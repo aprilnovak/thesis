@@ -1,0 +1,249 @@
+%% thesis.tex 2014/04/11
+%
+% Based on sample files of unknown authorship.
+%
+% The Current Maintainer of this work is Paul Vojta.
+
+\documentclass{ucbthesis}
+\usepackage[backend=bibtex,sorting=none,style=ieee,citestyle=numeric-comp]{biblatex}
+\usepackage{mathtools}
+\usepackage{rotating} % provides sidewaystable and sidewaysfigure
+\usepackage[acronym,nomain,nonumberlist,nogroupskip,nopostdot]{glossaries}
+\usepackage{siunitx}
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage[justification=centering, skip=0pt, font=small]{caption}
+\usepackage{arydshln}
+\usepackage{longtable}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bigints}
+\usepackage{lscape}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[section]{placeins}
+\usepackage{multirow}
+\usepackage[nonumberlist]{glossaries}
+\usepackage{booktabs}
+\usepackage{pdflscape}
+
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+
+\renewcommand{\arraystretch}{1.2}
+
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+
+\newcommand{\volume}{\mathop{\ooalign{\hfil$V$\hfil\cr\kern0.08em--\hfil\cr}}\nolimits}
+
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqa}{\begin{equation}\begin{aligned}}
+\newcommand{\eeqa}{\end{aligned}\end{equation}}
+
+\newcommand{\massconservation}{\epsilon\frac{\partial\rho_f}{\partial t} + \nabla\cdot(\epsilon\rho_f\vec{V})=0}
+\newcommand{\momentumconservation}{\epsilon\frac{\partial(\rho_f\vec{V})}{\partial t}+\nabla\cdot(\epsilon\rho_f\vec{V}\vec{V})+\epsilon\nabla P-\epsilon\rho_f\vec{g}+W\rho_f\vec{V}-\nabla\cdot(\tilde{\mu}\nabla\vec{V})=0}
+\newcommand{\fluidenergyconservation}{\epsilon\frac{\partial (\rho_f E_f)}{\partial t}+\nabla\cdot(\epsilon H_f\rho_f\vec{V})-\nabla\cdot(\kappa_f\nabla T)-\epsilon\rho_f \vec{g}\cdot\vec{V}+\alpha(T_f-T_s)-\dot{q}_f=0}
+\newcommand{\solidenergyconservation}{(1-\epsilon)\rho_sC_{p,s}\frac{\partial T_s}{\partial t}-\nabla\cdot(\kappa_s\nabla T_s)+\alpha(T_s-T_f)-\dot{q}_s=0}
+
+\newcommand{\legacymomentum}{\epsilon\nabla P-\epsilon\rho_f\vec{g}+W\rho_f\vec{V}=0}
+\newcommand{\legacymass}{\epsilon\frac{\partial\rho_f}{\partial t}+\nabla\cdot\left\lbrack\frac{\epsilon^2}{W}\left(\rho_f\vec{g}-\nabla P\right)\right\rbrack=0}
+\newcommand{\legacyfluidenergy}{\epsilon\rho_fC_{p,f,}\frac{\partial T_f}{\partial t}+\epsilon\rho_fC_{p,f}\vec{V}\cdot\nabla T_f-\nabla\cdot(\kappa_f\nabla T_f)+\alpha(T_f-T_s)-\dot{q}_f=0}
+\newcommand{\legacysolidenergy}{\solidenergyconservation}
+
+\lstset{language=C++,
+  backgroundcolor = \color{lbcolor},
+  frame = single,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{green}\ttfamily,
+  morecomment=[l][\color{magenta}]{\#}
+}
+
+\newcommand{\mdash}
+           {\discretionary{}{}{\kern 0.1em}---\discretionary{}{}{\kern 0.1em}}
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{4}
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+
+\allowdisplaybreaks
+
+% To compile this file, run "latex thesis", then "biber thesis"
+% (or "bibtex thesis", if the output from latex asks for that instead),
+% and then "latex thesis" (without the quotes in each case).
+
+% Double spacing, if you want it.  Do not use for the final copy.
+% \def\dsp{\def\baselinestretch{2.0}\large\normalsize}
+% \dsp
+
+% If the Grad. Division insists that the first paragraph of a section
+% be indented (like the others), then include this line:
+% \usepackage{indentfirst}
+
+\addtolength{\abovecaptionskip}{\baselineskip}
+
+%\newtheorem{theorem}{Jibberish}
+
+\bibliography{tex_inputs/bibliography.bib}
+
+\loadglsentries{tex_inputs/glossary}
+
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}%
+\renewcommand{\baselinestretch}{1.2}
+
+\newglossarystyle{mystyle}{%
+  \glossarystyle{long}%
+  \renewenvironment{theglossary}%
+     {\begin{longtable}{p{2.5cm}p{\linewidth}}}%
+     {\end{longtable}}%
+}
+
+%\input{../../pronghorn/doc/manual/custom_commands.tex}
+
+\hyphenation{mar-gin-al-ia}
+\hyphenation{bra-va-do}
+
+\makeglossaries
+
+\begin{document}
+
+\title{Multiscale Thermal-Hydraulic Methods for Pebble Bed Reactors}
+\author{April Jean Novak}
+\degreesemester{Spring}
+\degreeyear{2020}
+\degree{Doctor of Philosophy}
+\chair{Professor Rachel Slaybaugh}
+\othermembers{Professor Massimiliano Fratoni \\
+  Professor Tarek Zohdi\\
+  Dr. Richard Martineau}
+\numberofmembers{4}
+% Previous degrees are no longer to be listed on the title page.
+% \prevdegrees{B.A. (University of Northern South Dakota at Hoople) 1978 \\
+%   M.S. (Ed's School of Quantum Mechanics and Muffler Repair) 1989}
+\field{Engineering --- Nuclear Engineering}
+% Designated Emphasis -- this is optional, and rare
+ \emphasis{Computational Data Science and Engineering}
+% This is optional, and rare
+% \jointinstitution{University of Western Maryland}
+% This is optional (default is Berkeley)
+% \campus{Berkeley}
+
+% For a masters thesis, replace the above \documentclass line with
+% \documentclass[masters]{ucbthesis}
+% This affects the title and approval pages, which by default calls this
+% document a "dissertation", not a "thesis".
+
+\maketitle
+% Delete (or comment out) the \approvalpage line for the final version.
+\approvalpage
+\copyrightpage
+
+\begin{centering}
+Abstract\\
+\vspace{1em}
+Multiscale Thermal-Hydraulic Methods for Pebble Bed Reactors\\
+\vspace{1em}
+by\\
+\vspace{1em}
+April Jean Novak\\
+\vspace{1em}
+Doctor of Philosophy in Nuclear Engineering\\
+\vspace{1em}
+and the Designated Emphasis in\\
+\vspace{1em}
+Computational Data Science and Engineering\\
+\vspace{1em}
+University of California, Berkeley\\
+\vspace{1em}
+Professor Rachel Slaybaugh, Chair\\
+\end{centering}
+\vspace{2em}
+
+\noindent Pebble bed reactors (PBRs) are expected to display excellent heat removal characteristics due to graphite's capability for storing and transferring heat, the high failure temperatures of particle fuel, and the low power densities involved. However, a major challenge associated with the modeling of PBRs is the complex fuel-coolant structure in the core. Thermal-hydraulic (T/H) modeling of PBRs requires consideration of thermal and flow effects over five orders in spatial magnitude\mdash from \(5\times10^9\) \si{\milli\meter}-size fuel particles, to \(5\times10^5\) \si{\centi\meter}-size pebbles within a 10 \si{\meter}-size reactor core in the larger context of a power generating system. This dissertation develops and applies multiscale methods to the thermal analysis of PBRs. By decomposing the complex PBR geometry into coupled models for three characteristic length scales\mdash the particle, pebble, and core\mdash efficient predictions of core T/H relevant to reactor design are achieved.
+
+These multiscale models are implemented in a new finite element software application built on the open source Multiphysics Object-Oriented Software Environment (MOOSE). By leveraging state-of-the-art numerical methods, solvers, and meshing tools, this dissertation enables rapid design and analysis for scoping studies, fast-turnaround design, and multiphysics coupling to a comprehensive reactor analysis framework. 
+
+Application of multiscale analysis to a wide variety of flows demonstrates the software tool's capabilities as a general flow solver and the applicability of these models to both porous and open flows. Verification for open flows shows that the multiscale model reduces to the Navier-Stokes equations in regions such as reactor plena, where prediction of mixing and the ensuing thermal stresses are essential to the design of reactor internals. Application to the SANA experiments, a gas-cooled scaled PBR facility, demonstrates that the multiscale model predicts the passive conduction cool-down heat removal process with an average solid temperature error of 22.6\si{\celsius}. Statistical analysis as a function of position within the bed and other experimental characteristics illuminate limitations of model closures and simplifications useful for further macroscale analysis of gas-cooled PBRs.
+
+Supported by the verification and validation for open flows and gas systems, full-core steady-state T/H analysis is performed for the Mark-1 Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR). The unconventional reflector block design, uniquely ``thermally-thin'' fuel-matrix annulus, and non-uniform flow boundary conditions (BCs) highlight the new capabilities enabled by this dissertation for PBR industrial analysis. Two multiscale fuel models are compared against full-resolved PB-FHR fuel pebbles for a wide range in thermal conditions. While a homogeneous layer model is characterized by errors in excess of 200\si{\celsius}, a linear superposition method is shown to predict average and maximum temperatures to within 10\si{\celsius}. 
+
+Early models of PBRs have struggled to accurately characterize the core bypass fraction, with significant implications on fuel temperature predictions. A porous media model is constructed of the reflectors corresponding to the maximum-bypass end-of-life condition with friction factor correlations generated using COMSOL Multiphysics. A tensor representation of the friction factor shows that the momentum loss is significantly higher in the radial than the axial direction. These drag models are combined with the multiscale fuel verification to full-core analysis of the PB-FHR. A parametric study varying the reflector block gap distribution and the inflow port design demonstrates that the inflow BC has a significant effect on the core bypass fraction and that the bypass fraction is a strong function of the reflector block gap distribution. The maximum bypass fraction is predicted to be within the range of 11.9\%--14.0\% depending on the inflow BC and gap distribution. For a bottom-heavy center reflector inlet, predictions are made of the fuel and reflector temperatures. The primary effect of the core bypass is to uniformly raise core temperatures; for all reflector gap distributions, the maximum kernel temperature is approximately 93\si{\celsius} higher than the maximum fluid temperature, which remains far below the fuel failure limit.
+
+This work demonstrates the utility of multiscale methods to thermal analysis of PBRs. In conjunction with the larger scientific community, this dissertation enables fast-turnaround design and analysis of all single-phase PBRs to facilitate the contribution of advanced nuclear reactors to a clean energy future. 
+
+\begin{frontmatter}
+
+\begin{comment}
+\begin{dedication}
+\null\vfil
+\begin{center}
+To my family and friends\\\vspace{12pt}
+\end{center}
+\vfil\null
+\end{dedication}
+\end{comment}
+
+% You can delete the \clearpage lines if you don't want these to start on
+% separate pages.
+
+\clearpage
+\begin{KeepFromToc}
+\tableofcontents
+\end{KeepFromToc}
+\clearpage
+
+\clearpage
+\printglossary[style=mystyle]
+\addtocontents{toc}{\protect\contentsline{chapter}{\protect\numberline{}Acronyms}{}{}}
+
+\clearpage
+\input{units}
+
+\clearpage
+\input{symbols}
+
+%\listoffigures
+%\clearpage
+%\listoftables
+
+\begin{acknowledgements}
+to do
+\end{acknowledgements}
+
+\end{frontmatter}
+
+\pagestyle{headings}
+
+% (Optional) \part{First Part}
+\include{introduction}
+
+\include{physics}
+
+\include{pronghorn}
+
+\include{verification}
+
+\include{sana}
+
+\include{pbfhr}
+
+\include{conclusion}
+
+\include{appendix}
+
+\clearpage
+
+\printbibliography
+
+\end{document}

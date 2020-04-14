@@ -1,0 +1,514 @@
+\begin{appendices}
+\chapter{Mathematical Properties of Averages}
+\label{sec:PorousMediaMath}
+
+This section presents theorems for relating a generic field \(\Phi\) in a multi-phase domain to various mathematical operations on its spatial average. Note that most of the notation in this section has been introduced in Chapter \ref{sec:PhysicalModels}. 
+
+The key requirement for the use of these averaging identities is that the spatial average be independent of the size of the averaging \gls{rev}. Therefore, before deriving these identities, this requirement is provided a quantitative standing in terms of the relative length scale separation \(l/L\). Independence of the spatial average on the \gls{rev} size is equivalent to the requirement that the average of the average equals the average, or
+
+\beq
+\label{eq:AverageofAverage}
+\la\la\Phi\ra\ra\equiv\la\Phi\ra\ .
+\eeq
+
+\noindent Eq. \eqref{eq:AverageofAverage} also implies that 
+
+\beq
+\label{eq:AverageofAverage22}
+\la\la\Phi_k\ra^k\ra^k=\la\Phi_k\ra^k\ ,
+\eeq
+
+\noindent Eqs. \eqref{eq:AverageofAverage} and \eqref{eq:AverageofAverage22} require that the averaging volume be much larger than the volume over which the microscopic solution varies appreciably. Forming a Taylor series expansion of \(\la\Phi\ra\) about the centroid of the \gls{rev} gives
+
+\beq
+\label{eq:FF1}
+\la\Phi\ra=\la\Phi\ra_c+x_i\left(\frac{\partial\la\Phi\ra}{\partial x_i}\right)_c+\frac{x_ix_j}{2}\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c+\mathcal{O}(x_ix_jx_k)\ ,
+\eeq
+
+\noindent where the ``c'' subscript indicates the value at the centroid. Taking the average of Eq. \eqref{eq:FF1} gives
+
+\beqa
+\la\la\Phi\ra\ra=&\ \la\Phi\ra_c+\left(\frac{\partial\la\Phi\ra}{\partial x_i}\right)_c\frac{1}{\volume}\int_{\volume}x_id\volume +\frac{1}{2}\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c\frac{1}{\volume}\int_{\volume}x_ix_jd\volume +\mathcal{O}(x_ix_jx_k)\\
+=&\ \la\Phi\ra_c+\frac{1}{2}\underbrace{\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c}_{\mathcal{O}(1/L^2)}\frac{1}{\volume}\underbrace{\int_{\volume}x_ix_jd\volume }_{\mathcal{O}(l^2)}+\mathcal{O}(x_ix_jx_k)\ ,
+\eeqa
+
+\noindent where all terms subscripted with ``c'' are independent of the averaging volume. The \(x_id\volume\) integral is zero because the coordinate \(x_i\) is measured from the centroid of the averaging volume such that the integration represents an integral of an odd function. Based on this Taylor series analysis of \(\la\Phi\ra\) and \(\la\la\Phi\ra\ra\), the assumption of spatial averages being independent of the \gls{rev} volume is accurate to \(\mathcal{O}(l/L)^2\). Expressing volume averages in terms of a one-dimensional integral of a spatially-dependent surface average shows that volume averages are also equivalent to area averages with accuracy \(\mathcal{O}(l/L)^2\).
+
+A number of identities are now derived to address specific terms that arise in the averaging of the conservation equations in Chapter \ref{sec:PhysicalModels}. Combining Eqs. \eqref{eq:PM_back}, \eqref{eq:AverageofAverage}, and \eqref{eq:AverageofAverage22} gives
+
+\begin{subequations}
+\label{eq:SumMeanPlusFluctuation}
+\begin{align}
+\label{eq:SumMeanPlusFluctuationa}
+\Phi_kf_k=&\ \la\Phi_k\ra+\hat{\Phi}_kf_k\\
+\label{eq:SumMeanPlusFluctuationb}
+\Phi_kf_k=&\ \la\Phi_k\ra^k+\hat{\Phi}_kf_k\ .
+\end{align}
+\end{subequations}
+
+\noindent The presence of the phase function \(f_k\) indicates that \(\Phi_k\) and \(\hat{\Phi}_k\) both are zero in the non-\(k\) phases, which is why Eq. \eqref{eq:SumMeanPlusFluctuationb} is also valid. By switching orders of integration, it is shown that the extrinsic average of an intrinsic average equals the intrinsic average,
+
+\beqa
+\label{eq:SwapDerivs}
+\la\la\Phi_k\ra^k\ra\equiv&\ \frac{1}{\volume}\int_{\volume}\la\Phi_k\ra^kd\volume\\
+=&\ \frac{1}{\volume}\int_{\volume}\left(\frac{1}{\volume_k}\int_{\volume_k}d\volume\Phi f_k\right)d\volume\\
+=&\ \frac{1}{\volume_k}\int_{\volume_k}\left(\frac{1}{\volume}\int_{\volume}d\volume\Phi f_k\right)d\volume\\
+=&\ \la\Phi_k\ra^k\ .
+\eeqa
+
+\noindent A similar process of swapping orders of integration shows that the intrinsic average of an extrinsic average equals the extrinsic average,
+
+\beq
+\label{eq:avgavg2}
+\la\la\Phi_k\ra\ra^k=\la\Phi_k\ra\ .
+\eeq
+
+\noindent To relate averages of gradients to gradients of averages, consider a point located on a curve with arc length \(s\). At each point on this curve, define a \gls{rev} \(\volume(s)\) and the surface bounding that volume \(S(s)\). By assuming a continuous and invertible mapping between time and arc length, the general transport theorem commonly used to relate Eulerian and Lagrangian representations of continua can be written as
+
+\beqa
+\label{eq:GTT1}
+\frac{d}{ds}\int_{\volume(s)}\Phi d\volume=&\ \int_{\volume(s)}\frac{\partial\Phi}{\partial s}d\volume+\int_{S(s)}\Phi\frac{d\vec{x}}{ds}\cdot\hat{n}dS\\
+=&\ \int_{S(s)}\Phi\frac{d\vec{x}}{ds}\cdot\hat{n}dS\ ,
+\eeqa
+
+\noindent where the velocity of the surface \(\vec{V}=\partial\vec{x}/\partial t\) was also transformed by substituting arc length for time. \(\Phi\) only depends on arc length implicitly through its dependence on the spatial coordinate, so the first term on the \gls{rhs} of Eq. \eqref{eq:GTT1} is zero. Conservation of mass at stationary, impermeable, boundaries requires the nonzero component of \(\partial\vec{x}/\partial s\) be perpendicular to the unit normal vector at the solid-fluid interface, giving a zero dot product. Hence, the area \(S(s)\) in Eq. \eqref{eq:GTT1} can be replaced by the total area minus the solid-fluid interface area \(S_i(s)\), or
+
+\beq
+\label{eq:GTT2}
+S(s)\equiv S_e(s)+S_i(s)\ ,
+\eeq
+
+\noindent where \(S_e(s)\) is the portion of the \gls{rev} surface area that it not a phase interface. Rewriting Eq. \eqref{eq:GTT1} using Eq. \eqref{eq:GTT2} gives
+
+\beq
+\label{eq:GTT3}
+\frac{d}{ds}\int_{\volume(s)}\Phi d\volume=\int_{S_e(s)}\Phi\frac{d\vec{x}}{ds}\cdot\hat{n}dS\ .
+\eeq
+
+\noindent Finally, each point along the curve is described by a position vector \(\vec{x}_0(s)\) relative to an arbitrary origin. Let the vector \(\vec{p}(s)\) represent the location of the points on the enclosing surface relative to a point on the curve. The vector representing points on the surface is then the sum of the vector to a point on the curve plus the vector to the point on the surface,
+
+\beq
+\label{eq:PtonSurface}
+\vec{x}(s)=\vec{x}_0(s)+\vec{p}(s)\ ,
+\eeq
+
+\noindent By the chain rule, the directional derivative with respect to the arc length is
+
+\beqa
+\label{eq:DirectionalDeriv}
+\frac{d}{ds}=&\ \frac{d}{dx_i}\frac{dx_i}{ds}\\
+=&\ \nabla\cdot\frac{d\vec{x}}{ds}\ .
+\eeqa
+
+\noindent Using Eq. \eqref{eq:PtonSurface} and \eqref{eq:DirectionalDeriv} in Eq. \eqref{eq:GTT3} gives
+
+\beq
+\label{eq:GTT4}
+\frac{d\vec{x}_0}{ds}\cdot\left(\nabla\int_{\volume(s)}\Phi d\volume-\int_{S_e(s)}\Phi\hat{n}dS\right)=\int_{S_e(s)}\Phi\frac{d\vec{p}}{ds}\cdot\hat{n}dS\ ,
+\eeq
+
+\noindent where \(d\vec{x}_0/ds\) is independent of the area integration variable for a fixed value of \(s\). As long as \(\volume(s)\) is translated along the curve without rotation, then any differential change in \(\vec{p}\) is parallel to the surface, and hence the \gls{rhs} in Eq. \eqref{eq:GTT4} is zero. Then, because the vector \(\vec{x}_0\) was arbitrary, the expression must hold for any vector \(\vec{x}_0\), which requires
+
+\beqa
+\label{eq:Slattery}
+\nabla\int_{\volume(s)}\Phi d\volume-\int_{S_e(s)}\Phi\hat{n}dS=&\ 0\\
+\int_{\volume}\nabla\Phi_k d\volume=&\ \nabla\int_{\volume}\Phi_k d\volume+\int_{S_i}\Phi_k\hat{n}_kdS\ ,
+\eeqa
+
+\noindent where the divergence theorem was applied to the \(S_e(s)\) area integral,
+
+\beq
+\label{eq:DT1}
+\int_{\volume(s)}\nabla\Phi d\volume=\int_{S_e(s)}\Phi\hat{n}dS+\int_{S_i(s)}\Phi\hat{n}dS\ .
+\eeq
+
+\noindent Finally, dividing Eq. \eqref{eq:Slattery} by \(\volume\) gives the relation between the average of a gradient and the gradient of the average, 
+
+\begin{subequations}
+\label{eq:AvgGrdGrdAvg}
+\begin{align}
+\label{eq:AvgGrdGrdAvga}
+\la\nabla\Phi_k\ra=&\ \nabla\la\Phi_k\ra+\frac{1}{\volume}\int_{S_i}\Phi_k\hat{n}_kdS\\
+\label{eq:AvgGrdGrdAvgb}
+\la\nabla\Phi_k\ra=&\ \epsilon_k\nabla\la\Phi_k\ra^k+\frac{1}{\volume}\int_{S_i}\hat{\Phi}_k\hat{n}_kdS\ .
+\end{align}
+\end{subequations}
+
+\noindent Equality between the average of a gradient and the gradient of an average is offset by the integral of the field over the phase interfacial area \cite{kaviany}. Extensions of Eq. \eqref{eq:AvgGrdGrdAvg} to vectors convert gradients to divergences. 
+
+Now, in order to relate the averages of time derivatives to the time derivatives of averages, divide each term in the general transport theorem by \(\volume\) and use the identities derived previously to give
+
+\beqa
+\label{eq:TimeAvgDerivativeb}
+\frac{d}{dt}\frac{1}{\volume}\int_{\volume}\Phi_k d\volume=&\ \frac{1}{\volume}\int_{\volume}\frac{\partial\Phi_k}{\partial t}d\volume+\frac{1}{\volume}\int_{S_i}\Phi_k\vec{w}_k\cdot\hat{n}_kdS\\
+\frac{d\la\Phi_k\ra}{dt}=&\ \left\la\frac{\partial\Phi_k}{\partial t}\right\ra+\frac{1}{\volume}\int_{S_i}\Phi_k\vec{w}_k\cdot\hat{n}_kdS\ ,
+\eeqa
+
+\noindent where \(\vec{w}\) is the velocity of the phase interface \cite{gray}. Finally, several relations between averages of products are needed to average nonlinear advective terms. From Eq. \eqref{eq:PorosityAvg}, an average of the product \(\vec{V}_k\Phi_k\) over \(\volume\) can be related to an average over the phase volume \(\volume_k\), giving
+
+\begin{subequations}
+\label{eq:Dispersion}
+\begin{align}
+\label{eq:DispersionA}
+\la\vec{V}_k\Phi_k\ra=&\ \epsilon_k\la\vec{V}_k\Phi_k\ra^k\\
+\la\vec{V}_k\Phi_k\ra=&\ \epsilon_k\la\vec{V}_k\ra^k\la\Phi_k\ra^k+\la\hat{\vec{V}}_k\hat{\Phi}_k\ra\ ,
+\end{align}
+\end{subequations}
+
+\noindent where Eq. \eqref{eq:SumMeanPlusFluctuation} was substituted for both \(\vec{V}_k\) and \(\Phi_k\) and Eq. \eqref{eq:PorosityAvg} was used to rewrite \(\epsilon_k\la\hat{\vec{V}}_k\hat{\Phi}_k\ra^k\). For the case of three averaged terms, represented in generic notation \(a_kb_kc_k\),
+
+\beqa
+\label{eq:Dispersion3}
+\la a_kb_kc_k\ra=&\ \epsilon_k\la a_kb_kc_k\ra^f\\
+=&\ \la\hat{a}_k\hat{b}_k\hat{c}_k\ra+\la\hat{a}_k\hat{b}_k\ra\la c_k\ra^k+\la\hat{a}_k\hat{c}_k\ra\la b_k\ra^k+\la\hat{c}_k\hat{b}_k\ra\la a_k\ra^k+\epsilon_k\la a_k\ra^k\la b_k\ra^k\la c_k\ra^k\ .
+\eeqa
+
+\chapter{Fluid and Solid Material Properties}
+\label{sec:props}
+
+This section provides the correlations used for fluid and solid material properties. The units given in the front matter are used throughout\mdash \si{\kelvin} for temperature, \si{\kilo\gram\per\cubic\meter} for density, \si{\watt\per\meter\per\kelvin} for thermal conductivity, \si{\kilo\gram\per\meter\per\second} for dynamic viscosity, and \si{\joule\per\kilo\gram\per\kelvin} for isobaric specific heat capacity.
+
+\subsection*{Fluid Properties}
+
+This section provides the correlations used for fluid material properties; unless otherwise noted, all properties are available in the \gls{moose} fluid properties module.
+
+\subsubsection*{FLiBe}
+The material properties for \gls{flibe}, a peritectic molar composition of 67\% LiF and 33\% BeF$_2$, are given as \cite{richard,romatoski}
+
+\begin{subequations}
+\label{eq:flibe}
+\begin{align}
+\rho_f=&\ -0.4884T_f+1.7324\times10^{-7}(P-P_\text{atm})+2413.0\ ,\\
+k_f=&\ 5.0\times10^{-4}T_f+0.63\ ,\\
+\mu_f=&\ 1.16\times10^{-4}e^{3755.0/T_f}\ ,\\
+C_{p,f}=&\ 2416.0\ ,
+\end{align}
+\end{subequations}
+
+\noindent where \(P_{atm}\equiv101325\) \si{\pascal} is an atmospheric pressure reference point. A finite partial derivative of density with respect to pressure is included to obtain finite derivatives needed for the \gls{supg} stabilization. 
+
+\subsubsection*{Helium}
+Helium material properties are given as \cite{petersen}
+
+\begin{subequations}
+\label{eq:helium}
+\begin{align}
+\rho_f=&\ 48.14\times10^{-5}P\left(T_f+0.4446\times10^{-5}P\ T_f^{\ -0.2}\right)^{-1}\ ,\\
+k_f=&\ 2.682\times10^{-3}\left\lbrack1.0 + 1.123\times10^{-8}P\ T_f^{\ 0.71(1.0 - 2.0\times10^{-9}P)}\right\rbrack\ ,\\
+\mu_f=&\ 3.674\times10^{-7}T_f^{\ 0.7}\ ,\\
+C_{p,f}=&\ 5195.0\ .
+\end{align}
+\end{subequations}
+
+\noindent Alternatively, a \gls{moose} helium properties module based on the \gls{sbtl} method is available \cite{kunick}.
+
+\subsubsection*{Ideal Gas}
+The ideal gas \gls{eos} provides material properties for a generic gas as
+
+\begin{subequations}
+\begin{align}
+\rho_f=&\ \frac{P}{T_f}\frac{M}{8.3144598}\ ,\\
+k_f=&\ k_{f,0}\ ,\\
+\mu_f=&\ \mu_{f,0}\ ,\\
+C_{p,f}=&\ C_{p,f,0}\ ,
+\end{align}
+\end{subequations}
+
+\noindent where \(M\) is the molar mass, and \(k_{f,0}\), \(\mu_{f,0}\), and \(C_{p,f,0}\) are constant values chosen depending on the fluid modeled.
+
+\subsubsection*{Nitrogen}
+The correlations providing nitrogen material properties are based on the Span et. al and Lemmon and Jacobsen \glspl{eos}, and are far too lengthy to repeat, even in the Appendix \cite{span,lemmon}. Additional information may be found in the cited references and in the \gls{moose} fluid properties module documentation.
+
+Alternatively, a \gls{moose} nitrogen properties module based on the \gls{sbtl} method is available \cite{kunick}.
+
+\subsection*{Solid Properties}
+
+This section provides the correlations used for solid material properties. Note that these properties are functions of \(T_S\), the internal solid temperature, rather than \(T_s\), or the intrinsic phase averaged solid surface temperature. 
+
+\subsubsection*{Aluminum oxide}
+Aluminum oxide material properties are given as \cite{SANA,aluminum_oxide_cp}
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 3637\ ,\\
+k_S=&\ 743.0066\ T_S^{-0.69515}\ , \\
+C_{p,S}=&\ 880\ .
+\end{align}
+\end{subequations}
+
+%Eq. \eqref{eq:k_al2o3} is valid for \(293\text{ K}\leq T_S\leq 1579\) K. 
+
+\subsubsection*{Electric graphite}
+Sigri Al 2-500 electric graphite material properties are given as \cite{SANA,butland}
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 1673\ ,\\
+\label{eq:k_eg}
+k_S =&\ 2.5738\times10^4T_S^{\ -0.86367}\ , \\
+\label{eq:Butland_cp}
+C_{p,S} =&\ 4184\left(0.5421+a_1T_S+\frac{a_2}{T_S}+\frac{a_3}{T_S^2}+\frac{a_4}{T_S^3}+\frac{a_5}{T_S^4}\right)\ ,
+\end{align}
+\end{subequations}
+
+\noindent where \(a_1=-2.4267\times10^{-6}\), \(a_2=-90.273\), \(a_3=-43449\), \(a_4=1.5931\times10^7\), and \(a_5=-1.4369\times10^9\).
+
+%Eq. \eqref{eq:k_eg} is valid for \(373\textrm{ K}\leq T_s\leq 1273\) K. 
+
+\subsubsection*{Fire Brick}
+Type C-22Z fire brick material properties are given as \cite{firebrick,firebrick2}
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 737\ ,\\
+\label{eq:k_mg}
+k_S=&\ 0.26\ , \\
+\label{eq:Butland_cp2}
+C_{p,S} =&\ 1050\ .
+\end{align}
+\end{subequations}
+
+\subsubsection*{Matrix graphite}
+Matrix graphite material properties are given as \cite{SANA,butland}
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 1632\ ,\\
+\label{eq:k_mg}
+k_S=&\ -22.05679\ln{(T_S)}+194.32788\ , \\
+\label{eq:Butland_cp2}
+C_{p,S} =&\ 4184\left(0.5421+a_1T_S+\frac{a_2}{T_S}+\frac{a_3}{T_S^2}+\frac{a_4}{T_S^3}+\frac{a_5}{T_S^4}\right)\ ,
+\end{align}
+\end{subequations}
+
+\noindent where \(a_1=-2.4267\times10^{-6}\), \(a_2=-90.273\), \(a_3=-43449\), \(a_4=1.5931\times10^7\), and \(a_5=-1.4369\times10^9\). The graphite reflector properties are assumed given by these matrix graphite properties.
+
+%Eq. \eqref{eq:k_mg} is valid for \(292\text{ K}\leq T_s\leq 1574\) K. 
+
+\subsubsection*{Porous graphite}
+The material properties for porous graphite, or the low-density buffer layer in \glspl{cfp}, are assumed constant based on experimental data and values used elsewhere \cite{sun,tecdoc1694,xin_wang_thesis,stainsby,parfume,hales,rochais,lopez_honorato} as
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 1000\ ,\\
+k_S =&\ 0.5\ , \\
+C_{p,S} =&\ 720\ .
+\end{align}
+\end{subequations}
+%large differences in specific heat \cite{xin_wang_thesis,rochais} and thermal conductivity \cite{cao}
+
+\subsubsection*{Pyrolitic graphite (PyC)}
+The material properties for \gls{pyc} are assumed constant based on experimental data and values used elsewhere \cite{sun,xin_wang_thesis,tecdoc1694,slack,bokros,basini,hales,rochais,stainsby,parfume,cao} as
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 1900\ ,\\
+k_S =&\ 4.0\ , \\
+C_{p,S} =&\ 720\ .
+\end{align}
+\end{subequations}
+
+\noindent Some experimental measurements suggest that the thermal conductivity of the inner and outer \gls{pyc} in \glspl{cfp} differ due to the annealing process of the inner layer during \gls{sic} deposition, but this is not considered here \cite{slack,bokros,rochais,basini,lopez_honorato}. 
+
+\subsubsection*{Stainless steel 316}
+The material properties for stainless steel 316 are given as \cite{tinte2}
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 7863\ ,\\
+\label{eq:k_Ss}
+k_S =&\ 15.17+13.3\frac{T_S-273}{1000}\ , \\
+\label{eq:cp_ss}
+C_{p,S} =&\ \frac{7.8\times 10^6}{\rho_S}\left(0.4533+0.382\frac{T_S-273}{1000}\right)\ .
+\end{align}
+\end{subequations}
+
+\subsubsection*{Silicon carbide (SiC)}
+The material properties for \gls{sic} are given as \cite{snead,xin_wang_thesis,tecdoc1694,sun}
+
+\begin{subequations}
+\begin{align}
+\rho_S=&\ 3216\ ,\\
+k_S =&\ \left(-0.0003+1.05\times10^{-5}T_S\right)^{-1}\ ,\\ 
+\label{eq:CpSiC}
+C_{p,S} =&\ 925.65+0.3772T_S-7.9259\times10^{-5}T_S^2-3.1946\times10^7T_S^{-2}\ .
+\end{align}
+\end{subequations}
+
+\subsubsection*{Uranium oxycarbide}
+Due to a lack of other closures, uranium oxycarbide properties are approximated as the \gls{uo2} properties in Eq. \eqref{eq:uo2}.
+
+\subsubsection*{Uranium dioxide (UO$_2$)}
+\gls{uo2} material properties are given as
+
+\begin{subequations}
+\label{eq:uo2}
+\begin{align}
+\rho_S=&\ 10970\left(1.0056+d_1T_S+d_2T_S^2+d_3T_S^3\right)\ ,\\
+k_S =&\ \begin{dcases}\frac{100}{6.8337+b_1T_S+b_2T_S^2}+0.12783T_S\ e^\frac{-13475.11144}{T_S} & T_S<2670\\
+4.1486-2.2673\times10^{-4}T_S & \text{else}\end{dcases}\ , \\
+C_{p,S}=&\ \begin{dcases} \frac{C_1a_1^2e^\frac{a_1}{T_S}}{\left\lbrack T_S\left(e^\frac{a_1}{T_S}-1\right)\right\rbrack^2}+2 C_2T_S+C_3a_2e^{\ -\frac{a_3}{T_S}}\left\lbrack1+\frac{a_3\left(T_S-298.15\right)}{T_S^2}\right\rbrack & T_S<2670\\
+167 & \text{else}\end{dcases}\ ,
+\end{align}
+\end{subequations}
+
+\noindent where for conciseness \(d_1=-1.6324\times10^{-5}\), \(d_2=-8.3281\times10^{-9}\), \(d_3=2.0176\times10^{-13}\), \(b_1=1.6693\times10^{-2}\), \(b_2=3.1885\times10^{-6}\), \(a_1=516.11\), \(a_2=8.6144\times10^{-5}\), \(a_3=1.8815/a_2\), \(C_1=78.212\), \(C_2=3.8616\times10^{-3}\), and \(C_3=3.3993\times10^8\) \cite{fink}.
+
+\clearpage
+\chapter[Ideal Gas Streamline Upwind Petrov-Galerkin Stabilization]{Ideal Gas SUPG Stabilization}
+\chaptermark{Ideal Gas SUPG Stabilization}
+\label{sec:supg_app}
+
+This section presents the inviscid flux Jacobian matrices \(\textbf{A}_i\) defined in Eq. \eqref{eq:IFJM} and the additional \gls{supg} integral terms in Eq. \eqref{eq:supg1} for the conservation equations in Eq. \eqref{eq:NSConcise} for the ideal gas \gls{eos}. This example helps build the connection between the generic, multi-dimensional, coupled equation system \gls{supg} method given in Eq. \eqref{eq:supg1} with the single-equation, 1-D, form in Eq. \eqref{eq:psiStar}.
+
+The inviscid flux Jacobian matrices defined in Eq. \eqref{eq:IFJM} with the ideal gas \gls{eos} are
+
+\beq
+\textbf{A}_1=
+\begin{bmatrix}
+0 & 1 & 0 & 0 & 0\\
+\frac{\gamma-1}{2}\|\vec{V}\|^2-V_1^2 & (3-\gamma)V_1 & (1-\gamma)V_2 & (1-\gamma)V_3 & \gamma-1\\
+-V_2V_1 & V_2 & V_1 & 0 & 0\\
+-V_3V_1 & V_3 & 0 & V_1 & 0\\
+V_1\left\lbrack\frac{\gamma-1}{2}\|\vec{V}\|^2-H_f\right\rbrack & (1-\gamma)V_1^2+H_f & (1-\gamma)V_1V_2 & (1-\gamma)V_1V_3 & V_1\gamma\\
+\end{bmatrix}\ ,
+\eeq
+
+\beq
+\textbf{A}_2=
+\begin{bmatrix}
+0 & 0 & 1 & 0 & 0\\
+-V_1V_2 & V_2 & V_1 & 0 & 0\\
+\frac{\gamma-1}{2}\|\vec{V}\|^2-V_2^2 & (1-\gamma)V_1 & (3-\gamma)V_2 & (1-\gamma)V_3 & \gamma-1\\
+-V_3V_2 & 0 & V_3 & V_2 & 0\\
+V_2\left\lbrack\frac{\gamma-1}{2}\|\vec{V}\|^2-H_f\right\rbrack & (1-\gamma)V_1V_2 & (1-\gamma)V_2^2+H_f & (1-\gamma)V_2V_3 & V_2\gamma\\
+\end{bmatrix}\ ,
+\eeq
+
+\beq
+\textbf{A}_3=
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 0\\
+-V_1V_3 & V_3 & 0 & V_1 & 0\\
+-V_2V_3 & 0 & V_3 & V_2 & 0\\
+\frac{\gamma-1}{2}\|\vec{V}\|^2-V_3^2 & (1-\gamma)V_1 & (1-\gamma)V_2 & (3-\gamma)V_3 & \gamma-1\\
+V_3\left\lbrack\frac{\gamma-1}{2}\|\vec{V}\|^2-H_f\right\rbrack & (1-\gamma)V_1V_3 & (1-\gamma)V_2V_3 & (1-\gamma)V_3^2+H_f & V_3\gamma
+\end{bmatrix}\ ,
+\eeq
+
+\noindent where \(\gamma\) is the specific heat ratio,
+
+\beq
+\label{eq:GammaDef}
+\gamma\equiv\frac{C_{p,f}}{C_{v,f}}\ ,
+\eeq
+
+\noindent and \(C_{v,f}\) is the fluid isochoric specific heat capacity,
+
+\beq
+\label{eq:CvDef}
+C_v\equiv\left(\frac{\partial e}{\partial T}\right)_v\ .
+\eeq
+
+\noindent Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=0\) gives the following additional term for the mass conservation equation,
+
+\beqa
+\label{eq:MassStabilization}
+\int_{\Omega}\epsilon\ \tau_u\nabla W_0\cdot\vec{\mathscr{R}}_u\ d\Omega \ ,
+\eeqa
+
+\noindent The mass conservation equation is stabilized by a term proportional to the dot product of the gradient of the mass equation weight function with the momentum equation quasi-linear strong residuals. 
+
+Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=1,2,3\) gives the following additional term for the \(j\)-th momentum equation,
+
+\beqa
+&\int_{\Omega}\epsilon\tau_u\left\lbrack(1-\gamma)\vec{V}\cdot\vec{\mathscr{R}}_u\frac{\partial W_j}{\partial x_j}+\vec{V}\cdot\nabla W_j
+\mathscr{R}_{uj}+V_j\nabla W_j\cdot\vec{\mathscr{R}}_u\right\rbrack d\Omega\ +\\
+&\ \ \ \ \ \ \ \int_{\Omega}\epsilon\tau_e\mathscr{R}_e(\gamma-1)\frac{\partial W_j}{\partial x_j}d\Omega+\int_{\Omega} \epsilon\tau_c\mathscr{R}_c\left\lbrack-V_j\vec{V}\cdot\nabla W_j+\frac{1}{2}(\gamma-1)\|\vec{V}\|^2\frac{\partial W_j}{\partial x_j}\right\rbrack d\Omega\\
+\eeqa
+
+\noindent where summation over \(j\) is not implied, \(\mathscr{R}_c\) is the continuity equation quasi-linear strong residual, and \(\mathscr{R}_e\) is the energy equation quasi-linear strong residual. The momentum equations are therefore stabilized by terms proportional to the continuity, momentum, and energy equation quasi-linear strong residuals. 
+
+Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=4\) gives the following additional term for the energy conservation equation,
+
+\beqa
+\label{eq:EStab}
+&\int_{\Omega}\epsilon\tau_u\left\lbrack H_f\nabla W_4\cdot\vec{\mathscr{R}}_u+(1-\gamma)\left(\vec{V}\cdot\vec{\mathscr{R}}_u\right)\left(\vec{V}\cdot\nabla W_4\right)\right\rbrack d\Omega\ +\\
+&\hspace{1cm}\int_\Omega\epsilon\tau_e\mathscr{R}_e\gamma\vec{V}\cdot\nabla W_4 d\Omega+\int_{\Omega} \epsilon\tau_c\mathscr{R}_c\left\lbrack\frac{(\gamma-1)}{2}\|\vec{V}\|^2-H_f\right\rbrack\vec{V}\cdot\nabla W_4 d\Omega\ .
+\eeqa
+
+\noindent The energy equation is therefore stabilized by a term proportional to the continuity, momentum, and energy equation quasi-linear strong residuals. 
+
+\clearpage
+\chapter{Reproducibility}
+\label{sec:reproducibility}
+
+Reproducible science refers to the concept that all research outputs should be repeatable using a complete computational environment consisting of the software application, input files, and data results. This section describes the complete computational environment used to obtain the results in this dissertation.
+
+The Pronghorn project is hosted on an \gls{inl} internal GitLab site. Currently, the best way to request access is to post on the \gls{moose} users group at \mbox{\url{https://tinyurl.com/rkgccw7}}. The Pronghorn repository hash used for the present work is
+
+\begin{equation*}
+\texttt{d2429e07d746e4a4e996b1806ccdc35937395690}
+\end{equation*}
+
+\noindent Simple meshes were generated within the \gls{moose} framework with the \texttt{MeshGenerator} system, while more complex meshes were generated with Cubit version 15.1b \cite{cubit}. Output files are of Exodus II format and are visualized in Paraview version 5.0.1 \cite{paraview}.
+
+Table \ref{table:Reproducibility} provides paths for the tests, input files, and data files referenced in this dissertation in order of appearance. All path names are written in \texttt{typewriter} font assuming the current working directory is the Pronghorn root directory. For all files within the \texttt{problems} directory, \texttt{README} markdown files provide more detailed information on file descriptions and directory structure. 
+
+A \(\dagger\) superscript in Table \ref{table:Reproducibility} indicates that the data file corresponds to a mesh or time convergence study. If data files are not specifically listed for a particular item, this implies that data was collected directly from Exodus output files. Output files may be generated from any of the inputs indicated in Table \ref{table:Reproducibility} by running
+
+\begin{equation*}
+\texttt{pronghorn-opt -i file.i}
+\end{equation*}
+
+\noindent where \texttt{file.i} is the name of the input file and \texttt{pronghorn-opt} is the name of the \texttt{OPT} method compiled executable that should be in the \texttt{PATH} environment variable.
+
+\begin{landscape}
+\begin{table}[!h]
+\caption{Paths to tests, input files, and data files for the simulations performed in this dissertation. A $\dagger$ superscript indicates that the data files contain mesh and/or time refinement studies.}
+\centering
+\begin{tabular}{|c |l l l l l|}
+\hline\hline
+Section & Description & Type & Location\Tstrut\Bstrut\\
+\hline
+\multirow{2}{*}{\ref{sec:software}} & regression tests & tests & \mbox{\texttt{test/tests}}\\
+& unit tests & tests & \mbox{\texttt{unit}}\\
+\hline
+\multirow{4}{*}{\ref{sec:mms}} & \multirow{4}{*}{\gls{mms} tests} & tests & \mbox{\texttt{test/tests/mms}}\\
+& & \multirow{3}{*}{data files$^\dagger$} & \mbox{\texttt{doc/verification/convergence\_figures.i}}\\
+& & & \mbox{\texttt{doc/verification/SUPG\_convergence\_figures.i}}\\
+& & & \mbox{\texttt{doc/verification/time\_convergence\_figures\{,1,2,3\}.i}}\\
+\hline
+\multirow{2}{*}{\ref{sec:natural_convection}} & \multirow{2}{*}{convection flow} & input files & \mbox{\texttt{problems/rayleigh-benard}}\\
+& & data files$^\dagger$ & \texttt{problems/rayleigh-benard/pronghorn/horizontal\_refine.py}\\
+\hline
+\multirow{2}{*}{\ref{sec:potential_flow}} & \multirow{2}{*}{cylinder flow} & input files & \texttt{problems/potential-flow}\\
+& & data files$^\dagger$ & \texttt{doc/vv/potential\_flow.py}\\
+\hline
+\multirow{2}{*}{\ref{sec:verification_meso}} & \multirow{2}{*}{\gls{hsd} verification} & \multirow{2}{*}{input files} & \texttt{problems/multiscale/stainsby}\\
+ & & & \texttt{problems/multiscale/stainsby/transient}\\
+\hline
+\multirow{5}{*}{\ref{sec:baseline} and \ref{sec:sensitivity}} & \multirow{5}{*}{SANA validation} & \multirow{4}{*}{input files} & \texttt{problems/sana/revisited/bottom-half-heater}\\
+& & & \texttt{problems/sana/revisited/long-central-heater}\\
+& & & \texttt{problems/sana/revisited/plenum}\\
+& & & \texttt{problems/sana/revisited/top-half-heater}\\ % TODO: mesh refinement file?
+& & data files & \texttt{doc/papers/SANA-Revisited/data.py}\\
+%& & data files (GAMMA) & \texttt{doc/papers/SANA-Revisited/data/*.dat}\\
+%& & data files (Flownex) & \texttt{doc/papers/SANA-Revisited/data/Sana-Flownex-data.xls}\\ 
+\hline
+\multirow{3}{*}{\ref{sec:meso_fhr}} & \multirow{3}{*}{\gls{hsd} verification} & \multirow{2}{*}{input files} & \color{red}TODO: make public repo\color{black}\\  %TODO
+& & & \\ % TODO
+& & data files & \texttt{doc/papers/PBFHR/hsd\_data.py}\\ %TODO: mesh refinement?
+\hline
+\multirow{2}{*}{\ref{sec:bypass}} & \multirow{2}{*}{reflector \gls{cfd}} & input files & \color{red}TODO: make public repo\color{black}\\ %TODO, also mesh refinement?
+& & data files & \\ %TODO
+\hline
+\multirow{2}{*}{\ref{sec:core}} & \multirow{2}{*}{\gls{pbfhr} modeling} & \multirow{2}{*}{input files} & \texttt{problems/pb-fhr/pronghorn/core\_with\_plenum}\\
+& & & \texttt{problems/pb-fhr/pronghorn/core\_with\_plenum/axial\_gaps}\\ % TODO: mesh refinement?
+\hline
+\end{tabular}
+\label{table:Reproducibility}
+\end{table}
+\end{landscape}
+
+\end{appendices}
