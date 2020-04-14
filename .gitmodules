@@ -1,0 +1,3 @@
+[submodule "docs/tex_inputs"]
+	path = docs/tex_inputs
+	url = git@github.com:aprilnovak/tex_inputs.git
