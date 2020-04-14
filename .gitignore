@@ -1,5 +1,9 @@
 *.acn
+*.acr
+*.alg
 *.aux
+*.bbl
+*.blg
 *.ist
 *.log
 *.out
