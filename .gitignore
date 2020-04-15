@@ -4,7 +4,9 @@
 *.aux
 *.bbl
 *.blg
+*blx.bib
 *.ist
 *.log
 *.out
+*.run.xml
 *.toc
