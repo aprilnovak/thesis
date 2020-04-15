@@ -459,7 +459,7 @@ The Latex source files and figures used to compile this dissertation are availab
 \texttt{git clone git@github.com:aprilnovak/thesis.git}
 \end{equation*}
 
-\noindent Table \ref{table:Reproducibility} provides paths for the tests, input files, and data files referenced in this dissertation in order of appearance. All path names are written in \texttt{typewriter} font. For all files within the \texttt{problems} directory, \texttt{README} markdown files provide more detailed information on file descriptions and directory structure. 
+\noindent Table \ref{table:Reproducibility} provides paths for the tests, input files, and data files referenced in this dissertation in order of appearance. All path names are written in \texttt{typewriter} font. For all files within the \texttt{problems} directory, \texttt{README} markdown files provide more detailed information on file descriptions and directory structure. Note that all input files are based on the Pronghorn commit hash given at the beginning of this section, and are meant as an illustration of the method used. The values of local variables in file headers are for some cases varied to explore different thermal conditions, such as the multiscale verification in Section \ref{sec:meso_fhr}, and must change to cover the full range of results in this dissertation.
 
 A \(\dagger\) superscript in Table \ref{table:Reproducibility} indicates that the data file corresponds to a mesh or time convergence study. If data files are not specifically listed for a particular item, this implies that data was collected directly from Exodus output files. Output files may be generated from any of the inputs indicated in Table \ref{table:Reproducibility} by running
 
@@ -503,11 +503,11 @@ Section & Description & Type & Location\Tstrut\Bstrut\\
 %& & data files (GAMMA) & \texttt{doc/papers/SANA-Revisited/data/*.dat}\\
 %& & data files (Flownex) & \texttt{doc/papers/SANA-Revisited/data/Sana-Flownex-data.xls}\\ 
 \hline
-\multirow{3}{*}{\ref{sec:meso_fhr}} & \multirow{3}{*}{\gls{hsd} verification} & \multirow{2}{*}{input files} & \color{red}TODO: make public repo\color{black}\\  %TODO
-& & & \\ % TODO
+\multirow{3}{*}{\ref{sec:meso_fhr}} & \multirow{3}{*}{pebble verification} & \multirow{2}{*}{input files} & \texttt{thesis/hsd}\\
+& & & \texttt{thesis/hl}\\
 & & data files & \texttt{pronghorn/doc/papers/PBFHR/hsd\_data.py}\\ %TODO: mesh refinement?
 \hline
-\multirow{2}{*}{\ref{sec:bypass}} & \multirow{2}{*}{reflector \gls{cfd}} & input files & \texttt{thesis/outer_reflector_fluid.mph} (before mesh refinements)\\ %TODO, also mesh refinement?
+\multirow{2}{*}{\ref{sec:bypass}} & \multirow{2}{*}{reflector \gls{cfd}} & input files & \texttt{thesis/outer\_reflector\_fluid.mph} (before mesh refinements)\\ %TODO, also mesh refinement?
 & & data files & \texttt{thesis/drag.py}\\
 \hline
 \multirow{2}{*}{\ref{sec:core}} & \multirow{2}{*}{\gls{pbfhr} modeling} & \multirow{2}{*}{input files} & \texttt{pronghorn/problems/pb-fhr/pronghorn/core\_with\_plenum}\\
