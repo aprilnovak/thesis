@@ -453,7 +453,13 @@ The Pronghorn project is hosted on an \gls{inl} internal GitLab site. Currently,
 
 \noindent Simple meshes were generated within the \gls{moose} framework with the \texttt{MeshGenerator} system, while more complex meshes were generated with Cubit version 15.1b \cite{cubit}. Output files are of Exodus II format and are visualized in Paraview version 5.0.1 \cite{paraview}.
 
-Table \ref{table:Reproducibility} provides paths for the tests, input files, and data files referenced in this dissertation in order of appearance. All path names are written in \texttt{typewriter} font assuming the current working directory is the Pronghorn root directory. For all files within the \texttt{problems} directory, \texttt{README} markdown files provide more detailed information on file descriptions and directory structure. 
+The Latex source files and figures used to compile this dissertation are available in a public git repository that may be cloned by running
+
+\begin{equation*}
+\texttt{git clone git@github.com:aprilnovak/thesis.git}
+\end{equation*}
+
+\noindent Table \ref{table:Reproducibility} provides paths for the tests, input files, and data files referenced in this dissertation in order of appearance. All path names are written in \texttt{typewriter} font. For all files within the \texttt{problems} directory, \texttt{README} markdown files provide more detailed information on file descriptions and directory structure. 
 
 A \(\dagger\) superscript in Table \ref{table:Reproducibility} indicates that the data file corresponds to a mesh or time convergence study. If data files are not specifically listed for a particular item, this implies that data was collected directly from Exodus output files. Output files may be generated from any of the inputs indicated in Table \ref{table:Reproducibility} by running
 
@@ -465,46 +471,47 @@ A \(\dagger\) superscript in Table \ref{table:Reproducibility} indicates that th
 
 \begin{landscape}
 \begin{table}[!h]
+\small
 \caption{Paths to tests, input files, and data files for the simulations performed in this dissertation. A $\dagger$ superscript indicates that the data files contain mesh and/or time refinement studies.}
 \centering
 \begin{tabular}{|c |l l l l l|}
 \hline\hline
 Section & Description & Type & Location\Tstrut\Bstrut\\
 \hline
-\multirow{2}{*}{\ref{sec:software}} & regression tests & tests & \mbox{\texttt{test/tests}}\\
-& unit tests & tests & \mbox{\texttt{unit}}\\
+\multirow{2}{*}{\ref{sec:software}} & regression tests & tests & \mbox{\texttt{pronghorn/test/tests}}\\
+& unit tests & tests & \mbox{\texttt{pronghorn/unit}}\\
 \hline
-\multirow{4}{*}{\ref{sec:mms}} & \multirow{4}{*}{\gls{mms} tests} & tests & \mbox{\texttt{test/tests/mms}}\\
-& & \multirow{3}{*}{data files$^\dagger$} & \mbox{\texttt{doc/verification/convergence\_figures.i}}\\
-& & & \mbox{\texttt{doc/verification/SUPG\_convergence\_figures.i}}\\
-& & & \mbox{\texttt{doc/verification/time\_convergence\_figures\{,1,2,3\}.i}}\\
+\multirow{4}{*}{\ref{sec:mms}} & \multirow{4}{*}{\gls{mms} tests} & tests & \mbox{\texttt{pronghorn/test/tests/mms}}\\
+& & \multirow{3}{*}{data files$^\dagger$} & \mbox{\texttt{pronghorn/doc/verification/convergence\_figures.py}}\\
+& & & \mbox{\texttt{pronghorn/doc/verification/SUPG\_convergence\_figures.py}}\\
+& & & \mbox{\texttt{pronghorn/doc/verification/time\_convergence\_figures\{,1,2,3\}.py}}\\
 \hline
-\multirow{2}{*}{\ref{sec:natural_convection}} & \multirow{2}{*}{convection flow} & input files & \mbox{\texttt{problems/rayleigh-benard}}\\
-& & data files$^\dagger$ & \texttt{problems/rayleigh-benard/pronghorn/horizontal\_refine.py}\\
+\multirow{2}{*}{\ref{sec:natural_convection}} & \multirow{2}{*}{convection flow} & input files & \mbox{\texttt{pronghorn/problems/rayleigh-benard}}\\
+& & data files$^\dagger$ & \texttt{pronghorn/problems/rayleigh-benard/pronghorn/horizontal\_refine.py}\\
 \hline
-\multirow{2}{*}{\ref{sec:potential_flow}} & \multirow{2}{*}{cylinder flow} & input files & \texttt{problems/potential-flow}\\
-& & data files$^\dagger$ & \texttt{doc/vv/potential\_flow.py}\\
+\multirow{2}{*}{\ref{sec:potential_flow}} & \multirow{2}{*}{cylinder flow} & input files & \texttt{pronghorn/problems/potential-flow}\\
+& & data files$^\dagger$ & \texttt{pronghorn/doc/vv/potential\_flow.py}\\
 \hline
-\multirow{2}{*}{\ref{sec:verification_meso}} & \multirow{2}{*}{\gls{hsd} verification} & \multirow{2}{*}{input files} & \texttt{problems/multiscale/stainsby}\\
- & & & \texttt{problems/multiscale/stainsby/transient}\\
+\multirow{2}{*}{\ref{sec:verification_meso}} & \multirow{2}{*}{\gls{hsd} verification} & \multirow{2}{*}{input files} & \texttt{pronghorn/problems/multiscale/stainsby}\\
+ & & & \texttt{pronghorn/problems/multiscale/stainsby/transient}\\
 \hline
-\multirow{5}{*}{\ref{sec:baseline} and \ref{sec:sensitivity}} & \multirow{5}{*}{SANA validation} & \multirow{4}{*}{input files} & \texttt{problems/sana/revisited/bottom-half-heater}\\
-& & & \texttt{problems/sana/revisited/long-central-heater}\\
-& & & \texttt{problems/sana/revisited/plenum}\\
-& & & \texttt{problems/sana/revisited/top-half-heater}\\ % TODO: mesh refinement file?
-& & data files & \texttt{doc/papers/SANA-Revisited/data.py}\\
+\multirow{5}{*}{\ref{sec:baseline} and \ref{sec:sensitivity}} & \multirow{5}{*}{SANA validation} & \multirow{4}{*}{input files} & \texttt{pronghorn/problems/sana/revisited/bottom-half-heater}\\
+& & & \texttt{pronghorn/problems/sana/revisited/long-central-heater}\\
+& & & \texttt{pronghorn/problems/sana/revisited/plenum}\\
+& & & \texttt{pronghorn/problems/sana/revisited/top-half-heater}\\ % TODO: mesh refinement file?
+& & data files & \texttt{pronghorn/doc/papers/SANA-Revisited/data.py}\\
 %& & data files (GAMMA) & \texttt{doc/papers/SANA-Revisited/data/*.dat}\\
 %& & data files (Flownex) & \texttt{doc/papers/SANA-Revisited/data/Sana-Flownex-data.xls}\\ 
 \hline
 \multirow{3}{*}{\ref{sec:meso_fhr}} & \multirow{3}{*}{\gls{hsd} verification} & \multirow{2}{*}{input files} & \color{red}TODO: make public repo\color{black}\\  %TODO
 & & & \\ % TODO
-& & data files & \texttt{doc/papers/PBFHR/hsd\_data.py}\\ %TODO: mesh refinement?
+& & data files & \texttt{pronghorn/doc/papers/PBFHR/hsd\_data.py}\\ %TODO: mesh refinement?
 \hline
-\multirow{2}{*}{\ref{sec:bypass}} & \multirow{2}{*}{reflector \gls{cfd}} & input files & \color{red}TODO: make public repo\color{black}\\ %TODO, also mesh refinement?
-& & data files & \\ %TODO
+\multirow{2}{*}{\ref{sec:bypass}} & \multirow{2}{*}{reflector \gls{cfd}} & input files & \texttt{thesis/outer_reflector_fluid.mph} (before mesh refinements)\\ %TODO, also mesh refinement?
+& & data files & \texttt{thesis/drag.py}\\
 \hline
-\multirow{2}{*}{\ref{sec:core}} & \multirow{2}{*}{\gls{pbfhr} modeling} & \multirow{2}{*}{input files} & \texttt{problems/pb-fhr/pronghorn/core\_with\_plenum}\\
-& & & \texttt{problems/pb-fhr/pronghorn/core\_with\_plenum/axial\_gaps}\\ % TODO: mesh refinement?
+\multirow{2}{*}{\ref{sec:core}} & \multirow{2}{*}{\gls{pbfhr} modeling} & \multirow{2}{*}{input files} & \texttt{pronghorn/problems/pb-fhr/pronghorn/core\_with\_plenum}\\
+& & & \texttt{pronghorn/problems/pb-fhr/pronghorn/core\_with\_plenum/axial\_gaps}\\ % TODO: mesh refinement?
 \hline
 \end{tabular}
 \label{table:Reproducibility}
