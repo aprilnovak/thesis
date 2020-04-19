@@ -620,7 +620,7 @@ Fig.\ \ref{fig:multiscale_pbr} shows an illustration of the length scale couplin
 	\item The first-tier sub-applications calculate averaged power densities in each element of the mesoscale mesh.
 	\item The first-tier sub-applications transfer the averaged power densities as a source term to a microscale sub-application in each element.
 	\item The second-tier sub-applications solve the microscale models.
-	\item The first-tier sub-applications retrieve the microscale solution in each element of the mesoscale mesh.
+	\item The first-tier sub-applications retrieve the microscale solution in each element of the mesoscale mesh and apply the continuity in heat flux and temperature \gls{bc} with the summation in Eq. \eqref{eq:MultiscaleSolution}.
 	\end{enumerate}
 \end{enumerate}
 

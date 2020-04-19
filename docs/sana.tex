@@ -1,7 +1,7 @@
 \chapter{The SANA Experiments}
 \label{sec:sana}
 
-Power densities of gas-cooled \glspl{pbr} are typically low enough that radiation and conduction between touching pebbles, in combination with an ex-vessel water cooling system, is sufficient to remove decay heat in a depressurized \gls{lofc} by natural convection cooling. However, low power densities result in larger reactor vessels that both complicate rail transport and increase structural material costs. Economic feasibility may motivate stretching paper design concepts to higher power densities or uprating an existing reactor. Safe reactor operation requires \gls{th} models that can accurately model natural convection decay heat removal and the proximity of fuel temperatures to maximum allowable operating limits, especially when maximization of power density is a primary design objective. 
+Power densities of gas-cooled \glspl{pbr} are typically low enough that radiation and conduction between touching pebbles, in combination with an ex-vessel water cooling system, is sufficient to remove decay heat in a depressurized \gls{lofc} by natural convection cooling. However, low power densities result in larger reactor vessels that both complicate rail transport and increase structural material costs. Economic feasibility may motivate stretching paper design concepts to higher power densities or uprating an existing reactor. Safe reactor operation requires \gls{th} tools that can accurately model natural convection decay heat removal and the proximity of fuel temperatures to maximum allowable operating limits, especially when maximization of power density is a primary design objective. 
 
 % TODO: put this in the introduction section when describing the motivation for this section
 %Validation of a computational model for conduction cool-down conditions is necessary to establish additional margins associated with the predictive nature of modeling tools for decay heat removal.
@@ -19,7 +19,7 @@ In Section \ref{sec:sensitivity}, macroscale closures are individually varied fr
 \section{The SANA Facility}
 \label{sec:experimental}
 
-The SANA facility consists of a cylindrical steel vessel containing about 9500 non-fueled pebbles heated by electrical resistance heaters in a variety of configurations in both steady and transient conditions \cite{SANA}. A depiction of the facility in a full-length, single-heater configuration is shown in Fig.\ \ref{fig:SANA_core}. Insulation on the bottom and top of the bed limits axial heat loss. The pebble surface temperature is measured throughout the bed with thermocouples at five different elevations, indicated as ``bottom,'' ``near bottom,'' ``middle,'' ``near top,'' and ``top'' in Fig.\ \ref{fig:SANA_core}. The precise axial coordinate of these measurement planes varied from test to test, and the scale shown in Fig.\ \ref{fig:SANA_core} is approximate. Most experiments involved a single centrally-located heater in an axisymmetric configuration, though several experiments placed multiple heaters throughout the bed so that the power distribution was no longer axisymmetric; these cases are not considered here.
+The SANA facility consists of a closed cylindrical steel vessel containing about 9500 non-fueled pebbles heated by electrical resistance heaters in a variety of configurations in both steady and transient conditions \cite{SANA}. A depiction of the facility in a full-length, single-heater configuration is shown in Fig.\ \ref{fig:SANA_core}. Insulation on the bottom and top of the bed limits axial heat loss. The pebble surface temperature is measured throughout the bed with thermocouples at five different elevations, indicated as ``bottom,'' ``near bottom,'' ``middle,'' ``near top,'' and ``top'' in Fig.\ \ref{fig:SANA_core}. The precise axial coordinate of these measurement planes varied from test to test, and the scale shown in Fig.\ \ref{fig:SANA_core} is approximate. Most experiments involved a single centrally-located heater in an axisymmetric configuration, though several experiments placed multiple heaters throughout the bed so that the power distribution was no longer axisymmetric; these cases are not considered here.
 
 \begin{figure}[h!]
 \centering
@@ -124,14 +124,25 @@ A total of nearly 1300 solid temperature measurements were made across the stead
 
 A natural convection flow is established as fluid buoyantly rises near the heater surface and cools near the vessel outer surface. The insulation on the bottom and top of the bed induces primarily radial temperature gradients. The low thermal conductivity of nitrogen results in more significant convective transport than in helium, which manifests as larger axial fluid temperature gradients and a recirculation vortex located closer to the bottom of the bed. The thermal conductivity of the pebbles is directly related to the maximum temperature in the bed\mdash from left to right, the pebble thermal conductivity decreases. Experiments with aluminum oxide pebbles and nitrogen coolant have the greatest convective heat transport, while experiments with 6 \si{\centi\meter} graphite pebbles and helium coolant have the greatest diffusive heat transport. 
 
-Moving to the solid temperature predictions, similar trends in the solid temperature with pebble and coolant thermal properties will be highlighted with each case. In presenting the validation data, all experimental results are shown as discrete points and Pronghorn predictions are shown as solid lines (---). When available, Flownex results are shown as dashed lines (- -) and GAMMA results are shown as dotted lines ($\cdots$). Measurements were taken at the five axial elevations shown in Fig.\ \ref{fig:SANA_core}, but only three of these elevations are plotted to simplify data presentation.
+\begin{figure}[h!]
+\centering
+\centerline{
+\includegraphics[height=0.55\linewidth]{figs/sana_30kW_vel.png}}
+\caption{Pronghorn predicted fluid temperature and velocity streamlines for a full-length heater at 30 \si{\kilo\watt} for helium (top row) and nitrogen (bottom row) coolant for the three pebble types.}
+\label{fig:streamlines2}
+\end{figure}
+
+To provide physical insight for the partial-length heater experiments, Fig.\ \ref{fig:streamlines1} shows Pronghorn predictions of fluid temperature and velocity streamlines for the eight experiments with a half-length heater in the bottom of the bed and 6 \si{\centi\meter} graphite pebbles. The top and bottom rows show predictions for helium and nitrogen coolant, respectively, while each column corresponds to a unique power level. The higher the heater power, the further upward the recirculation vortex moves for the helium tests, as energy transfer is primarily diffusive and in the radial direction. For nitrogen, higher heater powers result in stronger fluid acceleration in the upwards direction, pushing the recirculation vortex further downwards as the fluid changes directions along the bottom and right walls of the vessel. Both of these observations are related to the stronger convective transport in nitrogen.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[height=0.65\linewidth]{figs/sana_30kW_vel.png}
-\caption{Pronghorn predicted fluid temperature and velocity streamlines for a 30 \si{\kilo\watt} heater power for helium (top row) and nitrogen (bottom row) coolant for the three pebble types.}
-\label{fig:streamlines2}
+\centerline{
+\includegraphics[height=0.6\linewidth]{figs/sana_bottom_vel.png}}
+\caption{Pronghorn predicted fluid temperature and velocity streamlines for a partial-length heater in the bottom of the bed for helium (top row) and nitrogen (bottom row) for 6 \si{\centi\meter} graphite pebbles for four power levels.}
+\label{fig:streamlines1}
 \end{figure}
+
+Moving to the solid temperature predictions, similar trends in the solid temperature with pebble and coolant thermal properties will be highlighted with each case. In presenting the validation data, all experimental results are shown as discrete points and Pronghorn predictions are shown as solid lines (---). When available, Flownex results are shown as dashed lines (- -) and GAMMA results are shown as dotted lines ($\cdots$). Measurements were taken at the five axial elevations shown in Fig.\ \ref{fig:SANA_core}, but only three of these elevations are plotted to simplify data presentation.
 
 Figs. \ref{fig:helium_long} and \ref{fig:nitrogen_long} show Pronghorn and Flownex solid temperature predictions for heater powers of 5 and 35 \si{\kilo\watt} and 6 \si{\centi\meter} graphite pebbles with helium and nitrogen coolant, respectively. The 5 k\si{\kilo\watt} cases in Figs. \ref{fig:helium_longa} and \ref{fig:nitrogen_longa} are shown on the same temperature scale of 0 to 500\si{\celsius}, while the 35 \si{\kilo\watt} cases in Figs. \ref{fig:helium_longb} and \ref{fig:nitrogen_longb} are shown on the same temperature scale of 0 to 1200\si{\celsius}. Similar to the fluid temperature shown in Fig.\ \ref{fig:streamlines2}, the greater diffusive transport in helium results in smaller axial solid temperature gradients and a lower maximum temperature as compared to nitrogen. 
 
