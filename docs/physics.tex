@@ -1327,7 +1327,7 @@ The number of pseudo-particles \(N_p\) is set as the only free parameter. First,
 \volume=\frac{4}{3}\pi\left(r_o^3-r_i^3\right)\ .
 \eeq
 
-\noindent For a \gls{cfp} packing fraction in the fuel-matrix region of \(\epsilon_\text{cfp}\), \(1-\epsilon_\text{cfp}\) of the shell volume is matrix material. The thickness of the matrix layer along the inner surface, or \(\delta_i\), is chosen such that half of the matrix material is present in a layer along the inner surface. Likewise, the thickness of the matrix layer along the outer surface, or \(\delta_o\), is chosen such that half of the matrix material is present in a layer along the outer surface. In other words, the inner matrix layer thickness is calculated as
+\noindent For a \gls{cfp} \gls{pf} in the fuel-matrix region of \(\epsilon_\text{cfp}\), \(1-\epsilon_\text{cfp}\) of the shell volume is matrix material. The thickness of the matrix layer along the inner surface, or \(\delta_i\), is chosen such that half of the matrix material is present in a layer along the inner surface. Likewise, the thickness of the matrix layer along the outer surface, or \(\delta_o\), is chosen such that half of the matrix material is present in a layer along the outer surface. In other words, the inner matrix layer thickness is calculated as
 
 \beq
 \frac{4}{3}\pi\left\lbrack\left(r_i+\delta_i\right)^3-r_i^3\right\rbrack=\frac{1}{2}\left(1-\epsilon_\text{cfp}\right)\volume\ ,
@@ -1339,7 +1339,7 @@ The number of pseudo-particles \(N_p\) is set as the only free parameter. First,
 \frac{4}{3}\pi\left\lbrack r_o^3-\left(r_o-\delta_o\right)^3\right\rbrack=\frac{1}{2}\left(1-\epsilon_\text{cfp}\right)\volume\ .
 \eeq
 
-\noindent A similar process is then performed for the materials in the \gls{cfp}, where the packing fraction of each material in the \gls{cfp} is used to determine the relative volume occupied in the segment.
+\noindent A similar process is then performed for the materials in the \gls{cfp}, where the \gls{pf} of each material in the \gls{cfp} is used to determine the relative volume occupied in the segment.
 
 The \gls{hl} method has no direct correlation to the actual geometry, and temperature solutions should only be used to predict integral metrics such as maximum and average material-wise temperatures. The \gls{hl} method also lacks the mathematical rigor of the approaches described previously. However, the \gls{hl} method is considered here for two reasons \mdash1)~the method is simple to implement and representative of the limitations in single-\gls{pde} fuel models used in many legacy \gls{th} tools; and 2)~the \gls{hl} method has recently been used in preliminary steady-state modeling of \gls{fcm} fuels \cite{brown_fcm} and transient analysis of the Mark-1 \gls{pbfhr} \cite{xin_wang_thesis} that is the subject of the modeling in Chapter \ref{sec:pbfhr}.
 
