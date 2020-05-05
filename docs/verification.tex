@@ -7,7 +7,9 @@ Efforts underway at \gls{inl} and \gls{ucb} focus on building a comprehensive so
 
 This chapter is organized as follows. Section \ref{sec:mms} discusses the use of the \gls{mms} to verify correct source implementation of all kernels and \glspl{bc}. The rigorous developer-imposed requirement to satisfy theoretical convergence rates for all source objects reflects the high caliber of the physics implementation, an essential first step before conducting more complex analyses.
 
-The focus of Chapters \ref{sec:sana} and \ref{sec:pbfhr} are on porous flows, but many the pebble region of most \glspl{pbr} is adjacent to an open plenum that falls under the purview of a \gls{th} core simulator such as Pronghorn. \gls{th} models of \glspl{pbr} must be able to accurately predict fluid mixing in the plenum region and the resulting thermal stresses on core structural materials. The macroscale models derived in Chapter \ref{sec:PhysicalModels} reduce to equations applicable to open flows by setting \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=\mu_f\), \(\alpha=0\), \(\kappa_f=k_f\), and \(\kappa_s=k_s\). To contrast with the porous simulations in Chapters \ref{sec:sana} and \ref{sec:pbfhr} and to verify the macroscale models for open flows such as plena, Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} demonstrate application of the porous macroscale models to open flows with thermal and flow characteristics relevant to \glspl{pbr}.
+The focus of Chapters \ref{sec:sana} and \ref{sec:pbfhr} are on porous flows, but many the pebble region of most \glspl{pbr} is adjacent to an open plenum that falls under the purview of a \gls{th} core simulator such as Pronghorn.
+% I don't understand the previous sentence or how the next sentence relates to it.
+\gls{th} models of \glspl{pbr} must be able to accurately predict fluid mixing in the plenum region and the resulting thermal stresses on core structural materials. The macroscale models derived in Chapter \ref{sec:PhysicalModels} reduce to equations applicable to open flows by setting \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=\mu_f\), \(\alpha=0\), \(\kappa_f=k_f\), and \(\kappa_s=k_s\). To contrast with the porous simulations in Chapters \ref{sec:sana} and \ref{sec:pbfhr} and to verify the macroscale models for open flows such as in plena, Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} demonstrate application of the porous macroscale models to open flows with thermal and flow characteristics relevant to \glspl{pbr}.
 
 Section \ref{sec:natural_convection} presents Pronghorn simulations of a numerical benchmark defined by de Vahl Davis and Jones for viscous natural convection flow in a square enclosure \cite{davis}. Many \gls{pbr} designs incorporate natural convection cooling in shutdown conditions, and this benchmark is an indication of the macroscale model's capabilities for modeling thermally-driven natural convection.
 
@@ -101,14 +103,15 @@ Pronghorn predictions of velocity, temperature, and Nusselt number are compared 
 \item Average Nusselt number \(\la Nu\ra\).
 \end{itemize}
 
-All locations, velocities, and temperatures are presented in nondimensional form by defining the following quantities,
+\noident All locations, velocities, and temperatures are presented in nondimensional form by defining the following quantities,
 
 \beq
 \label{eq:nondim_x}
 x^+=\frac{x}{L},\quad z^+=\frac{z}{L},\quad V_i^+=V_i\frac{\rho_f C_{p,f}L}{k_f},\quad T_f^+=\frac{T_f-T_C}{T_H-T_C}\ .
 \eeq
 
-\noindent A mesh refinement study based on a subset of the numeric information requested of benchmark participants is shown in Fig.\ \ref{fig:mr}. For each Rayleigh number, the same starting mesh is uniformly refined until the L$^1$ norm of the error in each of the scalar metrics is less than 5\%. A total of five meshes are considered, with errors computed relative to the to obtain all further results.
+A mesh refinement study based on a subset of the numeric information requested of benchmark participants is shown in Fig.\ \ref{fig:mr}. For each Rayleigh number, the same starting mesh is uniformly refined until the L$^1$ norm of the error in each of the scalar metrics is less than 5\%. A total of five meshes are considered, with errors computed relative to the to obtain all further results.
+% What do these results mean? Why do they matter? E.g., is it what you expected / consistent with theory / etc.
 
 \begin{figure}[!h]
 \centering
@@ -139,10 +142,12 @@ x^+=\frac{x}{L},\quad z^+=\frac{z}{L},\quad V_i^+=V_i\frac{\rho_f C_{p,f}L}{k_f}
 \caption{L$^1$ error norm of scalar benchmark metrics as a function of the mesh refinement.}
 \label{fig:mr}
 \end{figure}
+% what does mesh refinement level mean? That doesn't seem defined in the text so I'm not sure how to understanding quantitatively.
 
 Fig.\ \ref{fig:rb_results} shows Pronghorn predictions of fluid temperature, \(x\)-direction velocity, and \(z\)-direction velocity with contours in white for Rayleigh numbers of \(10^3\), \(10^4\), \(10^5\), and \(10^6\). For all cases, the decrease in density along the hot surface causes the fluid to rise along the left wall, while the increase in density along the cool surface causes the fluid to sink along the right wall. 
 
 As the Rayleigh number increases, the thickness of the thermal boundary layer on the hot and cool surfaces becomes thinner, the fluid motion becomes more chaotic, and the heat flux between the vertical cavity walls increases. For higher Rayleigh numbers, the largest \(z\)-velocity magnitudes occur in thinner regions near the vertical walls, while the increased momentum of the vertical flows causes the regions of large \(x\)-velocity magnitudes to move closer to the corners of the cavity. Excellent qualitative agreement in temperature and velocity is obtained with the reference solution \cite{davis_1983}.
+% is this shown somewhere? It seems like evidence of this agreement needs to be given. 
 
 \begin{figure}[!h]
 \centering
