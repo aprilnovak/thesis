@@ -7,16 +7,13 @@ Efforts underway at \gls{inl} and \gls{ucb} focus on building a comprehensive so
 
 This chapter is organized as follows. Section \ref{sec:mms} discusses the use of the \gls{mms} to verify correct source implementation of all kernels and \glspl{bc}. The rigorous developer-imposed requirement to satisfy theoretical convergence rates for all source objects reflects the high caliber of the physics implementation, an essential first step before conducting more complex analyses.
 
-The focus of Chapters \ref{sec:sana} and \ref{sec:pbfhr} are on porous flows, but many the pebble region of most \glspl{pbr} is adjacent to an open plenum that falls under the purview of a \gls{th} core simulator such as Pronghorn.
-% I don't understand the previous sentence or how the next sentence relates to it.
-\gls{th} models of \glspl{pbr} must be able to accurately predict fluid mixing in the plenum region and the resulting thermal stresses on core structural materials. The macroscale models derived in Chapter \ref{sec:PhysicalModels} reduce to equations applicable to open flows by setting \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=\mu_f\), \(\alpha=0\), \(\kappa_f=k_f\), and \(\kappa_s=k_s\). To contrast with the porous simulations in Chapters \ref{sec:sana} and \ref{sec:pbfhr} and to verify the macroscale models for open flows such as in plena, Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} demonstrate application of the porous macroscale models to open flows with thermal and flow characteristics relevant to \glspl{pbr}.
+The focus of Chapters \ref{sec:sana} and \ref{sec:pbfhr} are on porous flows, but the pebble region of most \glspl{pbr} is adjacent to a non-porous, open plenum that falls under the purview of a multidimensional \gls{th} core simulator such as Pronghorn. Therefore, \gls{th} models of \glspl{pbr} must be able to accurately predict fluid mixing in this plenum region and the resulting thermal stresses on core structural materials. The macroscale models derived in Chapter \ref{sec:PhysicalModels} reduce to equations applicable to open flows by setting \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=\mu_f\), \(\alpha=0\), \(\kappa_f=k_f\), and \(\kappa_s=k_s\). To contrast with the porous simulations in Chapters \ref{sec:sana} and \ref{sec:pbfhr} and to verify the macroscale models for open flows such as in plena, Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} demonstrate application of the porous macroscale models to open flows with thermal and flow characteristics relevant to \glspl{pbr}.
 
 Section \ref{sec:natural_convection} presents Pronghorn simulations of a numerical benchmark defined by de Vahl Davis and Jones for viscous natural convection flow in a square enclosure \cite{davis}. Many \gls{pbr} designs incorporate natural convection cooling in shutdown conditions, and this benchmark is an indication of the macroscale model's capabilities for modeling thermally-driven natural convection.
 
 Section \ref{sec:potential_flow} presents Pronghorn simulations of inviscid flow over a cylinder. Most gas-cooled \glspl{pbr} operate at high Reynolds number, making inviscid flow models a reasonable simplification over viscous models and their accompanying boundary layer meshing requirements. In the limit of zero Mach number, the compressibility effects in the macroscale model become insignificant, allowing a comparison to the analytic incompressible potential flow solution for inviscid cylinder flow. This analysis therefore serves as a demonstration of the macroscale model's capabilities for modeling inviscid flow and compressibility effects that may be quite significant in gas-cooled systems with large core temperature rises \cite{martineau}.
 
 All of the analyses in Chapters \ref{sec:sana} and \ref{sec:pbfhr} use the friction-dominated macroscale model in Eq. \eqref{eq:PrimitiveEqns} due to its more robust convergence properties and faster runtime relative to the Navier-Stokes model in Eq. \eqref{eq:PorousEquations}. The verification tests presented in Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} therefore provide a diversity to the macroscale model applications in this dissertation and demonstrate Pronghorn's capacity as a general-purpose flow solver.
-% However, the Navier-Stokes macroscale model in Eq. \eqref{eq:PorousEquations} is expected to be more accurate than the friction-dominated model for prototypical gas-cooled \gls{pbr} systems and coupled bed-plenum geometries due to the higher flowrates and more significant mixing effects.
 
 To enable reproduction of the simulations presented in this chapter, Appendix \ref{sec:reproducibility} lists all data and input files related to this chapter.
 
@@ -103,15 +100,14 @@ Pronghorn predictions of velocity, temperature, and Nusselt number are compared 
 \item Average Nusselt number \(\la Nu\ra\).
 \end{itemize}
 
-\noident All locations, velocities, and temperatures are presented in nondimensional form by defining the following quantities,
+All locations, velocities, and temperatures are presented in nondimensional form by defining the following quantities,
 
 \beq
 \label{eq:nondim_x}
 x^+=\frac{x}{L},\quad z^+=\frac{z}{L},\quad V_i^+=V_i\frac{\rho_f C_{p,f}L}{k_f},\quad T_f^+=\frac{T_f-T_C}{T_H-T_C}\ .
 \eeq
 
-A mesh refinement study based on a subset of the numeric information requested of benchmark participants is shown in Fig.\ \ref{fig:mr}. For each Rayleigh number, the same starting mesh is uniformly refined until the L$^1$ norm of the error in each of the scalar metrics is less than 5\%. A total of five meshes are considered, with errors computed relative to the to obtain all further results.
-% What do these results mean? Why do they matter? E.g., is it what you expected / consistent with theory / etc.
+\noindent A mesh refinement study based on a subset of the numeric information requested of benchmark participants is shown in Fig.\ \ref{fig:mr}. For each Rayleigh number, the same starting mesh is uniformly refined until the L$^1$ norm of the error in each of the scalar metrics is less than 5\%. Here, ``uniform refinement'' refers to a division of each quadrilateral element into four quadrilateral elements based on the original element's centroid. A total of five meshes are considered, with errors computed relative to the most refined mesh. A continuous decrease in error with mesh refinement demonstrates that the numerical implementation is convergent. While the \gls{mms} studies described in Section \ref{sec:mms} have already demonstrated these convergence properties, Fig. \ref{fig:mr} provides an example of the mesh refinement studies performed for physics simulations for which an analytic reference solution is not available. All results shown in the remainder of this section are obtained on the finest mesh considered during this refinement study.
 
 \begin{figure}[!h]
 \centering
@@ -142,12 +138,10 @@ A mesh refinement study based on a subset of the numeric information requested o
 \caption{L$^1$ error norm of scalar benchmark metrics as a function of the mesh refinement.}
 \label{fig:mr}
 \end{figure}
-% what does mesh refinement level mean? That doesn't seem defined in the text so I'm not sure how to understanding quantitatively.
 
 Fig.\ \ref{fig:rb_results} shows Pronghorn predictions of fluid temperature, \(x\)-direction velocity, and \(z\)-direction velocity with contours in white for Rayleigh numbers of \(10^3\), \(10^4\), \(10^5\), and \(10^6\). For all cases, the decrease in density along the hot surface causes the fluid to rise along the left wall, while the increase in density along the cool surface causes the fluid to sink along the right wall. 
 
-As the Rayleigh number increases, the thickness of the thermal boundary layer on the hot and cool surfaces becomes thinner, the fluid motion becomes more chaotic, and the heat flux between the vertical cavity walls increases. For higher Rayleigh numbers, the largest \(z\)-velocity magnitudes occur in thinner regions near the vertical walls, while the increased momentum of the vertical flows causes the regions of large \(x\)-velocity magnitudes to move closer to the corners of the cavity. Excellent qualitative agreement in temperature and velocity is obtained with the reference solution \cite{davis_1983}.
-% is this shown somewhere? It seems like evidence of this agreement needs to be given. 
+As the Rayleigh number increases, the thickness of the thermal boundary layer on the hot and cool surfaces becomes thinner, the fluid motion becomes more chaotic, and the heat flux between the vertical cavity walls increases. For higher Rayleigh numbers, the largest \(z\)-velocity magnitudes occur in thinner regions near the vertical walls, while the increased momentum of the vertical flows causes the regions of large \(x\)-velocity magnitudes to move closer to the corners of the cavity.
 
 \begin{figure}[!h]
 \centering
@@ -300,7 +294,7 @@ The potential flow equations are a simplification to the Euler model for irrotat
 \nabla^2\phi=0\ .
 \eeq
 
-For flow past a 2-D cylinder, an analytic solution to Eq. \eqref{eq:LaplacePhi} is formed by superimposing the solution for uniform inflow with the solution for a doublet, a combination of a source and sink of equal strength separated by a finite distance. A derivation of this solution is available in many introductory fluid mechanics texts \cite{munson}. For a cylinder centered on the origin, the \(x\)- and \(y\)-velocity components are
+\noindent For flow past a 2-D cylinder, an analytic solution to Eq. \eqref{eq:LaplacePhi} is formed by superimposing the solution for uniform inflow with the solution for a doublet, a combination of a source and sink of equal strength separated by a finite distance. A derivation of this solution is available in many introductory fluid mechanics texts \cite{munson}. For a cylinder centered on the origin, the \(x\)- and \(y\)-velocity components are
 
 \beq
 \label{eq:V1Analytic}
@@ -406,9 +400,7 @@ Given the computing resources available for routine design and analysis, the het
 
 Two multiscale models were introduced in Chapter \ref{sec:PhysicalModels}\mdash the \gls{hsd} model and the \gls{hl} model. This section applies the \gls{hsd} model to a Cartesian domain consisting of nine \glspl{cfp} in a matrix and provides a comparison against a fully-resolved heat conduction solution of the same geometry. The objectives of this analysis are to 1)~verify the \gls{hsd} method for a simple, but representative, domain; 2)~explain the microscale ``translation'' process in Eq. \eqref{eq:MultiscaleSolution}; and 3)~address the accuracy of the averaging approximation in Eq. \eqref{eq:AvgT}. Because the \gls{mms} tests described in Section \ref{sec:mms} verify correct implementation of the diffusion kernels needed for the multi-layer \gls{hl} method, no such dedicated verification is required for the \gls{hl} method, which is simply a multi-layer conduction model.
 
-For this demonstration problem, each \gls{cfp} is composed of five material layers with a uniform heat source of \(2\times10^8\) \si{\watt\per\cubic\meter} in the center kernel. While this power density is higher than that used in most \glspl{pbr}, the larger magnitude is selected to accentuate the differences between the meso and micro scale solutions. The \glspl{cfp} occupy 40\% by volume of the matrix material. Fig.\ \ref{fig:nine_particle_mesha} shows the mesh, colored by material ID, used to obtain the reference temperature solution. The \gls{cfp} layer thicknesses are the same as those in the \gls{pbfhr} design in Table \ref{table:pebble_props} and are typical of most \gls{triso} particle designs. Thermal properties in dimensionally consistent units are shown for each material in Fig.\ \ref{fig:nine_particle_mesha}. Thermal \glspl{bc} are selected in an arbitrary, but non-uniform, manner. 
-% Again, I'm not sure arbitrary is the right word. How did you choose the BCs exactly? These numbers have some sort of meaning. 
-The top, left, and right boundaries are set to 1100\si{\celsius}, 1100\si{\celsius}, and 1150\si{\celsius}, respectively, while the bottom boundary is insulated.
+For this demonstration problem, each \gls{cfp} is composed of five material layers with a uniform heat source of \(2\times10^8\) \si{\watt\per\cubic\meter} in the center kernel. While this power density is higher than that used in most \glspl{pbr}, the larger magnitude is selected to accentuate the differences between the meso and micro scale solutions. The \glspl{cfp} occupy 40\% by volume of the matrix material. Fig.\ \ref{fig:nine_particle_mesha} shows the mesh, colored by material ID, used to obtain the reference temperature solution. The \gls{cfp} layer thicknesses are the same as those in the \gls{pbfhr} design in Table \ref{table:pebble_props} and are typical of most \gls{triso} particle designs. Thermal properties in dimensionally consistent units are shown for each material in Fig.\ \ref{fig:nine_particle_mesha}. Thermal \glspl{bc} are selected to have a significant thermal gradient over the domain. The top, left, and right boundaries are set to 1100\si{\celsius}, 1100\si{\celsius}, and 1150\si{\celsius}, respectively, while the bottom boundary is insulated.
 
 \begin{figure}[!h]
 \centering
@@ -469,7 +461,6 @@ The microscale domain, shown in Fig.\ \ref{fig:micro_a}, is a 1-D representation
 \end{subfigure}
 \caption{\gls{hsd} microscale (a) mesh and (b) solution.}
 \end{figure}
-% is there a way to indicate the position on side a or else add lines showing the material divisions on side b? It's not completely clear how things line up (we have to assume now)
 
 Fig.\ \ref{fig:MMD_example} shows the reference and \gls{hsd} solutions along a horizontal line passing through the centers of the middle row of particles. The low-conductivity buffer results in significantly higher kernel temperatures than in surrounding materials. The bottom section of Fig.\ \ref{fig:MMD_example} shows the microscale solution translated to the location of each of the three particles. According to Eq. \eqref{eq:MultiscaleSolution}, the \gls{hsd} multiscale approximation is the sum of the long-wavelength mesoscale solution and the translated microscale solutions, and is shown as a red dashed line in Fig.\ \ref{fig:MMD_example}. The \gls{hsd} solution agrees very well with the reference temperature solution; the only source of error in the \gls{hsd} method is the homogenization of the mesoscale properties.
 
