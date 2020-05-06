@@ -594,7 +594,7 @@ The \gls{fe} discretization described in Section \ref{sec:fem} converts the stro
 
 This distinction between imposed and implicit \glspl{bc} is important for understanding the \gls{bc} requirements. On each boundary, a Dirichlet or Neumann condition must be applied to each conservation equation simply due to the nature of the boundary integrals in the \gls{fe} weak form. In \(n_{sd}\) spatial dimensions, this results in \(n_{sd}+2\) conditions on each boundary. The eigenvalue analysis then provides information on what subset of these conditions must be imposed by the modeler, rather than implicit. The eigenvalue analysis for inlet and no-penetration boundaries shows the \(n_{sd}+1\) conditions corresponding to positive eigenvalues must be of Dirichlet or specified Neumann type, while the remaining condition corresponding to the negative eigenvalue must be of implicit Neumann type. On outlet boundaries, one condition must be of Dirichlet or specified Neumann type, while the remaining \(n_{sd}+1\) conditions must be of implicit Neumann type. 
 
-The remainder of this section describes Dirichlet and Neumann \glspl{bc} for the fluid conservation equations subject to these constraints. Neumann \glspl{bc} are additive within the numerical implementation, so are discussed individually. On inlet boundaries, temperature and either velocity or momentum are specified. Velocity and momentum may be specified in either an interstitial or superficial basis. On outlet boundaries, pressure is specified. On solid walls and \(r\)-\(z\) symmetry boundaries, mass conservation requires the no-penetration condition. On solid walls, the tangential velocity component may optionally be set to zero with what is referred to as a ``no-slip'' condition. On solid boundaries, the fluid temperature or heat flux may be specified. 
+The remainder of this section describes Dirichlet and Neumann \glspl{bc} for the fluid conservation equations subject to these constraints. Neumann \glspl{bc} are additive within the numerical implementation, so are discussed individually. On inlet boundaries, temperature and either velocity or momentum are specified. Velocity and momentum may be specified in either an interstitial or superficial basis. On outlet boundaries, pressure is specified. On solid walls and \(r\)-\(z\) symmetry boundaries, mass conservation requires the no-penetration condition. On solid walls, the tangential velocity component may optionally be set to zero with what is referred to as a ``no-slip'' condition. On solid boundaries, the solid temperature or heat flux may be specified. 
 
 The boundary is the union of the inlet \(\Gamma_\text{in}\), outlet \(\Gamma_\text{out}\), wall \(\Gamma_\text{wall}\), and $r$-$z$ symmetry axis \(\Gamma_\text{$r$-$z$ symmetry}\),
 
@@ -611,13 +611,13 @@ The boundary is the union of the inlet \(\Gamma_\text{in}\), outlet \(\Gamma_\te
 \Gamma_\text{in, interstitial momentum}\cup\Gamma_\text{in, superficial momentum}\ ,
 \eeqa
 
-\noindent where the intersection of the \(j\)-th term on the \gls{rhs} of Eq. \eqref{eq:q7} with the \(k\)-th term on the \gls{rhs} of Eq. \eqref{eq:q7} is the empty set for \(j\neq k\). The solid wall boundary is the union of the slip and no-slip boundaries, 
+\noindent where the intersection of the \(j\)-th term on the \gls{rhs} of Eq. \eqref{eq:q7} with the \(k\)-th term on the \gls{rhs} of Eq. \eqref{eq:q7} is the empty set for \(j\neq k\). The wall boundary is the union of the slip and no-slip boundaries, 
 
 \beq
 \Gamma_\text{wall}\equiv\Gamma_\text{wall, slip}\cup\Gamma_\text{wall, no-slip}\ ,
 \eeq
 
-\noindent where \(\Gamma_\text{wall, slip}\cap\Gamma_\text{wall, no-slip}=\emptyset\). The solid wall boundary is also the union of the specified temperature and heat flux boundaries,
+\noindent where \(\Gamma_\text{wall, slip}\cap\Gamma_\text{wall, no-slip}=\emptyset\). The wall boundary is also the union of the specified temperature and heat flux boundaries,
 
 \beq
 \Gamma_\text{wall}\equiv\Gamma_\text{wall, temperature}\cup\Gamma_\text{wall, heat flux}\ ,
@@ -634,11 +634,11 @@ For the mass conservation equation in Eqs. \eqref{eq:PMass} and \eqref{eq:PMass2
 P=P_i\text{ for }\Gamma\in\Gamma_\text{out}\ ,
 \eeq
 
-\noindent while the outlet condition for density as the nonlinear variable is
+\noindent while the outlet condition for density as the nonlinear variable is a fully-implicit condition with pressure weakly imposed in the momentum \glspl{bc},
 
 \beq
 \label{eq:MassOut2}
-\rho_f=\rho_f(P_i,T_f)\text{ for }\Gamma\in\Gamma_\text{out}\ .
+\epsilon\rho_f\vec{V}\cdot\hat{n}=\epsilon\rho_f\vec{V}\cdot\hat{n}\text{ for }\Gamma\in\Gamma_\text{out}\ .
 \eeq
 
 \noindent The Neumann-type \glspl{bc} for the advective flux integral for the remaining boundaries are
@@ -760,7 +760,7 @@ T_f=T_{f,i}\text{ for }\Gamma\in\Gamma_\text{in}\cup\Gamma_\text{wall, temperatu
 
 \beq
 \label{eq:q5}
-\rho_fE_f=\rho_f\left\lbrack e_f(P,T_{f,i})+\frac{1}{2}\vec{V}\cdot\vec{V}\right\rbrack\text{ for }\Gamma\in\Gamma_\text{in}\cup\Gamma_\text{wall, temperature}\ .
+\rho_fE_f=\rho_f(P,T_{f,i})\left\lbrack e_f(P,T_{f,i})+\frac{1}{2}\vec{V}\cdot\vec{V}\right\rbrack\text{ for }\Gamma\in\Gamma_\text{in}\cup\Gamma_\text{wall, temperature}\ .
 \eeq
 
 \noindent For brevity, Eq. \eqref{eq:q5} is written in terms of the implicit values of velocity at the inlet rather than the many combinations of specified velocity and momentum as represented by Eqs. \eqref{eq:q6}--\eqref{eq:q7}. Because Dirichlet \glspl{bc} are strongly imposed within the \gls{fe} discretization, no approximation is made in this notational simplification. 
@@ -770,9 +770,9 @@ No advective flux integral appears in the weak form of Eq. \eqref{eq:PEnergy2}. 
 \beq
 \epsilon\rho_fH_f\vec{V}\cdot\hat{n}=
 \begin{dcases}
-0 & \Gamma\in\Gamma_\text{wall, heat flux}\\
+0 & \Gamma\in\Gamma_\text{wall}\\
 0 & \Gamma\in\Gamma_\text{$r$-$z$ symmetry}\\
-\epsilon\left\lbrack\rho_f\left\{ e_f(P_i,T_f)+\frac{1}{2}\vec{V}\cdot\vec{V}\right\rbrack+P_i\right\}\vec{V}\cdot\hat{n} & \Gamma\in\Gamma_\text{out}
+\epsilon\left\{\rho_f\left\lbrack e_f(P_i,T_f)+\frac{1}{2}\vec{V}\cdot\vec{V}\right\rbrack+P_i\right\}\vec{V}\cdot\hat{n} & \Gamma\in\Gamma_\text{out}
 \end{dcases}\ .
 \eeq
 
