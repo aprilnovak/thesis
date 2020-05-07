@@ -246,23 +246,32 @@ Fig.\ \ref{fig:pebble_octant_mesh} shows a close-up view of a portion of the tet
 \label{fig:pebble_octant_mesh}
 \end{figure}
 
-For illustration, the reference temperature solution at \(20\)\% \gls{pf} is shown in Fig.\ \ref{fig:octant1} along a radial plane and in Fig.\ \ref{fig:octant2} on the surfaces of the particles with the core and shell shown for context. Different color scales are used to make results clearer. The absence of a heat source in the central graphite core results in a nearly uniform temperature distribution in this region, and the majority of the radial temperature drop occurs over the fuel-matrix region. Ten other simulations at different \glspl{pf} were performed, but for brevity not shown here.
+For illustration, Fig.\ \ref{fig:f1} shows the reference fuel kernel temperature solution for 15\% particle \gls{pf}. Temperatures in the matrix and all \gls{cfp} layers exterior to the central fissile kernel are not shown, while the core and shell regions are shown as gray blocks for scale. An inset shows the tetrahedral mesh in the \glspl{cfp}, where the color represents the material ID. Because the heat source is uniform and localized to the kernel, kernel temperatures are highest in the particle center.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{figs/fhr_fuel1.png}
+\caption{Reference temperature solution in the kernels for 15\% \gls{pf} with the shell and core shown as gray blocks.}
+\label{fig:f1}
+\end{figure}
+
+To provide a second perspective at a different \gls{pf}, the reference temperature solution at \(20\)\% \gls{pf} is shown in Fig.\ \ref{fig:octant1} along a radial plane and in Fig.\ \ref{fig:octant2} on the surfaces of the particles with the core and shell shown for context. Different color scales are used to make results clearer. The absence of a heat source in the central graphite core results in a nearly uniform temperature distribution in this region, and the majority of the radial temperature drop occurs over the fuel-matrix region. Ten other simulations at different \glspl{pf} were performed, but for brevity not shown here.
 
 \begin{figure}[!htb]
 \centering
 \begin{subfigure}{.475\textwidth}
   \centering
-  \includegraphics[height=5.3cm]{figs/pbfhr_16_slice_pf20.png}
+  \includegraphics[width=\linewidth]{figs/fhr_fuel3.png}
   \caption{Along plane parallel to \(x\) axis}
   \label{fig:octant1}
 \end{subfigure}
 \begin{subfigure}{.475\textwidth}
   \centering
-  \includegraphics[height=5.3cm]{figs/pbfhr_16_surfaces_pf20.png}
+  \includegraphics[width=\linewidth]{figs/fhr_fuel2.png}
   \caption{Particle surfaces with core and shell}
   \label{fig:octant2}
 \end{subfigure}
-\caption{Reference temperature solution for \(20\)\% \gls{pf} (a) along a radial plane and (b) on the surfaces of the particles, with the shell shown for context. Different temperature scales are used to enhance clarity.}
+\caption{Reference temperature solution for \(20\)\% \gls{pf} (a) along a radial plane and (b) on the surfaces of the particles, with the shell and core shown for context. Different temperature scales are used to enhance clarity.}
 \label{fig:pebble_octant_ref}
 \end{figure}
 
