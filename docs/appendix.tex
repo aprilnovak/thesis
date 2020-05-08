@@ -11,7 +11,7 @@ The key requirement for the use of these averaging identities is that the spatia
 \la\la\Phi\ra\ra\equiv\la\Phi\ra\ .
 \eeq
 
-\noindent Eq. \eqref{eq:AverageofAverage} also implies that 
+\noindent Eq.\ \eqref{eq:AverageofAverage} also implies that 
 
 \beq
 \label{eq:AverageofAverage22}
@@ -25,7 +25,7 @@ The key requirement for the use of these averaging identities is that the spatia
 \la\Phi\ra=\la\Phi\ra_c+x_i\left(\frac{\partial\la\Phi\ra}{\partial x_i}\right)_c+\frac{x_ix_j}{2}\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c+\mathcal{O}(x_ix_jx_k)\ ,
 \eeq
 
-\noindent where the ``c'' subscript indicates the value at the centroid. Taking the average of Eq. \eqref{eq:FF1} gives
+\noindent where the ``c'' subscript indicates the value at the centroid. Taking the average of Eq.\ \eqref{eq:FF1} gives
 
 \beqa
 \la\la\Phi\ra\ra=&\ \la\Phi\ra_c+\left(\frac{\partial\la\Phi\ra}{\partial x_i}\right)_c\frac{1}{\volume}\int_{\volume}x_id\volume +\frac{1}{2}\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c\frac{1}{\volume}\int_{\volume}x_ix_jd\volume +\mathcal{O}(x_ix_jx_k)\\
@@ -46,7 +46,7 @@ A number of identities are now derived to address specific terms that arise in t
 \end{align}
 \end{subequations}
 
-\noindent The presence of the phase function \(f_k\) indicates that \(\Phi_k\) and \(\hat{\Phi}_k\) both are zero in the non-\(k\) phases, which is why Eq. \eqref{eq:SumMeanPlusFluctuationb} is also valid. By switching orders of integration, it is shown that the extrinsic average of an intrinsic average equals the intrinsic average,
+\noindent The presence of the phase function \(f_k\) indicates that \(\Phi_k\) and \(\hat{\Phi}_k\) both are zero in the non-\(k\) phases, which is why Eq.\ \eqref{eq:SumMeanPlusFluctuationb} is also valid. By switching orders of integration, it is shown that the extrinsic average of an intrinsic average equals the intrinsic average,
 
 \beqa
 \label{eq:SwapDerivs}
@@ -71,14 +71,14 @@ A number of identities are now derived to address specific terms that arise in t
 =&\ \int_{S(s)}\Phi\frac{d\vec{x}}{ds}\cdot\hat{n}dS\ ,
 \eeqa
 
-\noindent where the velocity of the surface \(\vec{V}=\partial\vec{x}/\partial t\) was also transformed by substituting arc length for time. \(\Phi\) only depends on arc length implicitly through its dependence on the spatial coordinate, so the first term on the \gls{rhs} of Eq. \eqref{eq:GTT1} is zero. Conservation of mass at stationary, impermeable, boundaries requires the nonzero component of \(\partial\vec{x}/\partial s\) be perpendicular to the unit normal vector at the solid-fluid interface, giving a zero dot product. Hence, the area \(S(s)\) in Eq. \eqref{eq:GTT1} can be replaced by the total area minus the solid-fluid interface area \(S_i(s)\), or
+\noindent where the velocity of the surface \(\vec{V}=\partial\vec{x}/\partial t\) was also transformed by substituting arc length for time. \(\Phi\) only depends on arc length implicitly through its dependence on the spatial coordinate, so the first term on the \gls{rhs} of Eq.\ \eqref{eq:GTT1} is zero. Conservation of mass at stationary, impermeable, boundaries requires the nonzero component of \(\partial\vec{x}/\partial s\) be perpendicular to the unit normal vector at the solid-fluid interface, giving a zero dot product. Hence, the area \(S(s)\) in Eq.\ \eqref{eq:GTT1} can be replaced by the total area minus the solid-fluid interface area \(S_i(s)\), or
 
 \beq
 \label{eq:GTT2}
 S(s)\equiv S_e(s)+S_i(s)\ ,
 \eeq
 
-\noindent where \(S_e(s)\) is the portion of the \gls{rev} surface area that it not a phase interface. Rewriting Eq. \eqref{eq:GTT1} using Eq. \eqref{eq:GTT2} gives
+\noindent where \(S_e(s)\) is the portion of the \gls{rev} surface area that it not a phase interface. Rewriting Eq.\ \eqref{eq:GTT1} using Eq.\ \eqref{eq:GTT2} gives
 
 \beq
 \label{eq:GTT3}
@@ -100,14 +100,14 @@ S(s)\equiv S_e(s)+S_i(s)\ ,
 =&\ \nabla\cdot\frac{d\vec{x}}{ds}\ .
 \eeqa
 
-\noindent Using Eq. \eqref{eq:PtonSurface} and \eqref{eq:DirectionalDeriv} in Eq. \eqref{eq:GTT3} gives
+\noindent Using Eq.\ \eqref{eq:PtonSurface} and \eqref{eq:DirectionalDeriv} in Eq.\ \eqref{eq:GTT3} gives
 
 \beq
 \label{eq:GTT4}
 \frac{d\vec{x}_0}{ds}\cdot\left(\nabla\int_{\volume(s)}\Phi d\volume-\int_{S_e(s)}\Phi\hat{n}dS\right)=\int_{S_e(s)}\Phi\frac{d\vec{p}}{ds}\cdot\hat{n}dS\ ,
 \eeq
 
-\noindent where \(d\vec{x}_0/ds\) is independent of the area integration variable for a fixed value of \(s\). As long as \(\volume(s)\) is translated along the curve without rotation, then any differential change in \(\vec{p}\) is parallel to the surface, and hence the \gls{rhs} in Eq. \eqref{eq:GTT4} is zero. Then, because the vector \(\vec{x}_0\) was arbitrary, the expression must hold for any vector \(\vec{x}_0\), which requires
+\noindent where \(d\vec{x}_0/ds\) is independent of the area integration variable for a fixed value of \(s\). As long as \(\volume(s)\) is translated along the curve without rotation, then any differential change in \(\vec{p}\) is parallel to the surface, and hence the \gls{rhs} in Eq.\ \eqref{eq:GTT4} is zero. Then, because the vector \(\vec{x}_0\) was arbitrary, the expression must hold for any vector \(\vec{x}_0\), which requires
 
 \beqa
 \label{eq:Slattery}
@@ -122,7 +122,7 @@ S(s)\equiv S_e(s)+S_i(s)\ ,
 \int_{\volume(s)}\nabla\Phi d\volume=\int_{S_e(s)}\Phi\hat{n}dS+\int_{S_i(s)}\Phi\hat{n}dS\ .
 \eeq
 
-\noindent Finally, dividing Eq. \eqref{eq:Slattery} by \(\volume\) gives the relation between the average of a gradient and the gradient of the average, 
+\noindent Finally, dividing Eq.\ \eqref{eq:Slattery} by \(\volume\) gives the relation between the average of a gradient and the gradient of the average, 
 
 \begin{subequations}
 \label{eq:AvgGrdGrdAvg}
@@ -134,7 +134,7 @@ S(s)\equiv S_e(s)+S_i(s)\ ,
 \end{align}
 \end{subequations}
 
-\noindent Equality between the average of a gradient and the gradient of an average is offset by the integral of the field over the phase interfacial area \cite{kaviany}. Extensions of Eq. \eqref{eq:AvgGrdGrdAvg} to vectors convert gradients to divergences. 
+\noindent Equality between the average of a gradient and the gradient of an average is offset by the integral of the field over the phase interfacial area \cite{kaviany}. Extensions of Eq.\ \eqref{eq:AvgGrdGrdAvg} to vectors convert gradients to divergences. 
 
 Now, in order to relate the averages of time derivatives to the time derivatives of averages, divide each term in the general transport theorem by \(\volume\) and use the identities derived previously to give
 
@@ -144,7 +144,7 @@ Now, in order to relate the averages of time derivatives to the time derivatives
 \frac{d\la\Phi_k\ra}{dt}=&\ \left\la\frac{\partial\Phi_k}{\partial t}\right\ra+\frac{1}{\volume}\int_{S_i}\Phi_k\vec{w}_k\cdot\hat{n}_kdS\ ,
 \eeqa
 
-\noindent where \(\vec{w}\) is the velocity of the phase interface \cite{gray}. Finally, several relations between averages of products are needed to average nonlinear advective terms. From Eq. \eqref{eq:PorosityAvg}, an average of the product \(\vec{V}_k\Phi_k\) over \(\volume\) can be related to an average over the phase volume \(\volume_k\), giving
+\noindent where \(\vec{w}\) is the velocity of the phase interface \cite{gray}. Finally, several relations between averages of products are needed to average nonlinear advective terms. From Eq.\ \eqref{eq:PorosityAvg}, an average of the product \(\vec{V}_k\Phi_k\) over \(\volume\) can be related to an average over the phase volume \(\volume_k\), giving
 
 \begin{subequations}
 \label{eq:Dispersion}
@@ -155,7 +155,7 @@ Now, in order to relate the averages of time derivatives to the time derivatives
 \end{align}
 \end{subequations}
 
-\noindent where Eq. \eqref{eq:SumMeanPlusFluctuation} was substituted for both \(\vec{V}_k\) and \(\Phi_k\) and Eq. \eqref{eq:PorosityAvg} was used to rewrite \(\epsilon_k\la\hat{\vec{V}}_k\hat{\Phi}_k\ra^k\). For the case of three averaged terms, represented in generic notation \(a_kb_kc_k\),
+\noindent where Eq.\ \eqref{eq:SumMeanPlusFluctuation} was substituted for both \(\vec{V}_k\) and \(\Phi_k\) and Eq.\ \eqref{eq:PorosityAvg} was used to rewrite \(\epsilon_k\la\hat{\vec{V}}_k\hat{\Phi}_k\ra^k\). For the case of three averaged terms, represented in generic notation \(a_kb_kc_k\),
 
 \beqa
 \label{eq:Dispersion3}
@@ -236,7 +236,7 @@ C_{p,S}=&\ 880\ .
 \end{align}
 \end{subequations}
 
-%Eq. \eqref{eq:k_al2o3} is valid for \(293\text{ K}\leq T_S\leq 1579\) K. 
+%Eq.\ \eqref{eq:k_al2o3} is valid for \(293\text{ K}\leq T_S\leq 1579\) K. 
 
 \subsubsection*{Electric graphite}
 Sigri Al 2-500 electric graphite material properties are given as \cite{SANA,butland}
@@ -253,7 +253,7 @@ C_{p,S} =&\ 4184\left(0.5421+a_1T_S+\frac{a_2}{T_S}+\frac{a_3}{T_S^2}+\frac{a_4}
 
 \noindent where \(a_1=-2.4267\times10^{-6}\), \(a_2=-90.273\), \(a_3=-43449\), \(a_4=1.5931\times10^7\), and \(a_5=-1.4369\times10^9\).
 
-%Eq. \eqref{eq:k_eg} is valid for \(373\textrm{ K}\leq T_s\leq 1273\) K. 
+%Eq.\ \eqref{eq:k_eg} is valid for \(373\textrm{ K}\leq T_s\leq 1273\) K. 
 
 \subsubsection*{Fire Brick}
 Type C-22Z fire brick material properties are given as \cite{firebrick,firebrick2}
@@ -283,7 +283,7 @@ C_{p,S} =&\ 4184\left(0.5421+a_1T_S+\frac{a_2}{T_S}+\frac{a_3}{T_S^2}+\frac{a_4}
 
 \noindent where \(a_1=-2.4267\times10^{-6}\), \(a_2=-90.273\), \(a_3=-43449\), \(a_4=1.5931\times10^7\), and \(a_5=-1.4369\times10^9\). The graphite reflector properties are assumed given by these matrix graphite properties.
 
-%Eq. \eqref{eq:k_mg} is valid for \(292\text{ K}\leq T_s\leq 1574\) K. 
+%Eq.\ \eqref{eq:k_mg} is valid for \(292\text{ K}\leq T_s\leq 1574\) K. 
 
 \subsubsection*{Porous graphite}
 The material properties for porous graphite, or the low-density buffer layer in \glspl{cfp}, are assumed constant based on experimental data and values used elsewhere \cite{sun,tecdoc1694,xin_wang_thesis,stainsby,parfume,hales,rochais,lopez_honorato} as
@@ -336,7 +336,7 @@ C_{p,S} =&\ 925.65+0.3772T_S-7.9259\times10^{-5}T_S^2-3.1946\times10^7T_S^{-2}\ 
 \end{subequations}
 
 \subsubsection*{Uranium oxycarbide}
-Due to a lack of other closures, uranium oxycarbide properties are approximated as the \gls{uo2} properties in Eq. \eqref{eq:uo2}.
+Due to a lack of other closures, uranium oxycarbide properties are approximated as the \gls{uo2} properties in Eq.\ \eqref{eq:uo2}.
 
 \subsubsection*{Uranium dioxide (UO$_2$)}
 \gls{uo2} material properties are given as
@@ -359,9 +359,9 @@ C_{p,S}=&\ \begin{dcases} \frac{C_1a_1^2e^\frac{a_1}{T_S}}{\left\lbrack T_S\left
 \chaptermark{Ideal Gas SUPG Stabilization}
 \label{sec:supg_app}
 
-This section presents the inviscid flux Jacobian matrices \(\textbf{A}_i\) defined in Eq. \eqref{eq:IFJM} and the additional \gls{supg} integral terms in Eq. \eqref{eq:supg1} for the conservation equations in Eq. \eqref{eq:NSConcise} for the ideal gas \gls{eos}. This example helps build the connection between the generic, multi-dimensional, coupled equation system \gls{supg} method given in Eq. \eqref{eq:supg1} with the single-equation, 1-D, form in Eq. \eqref{eq:psiStar}.
+This section presents the inviscid flux Jacobian matrices \(\textbf{A}_i\) defined in Eq.\ \eqref{eq:IFJM} and the additional \gls{supg} integral terms in Eq.\ \eqref{eq:supg1} for the conservation equations in Eq.\ \eqref{eq:NSConcise} for the ideal gas \gls{eos}. This example helps build the connection between the generic, multi-dimensional, coupled equation system \gls{supg} method given in Eq.\ \eqref{eq:supg1} with the single-equation, 1-D, form in Eq.\ \eqref{eq:psiStar}.
 
-The inviscid flux Jacobian matrices defined in Eq. \eqref{eq:IFJM} with the ideal gas \gls{eos} are
+The inviscid flux Jacobian matrices defined in Eq.\ \eqref{eq:IFJM} with the ideal gas \gls{eos} are
 
 \beq
 \textbf{A}_1=
@@ -410,7 +410,7 @@ V_3\left\lbrack\frac{\gamma-1}{2}\|\vec{V}\|^2-H_f\right\rbrack & (1-\gamma)V_1V
 C_v\equiv\left(\frac{\partial e}{\partial T}\right)_v\ .
 \eeq
 
-\noindent Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=0\) gives the following additional term for the mass conservation equation,
+\noindent Carrying through the algebra in Eq.\ \eqref{eq:supg2} for \(j=0\) gives the following additional term for the mass conservation equation,
 
 \beqa
 \label{eq:MassStabilization}
@@ -419,7 +419,7 @@ C_v\equiv\left(\frac{\partial e}{\partial T}\right)_v\ .
 
 \noindent The mass conservation equation is stabilized by a term proportional to the dot product of the gradient of the mass equation weight function with the momentum equation quasi-linear strong residuals. 
 
-Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=1,2,3\) gives the following additional term for the \(j\)-th momentum equation,
+Carrying through the algebra in Eq.\ \eqref{eq:supg2} for \(j=1,2,3\) gives the following additional term for the \(j\)-th momentum equation,
 
 \beqa
 &\int_{\Omega}\epsilon\tau_u\left\lbrack(1-\gamma)\vec{V}\cdot\vec{\mathscr{R}}_u\frac{\partial W_j}{\partial x_j}+\vec{V}\cdot\nabla W_j
@@ -429,7 +429,7 @@ Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=1,2,3\) gives the f
 
 \noindent where summation over \(j\) is not implied, \(\mathscr{R}_c\) is the continuity equation quasi-linear strong residual, and \(\mathscr{R}_e\) is the energy equation quasi-linear strong residual. The momentum equations are therefore stabilized by terms proportional to the continuity, momentum, and energy equation quasi-linear strong residuals. 
 
-Carrying through the algebra in Eq. \eqref{eq:supg2} for \(j=4\) gives the following additional term for the energy conservation equation,
+Carrying through the algebra in Eq.\ \eqref{eq:supg2} for \(j=4\) gives the following additional term for the energy conservation equation,
 
 \beqa
 \label{eq:EStab}

@@ -13,7 +13,7 @@ Section \ref{sec:natural_convection} presents Pronghorn simulations of a numeric
 
 Section \ref{sec:potential_flow} presents Pronghorn simulations of inviscid flow over a cylinder. Most gas-cooled \glspl{pbr} operate at high Reynolds number, making inviscid flow models a reasonable simplification over viscous models and their accompanying boundary layer meshing requirements. In the limit of zero Mach number, the compressibility effects in the macroscale model become insignificant, allowing a comparison to the analytic incompressible potential flow solution for inviscid cylinder flow. This analysis therefore serves as a demonstration of the macroscale model's capabilities for modeling inviscid flow and compressibility effects that may be quite significant in gas-cooled systems with large core temperature rises \cite{martineau}.
 
-All of the analyses in Chapters \ref{sec:sana} and \ref{sec:pbfhr} use the friction-dominated macroscale model in Eq. \eqref{eq:PrimitiveEqns} due to its more robust convergence properties and faster runtime relative to the Navier-Stokes model in Eq. \eqref{eq:PorousEquations}. The verification tests presented in Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} therefore provide a diversity to the macroscale model applications in this dissertation and demonstrate Pronghorn's capacity as a general-purpose flow solver.
+All of the analyses in Chapters \ref{sec:sana} and \ref{sec:pbfhr} use the friction-dominated macroscale model in Eq.\ \eqref{eq:PrimitiveEqns} due to its more robust convergence properties and faster runtime relative to the Navier-Stokes model in Eq.\ \eqref{eq:PorousEquations}. The verification tests presented in Sections \ref{sec:natural_convection} and \ref{sec:potential_flow} therefore provide a diversity to the macroscale model applications in this dissertation and demonstrate Pronghorn's capacity as a general-purpose flow solver.
 
 To enable reproduction of the simulations presented in this chapter, Appendix \ref{sec:reproducibility} lists all data and input files related to this chapter.
 
@@ -42,7 +42,7 @@ A user-specified solution to a particular governing equation is ``manufactured''
 -\nabla^2\Phi=-\nabla^2f(\vec{x},t)
 \end{equation}
 
-\noindent with the appropriate \glspl{bc} on \(\Phi\) will return the manufactured solution in Eq. \eqref{eq:mms_soln} provided the source implementation of the diffusion kernel is correct. Successively refining the mesh and/or time resolution can then be used to estimate convergence rates for various \gls{fe} basis function orders and \gls{fd} time integration schemes.
+\noindent with the appropriate \glspl{bc} on \(\Phi\) will return the manufactured solution in Eq.\ \eqref{eq:mms_soln} provided the source implementation of the diffusion kernel is correct. Successively refining the mesh and/or time resolution can then be used to estimate convergence rates for various \gls{fe} basis function orders and \gls{fd} time integration schemes.
 
 To verify spatial convergence, the L$^2$ norm relative to the manufactured solution is computed on a series of uniformly refined meshes. When measured in the L$^2$ norm, the \gls{fem} is second-order accurate in space with linear elements and third-order accurate in space with quadratic elements. 
 
@@ -80,7 +80,7 @@ Ra\equiv\frac{|g|\rho_f^2C_{p,f}\beta_f L^3\Delta T_f}{\mu_f k_f}\ ,
 
 This section presents Pronghorn simulations of flow in an open square cavity with differentially heated walls to verify the applicability of the Navier-Stokes macroscale model to open natural convection flows. This verification exercise is relevant to the use of coarse mesh tools for prediction of mixing and thermal striping in the open plena adjacent to many \gls{pbr} beds. Additional objectives of this analysis are to 1)~illustrate the reduction of the macroscale models in Chapter \ref{sec:PhysicalModels} to the open flow equations through proper selection of the macroscale closures and 2)~demonstrate mesh refinement studies for a physics simulation that are omitted in all later chapters for brevity.
 
-The problem geometry is shown in Fig.\ \ref{fig:rb_cell}; the domain and \glspl{bc} are selected based on a benchmark defined by de Vahl Davis and Jones \cite{davis}. The cavity dimension \(L\) is 1 \si{\meter}, gravity acts in the \(-z\) direction, velocity satisfies no-slip \glspl{bc} on all surfaces, and the top and bottom boundaries are insulated. The temperature is \(T_H\) on the heated boundary and \(T_C\) on the cooled boundary. The fluid is modeled with the Navier-Stokes macroscale model in Eq. \eqref{eq:PorousEquations} with \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=\mu_f\), \(\alpha=0\), \(\kappa_f=k_f\), and \(\kappa_s=k_s\) and properties closed by the ideal gas \gls{eos}. The Prandtl number is fixed at 0.71 and the Rayleigh number is varied from \(10^3\) to \(10^6\) by varying the fluid dynamic viscosity and thermal conductivity.
+The problem geometry is shown in Fig.\ \ref{fig:rb_cell}; the domain and \glspl{bc} are selected based on a benchmark defined by de Vahl Davis and Jones \cite{davis}. The cavity dimension \(L\) is 1 \si{\meter}, gravity acts in the \(-z\) direction, velocity satisfies no-slip \glspl{bc} on all surfaces, and the top and bottom boundaries are insulated. The temperature is \(T_H\) on the heated boundary and \(T_C\) on the cooled boundary. The fluid is modeled with the Navier-Stokes macroscale model in Eq.\ \eqref{eq:PorousEquations} with \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=\mu_f\), \(\alpha=0\), \(\kappa_f=k_f\), and \(\kappa_s=k_s\) and properties closed by the ideal gas \gls{eos}. The Prandtl number is fixed at 0.71 and the Rayleigh number is varied from \(10^3\) to \(10^6\) by varying the fluid dynamic viscosity and thermal conductivity.
 
 \begin{figure}[!h]
 \centering
@@ -224,7 +224,7 @@ As the Rayleigh number increases, the thickness of the thermal boundary layer on
 \label{fig:rb_results}
 \end{figure}
 
-Table \ref{table:rb} provides a quantitative comparison between the Pronghorn and reference solutions for the scalar benchmark metrics. Given the limited significant figures reported in the benchmark, some relative errors are zero. For most data points, Pronghorn agrees with the reference solution to less than 1\% relative error. The largest relative errors, observed in the predictions for \(z^+_\text{max}\), represent absolute errors on the order of 0.001. When expressed in dimensional form with Eq. \eqref{eq:nondim_x}, the absolute error in this \(z_\text{max}\) for \(L=1\) \si{\meter} is only 1 \si{\milli\meter}.
+Table \ref{table:rb} provides a quantitative comparison between the Pronghorn and reference solutions for the scalar benchmark metrics. Given the limited significant figures reported in the benchmark, some relative errors are zero. For most data points, Pronghorn agrees with the reference solution to less than 1\% relative error. The largest relative errors, observed in the predictions for \(z^+_\text{max}\), represent absolute errors on the order of 0.001. When expressed in dimensional form with Eq.\ \eqref{eq:nondim_x}, the absolute error in this \(z_\text{max}\) for \(L=1\) \si{\meter} is only 1 \si{\milli\meter}.
 
 \begin{table}[!h]
 \caption{Pronghorn (PH) and reference (Ref.) solutions for the natural convection benchmark \cite{davis_1983} with percent error (Err.) between Pronghorn and the reference.} 
@@ -269,7 +269,7 @@ The problem geometry is shown in Fig.\ \ref{fig:pf_geometry}. The cylinder radiu
 \vec{V}=U\vec{e}_x\ ;
 \eeq
 
-\noindent and the right boundary is a free outlet. The domain width \(W\), height \(H\), and distance from entrance to the cylinder center \(L\) are selected based on recommendations by Hoffman et.\ al to introduce a small distortion from the free-stream velocity \(U\) at the top and bottom boundaries \cite{hoffman_2011}. The fluid is modeled with the Euler macroscale model in Eq. \eqref{eq:PorousEquations} with \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=0\), \(\alpha=0\), \(\kappa_f=0\), and \(\kappa_s=0\) and properties closed by the ideal gas \gls{eos}. Further, gravitational acceleration effects are neglected by setting \(\vec{g}=\vec{0}\). The inlet temperature is 300 \si{\kelvin} and the outlet pressure is 1 atm. All \glspl{ic} are uniform and correspond to the inlet temperature and outlet pressure.
+\noindent and the right boundary is a free outlet. The domain width \(W\), height \(H\), and distance from entrance to the cylinder center \(L\) are selected based on recommendations by Hoffman et.\ al to introduce a small distortion from the free-stream velocity \(U\) at the top and bottom boundaries \cite{hoffman_2011}. The fluid is modeled with the Euler macroscale model in Eq.\ \eqref{eq:PorousEquations} with \(\epsilon=1\), \(W=0\), \(\tilde{\mu}=0\), \(\alpha=0\), \(\kappa_f=0\), and \(\kappa_s=0\) and properties closed by the ideal gas \gls{eos}. Further, gravitational acceleration effects are neglected by setting \(\vec{g}=\vec{0}\). The inlet temperature is 300 \si{\kelvin} and the outlet pressure is 1 atm. All \glspl{ic} are uniform and correspond to the inlet temperature and outlet pressure.
 
 \begin{figure}[!h]
 \centering
@@ -287,14 +287,14 @@ The potential flow equations are a simplification to the Euler model for irrotat
 \vec{V}=\nabla\phi\ ,
 \eeq
 
-\noindent because the curl of a gradient of a scalar is zero. For steady flow, substituting Eq. \eqref{eq:PotentialVelocity} into the incompressible Euler mass conservation equation gives a Laplace equation for the potential,
+\noindent because the curl of a gradient of a scalar is zero. For steady flow, substituting Eq.\ \eqref{eq:PotentialVelocity} into the incompressible Euler mass conservation equation gives a Laplace equation for the potential,
 
 \beq
 \label{eq:LaplacePhi}
 \nabla^2\phi=0\ .
 \eeq
 
-\noindent For flow past a 2-D cylinder, an analytic solution to Eq. \eqref{eq:LaplacePhi} is formed by superimposing the solution for uniform inflow with the solution for a doublet, a combination of a source and sink of equal strength separated by a finite distance. A derivation of this solution is available in many introductory fluid mechanics texts \cite{munson}. For a cylinder centered on the origin, the \(x\)- and \(y\)-velocity components are
+\noindent For flow past a 2-D cylinder, an analytic solution to Eq.\ \eqref{eq:LaplacePhi} is formed by superimposing the solution for uniform inflow with the solution for a doublet, a combination of a source and sink of equal strength separated by a finite distance. A derivation of this solution is available in many introductory fluid mechanics texts \cite{munson}. For a cylinder centered on the origin, the \(x\)- and \(y\)-velocity components are
 
 \beq
 \label{eq:V1Analytic}
@@ -313,7 +313,7 @@ V_{y,p}=-2UR^2\frac{xy}{(x^2+y^2)^2}\ ,
 \nabla\left(\frac{1}{2}V_iV_i+\frac{P}{\rho_f}\right)=0\ .
 \eeq
 
-\noindent To obtain the solution for pressure, apply Eq. \eqref{eq:B1} at the free-stream conditions of \(\vec{V}=U\vec{e}_x\) and \(P=P_\infty\) in combination with the velocity solutions in Eqs. \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic} to give
+\noindent To obtain the solution for pressure, apply Eq.\ \eqref{eq:B1} at the free-stream conditions of \(\vec{V}=U\vec{e}_x\) and \(P=P_\infty\) in combination with the velocity solutions in Eqs. \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic} to give
 
 \beq
 \label{eq:PPressure}
@@ -328,7 +328,7 @@ P_p=P_\infty+\frac{1}{2}\rho_f\left(U^2-V_iV_i\right)\ .
 C_P\equiv\frac{P_\text{surface}-P_\infty}{\frac{1}{2}\rho_fU^2}\ .
 \eeq
 
-\noindent Substituting the pressure distribution in Eq. \eqref{eq:PPressure} with \(x^2+y^2=R^2\) into Eq. \eqref{eq:CPDef} gives the surface pressure coefficient for the potential flow as
+\noindent Substituting the pressure distribution in Eq.\ \eqref{eq:PPressure} with \(x^2+y^2=R^2\) into Eq.\ \eqref{eq:CPDef} gives the surface pressure coefficient for the potential flow as
 
 \beq
 \label{eq:PressureCoefficient}
@@ -398,7 +398,7 @@ Overall, the mechanical compressibility effects are correctly modeled with the i
 
 Given the computing resources available for routine design and analysis, the heterogeneous nature of \gls{pbr} fuels requires the use of multiscale models to predict temperatures. Simply homogenizing the fission heat source and thermal properties fails to capture the thermal resistance imposed by the low-conductivity buffer layer, and may result in significant underprediction of fuel temperatures. 
 
-Two multiscale models were introduced in Chapter \ref{sec:PhysicalModels}\mdash the \gls{hsd} model and the \gls{hl} model. This section applies the \gls{hsd} model to a Cartesian domain consisting of nine \glspl{cfp} in a matrix and provides a comparison against a fully-resolved heat conduction solution of the same geometry. The objectives of this analysis are to 1)~verify the \gls{hsd} method for a simple, but representative, domain; 2)~explain the microscale ``translation'' process in Eq. \eqref{eq:MultiscaleSolution}; and 3)~address the accuracy of the averaging approximation in Eq. \eqref{eq:AvgT}. Because the \gls{mms} tests described in Section \ref{sec:mms} verify correct implementation of the diffusion kernels needed for the multi-layer \gls{hl} method, no such dedicated verification is required for the \gls{hl} method, which is simply a multi-layer conduction model.
+Two multiscale models were introduced in Chapter \ref{sec:PhysicalModels}\mdash the \gls{hsd} model and the \gls{hl} model. This section applies the \gls{hsd} model to a Cartesian domain consisting of nine \glspl{cfp} in a matrix and provides a comparison against a fully-resolved heat conduction solution of the same geometry. The objectives of this analysis are to 1)~verify the \gls{hsd} method for a simple, but representative, domain; 2)~explain the microscale ``translation'' process in Eq.\ \eqref{eq:MultiscaleSolution}; and 3)~address the accuracy of the averaging approximation in Eq.\ \eqref{eq:AvgT}. Because the \gls{mms} tests described in Section \ref{sec:mms} verify correct implementation of the diffusion kernels needed for the multi-layer \gls{hl} method, no such dedicated verification is required for the \gls{hl} method, which is simply a multi-layer conduction model.
 
 For this demonstration problem, each \gls{cfp} is composed of five material layers with a uniform heat source of \(2\times10^8\) \si{\watt\per\cubic\meter} in the center kernel. While this power density is higher than that used in most \glspl{pbr}, the larger magnitude is selected to accentuate the differences between the meso and micro scale solutions. The \glspl{cfp} occupy 40\% by volume of the matrix material. Fig.\ \ref{fig:nine_particle_mesha} shows the mesh, colored by material ID, used to obtain the reference temperature solution. The \gls{cfp} layer thicknesses are the same as those in the \gls{pbfhr} design in Table \ref{table:pebble_props} and are typical of most \gls{triso} particle designs. Thermal properties in dimensionally consistent units are shown for each material in Fig.\ \ref{fig:nine_particle_mesha}. Thermal \glspl{bc} are selected to have a significant thermal gradient over the domain. The top, left, and right boundaries are set to 1100\si{\celsius}, 1100\si{\celsius}, and 1150\si{\celsius}, respectively, while the bottom boundary is insulated.
 
@@ -410,7 +410,7 @@ For this demonstration problem, each \gls{cfp} is composed of five material laye
 \label{fig:nine_particle_mesha}
 \end{figure}
 
-The reference temperature solution, shown in Fig.\ \ref{fig:nine_particle_mesh}, is obtained by solving the heat conduction equation in Eq. \eqref{eq:oem} with the \gls{moose} heat conduction module. The temperature contours are tightly packed in the second material layer in each \gls{cfp} due to its relatively low thermal conductivity. The objective of the \gls{hsd} model is to approximate the temperature distribution in Fig.\ \ref{fig:nine_particle_mesh} with significantly lower computational effort.
+The reference temperature solution, shown in Fig.\ \ref{fig:nine_particle_mesh}, is obtained by solving the heat conduction equation in Eq.\ \eqref{eq:oem} with the \gls{moose} heat conduction module. The temperature contours are tightly packed in the second material layer in each \gls{cfp} due to its relatively low thermal conductivity. The objective of the \gls{hsd} model is to approximate the temperature distribution in Fig.\ \ref{fig:nine_particle_mesh} with significantly lower computational effort.
 
 \begin{figure}[!h]
   \centering
@@ -420,7 +420,7 @@ The reference temperature solution, shown in Fig.\ \ref{fig:nine_particle_mesh},
 \label{fig:nine_particle_mesh}
 \end{figure}
 
-The \gls{hsd} method involves the coupled solutions of the mesoscale model in Eq. \eqref{eq:MesoscaleSolution} and the microscale model in Eq. \eqref{eq:MicroscaleSolution}. The mesoscale mesh encompasses the entire heterogeneous region and is shown in Fig.\ \ref{fig:nine_particle_mesoscalea}. The \gls{cfp} properties are homogenized with the volume average in Eq. \eqref{eq:series}. \(\rho_\text{meso}\), and \(C_{p,\text{meso}}\) are then evaluated with the volume average in Eq. \eqref{eq:series}, while \(k_\text{meso}\) is evaluated with the Chiew and Glandt averaging theorem in Eq. \eqref{eq:ChiewGlandt}. The volumetric heat source is averaged over the \glspl{cfp} and matrix.
+The \gls{hsd} method involves the coupled solutions of the mesoscale model in Eq.\ \eqref{eq:MesoscaleSolution} and the microscale model in Eq.\ \eqref{eq:MicroscaleSolution}. The mesoscale mesh encompasses the entire heterogeneous region and is shown in Fig.\ \ref{fig:nine_particle_mesoscalea}. The \gls{cfp} properties are homogenized with the volume average in Eq.\ \eqref{eq:series}. \(\rho_\text{meso}\), and \(C_{p,\text{meso}}\) are then evaluated with the volume average in Eq.\ \eqref{eq:series}, while \(k_\text{meso}\) is evaluated with the Chiew and Glandt averaging theorem in Eq.\ \eqref{eq:ChiewGlandt}. The volumetric heat source is averaged over the \glspl{cfp} and matrix.
 
 The mesoscale solution is shown in Fig.\ \ref{fig:nine_particle_mesoscaleb}. The mesoscale temperature represents a long-wavelength ``background'' response to the \glspl{bc}, averaged thermal properties, and averaged heat source. Note that the color bar in Fig.\ \ref{fig:nine_particle_mesoscaleb} is intentionally not the same as in Fig.\ \ref{fig:nine_particle_mesh} to reinforce that it is the sum of the meso and micro scale solutions that satisfies the imposed \glspl{bc}.
 
@@ -462,7 +462,7 @@ The microscale domain, shown in Fig.\ \ref{fig:micro_a}, is a 1-D representation
 \caption{\gls{hsd} microscale (a) mesh and (b) solution.}
 \end{figure}
 
-Fig.\ \ref{fig:MMD_example} shows the reference and \gls{hsd} solutions along a horizontal line passing through the centers of the middle row of particles. The low-conductivity buffer results in significantly higher kernel temperatures than in surrounding materials. The bottom section of Fig.\ \ref{fig:MMD_example} shows the microscale solution translated to the location of each of the three particles. According to Eq. \eqref{eq:MultiscaleSolution}, the \gls{hsd} multiscale approximation is the sum of the long-wavelength mesoscale solution and the translated microscale solutions, and is shown as a red dashed line in Fig.\ \ref{fig:MMD_example}. The \gls{hsd} solution agrees very well with the reference temperature solution; the only source of error in the \gls{hsd} method is the homogenization of the mesoscale properties.
+Fig.\ \ref{fig:MMD_example} shows the reference and \gls{hsd} solutions along a horizontal line passing through the centers of the middle row of particles. The low-conductivity buffer results in significantly higher kernel temperatures than in surrounding materials. The bottom section of Fig.\ \ref{fig:MMD_example} shows the microscale solution translated to the location of each of the three particles. According to Eq.\ \eqref{eq:MultiscaleSolution}, the \gls{hsd} multiscale approximation is the sum of the long-wavelength mesoscale solution and the translated microscale solutions, and is shown as a red dashed line in Fig.\ \ref{fig:MMD_example}. The \gls{hsd} solution agrees very well with the reference temperature solution; the only source of error in the \gls{hsd} method is the homogenization of the mesoscale properties.
 
 \begin{figure}[!h]
 \centering
@@ -496,9 +496,9 @@ Next, in order to verify applicability of the \gls{hsd} method to transients, co
 \caption{Solutions averaged in space}
 \label{fig:avg_nine}
 \end{subfigure}
-\caption{Reference (---) and \gls{hsd} multiscale solutions (- -) (a) along a line through the centers of the middle row of particles and (b) spatially-averaged for the problem in Fig.\ \ref{fig:nine_particle_mesha} with the heat source in Eq. \eqref{eq:time_q}.}
+\caption{Reference (---) and \gls{hsd} multiscale solutions (- -) (a) along a line through the centers of the middle row of particles and (b) spatially-averaged for the problem in Fig.\ \ref{fig:nine_particle_mesha} with the heat source in Eq.\ \eqref{eq:time_q}.}
 \end{figure}
 
-Fig.\ \ref{fig:avg_nine} shows the average temperatures of each material as a function of time. To reflect conditions typical of \gls{pbr} analysis, where the \gls{cfp} locations are unknown, the \gls{hsd} averages are evaluated with Eq. \eqref{eq:AvgT}. Excellent agreement is observed between the multiscale and reference solutions, especially considering that the mesoscale solution in this particular test problem varies on the order of the micro length scale.
+Fig.\ \ref{fig:avg_nine} shows the average temperatures of each material as a function of time. To reflect conditions typical of \gls{pbr} analysis, where the \gls{cfp} locations are unknown, the \gls{hsd} averages are evaluated with Eq.\ \eqref{eq:AvgT}. Excellent agreement is observed between the multiscale and reference solutions, especially considering that the mesoscale solution in this particular test problem varies on the order of the micro length scale.
 
 The excellent agreement between the \gls{hsd} model and reference solution demonstrates the capacity of the \gls{hsd} model to simulate heat conduction in heterogeneous solids, providing important verification before application of the \gls{hsd} model to the Mark-1 \gls{pbfhr} in Chapter \ref{sec:pbfhr}.

@@ -3,7 +3,7 @@
 
 % TODO: touch on all of these things in the introduction
 
-Motivated in Section \ref{sec:ph_motivation} by the tightly-coupled multiscale and multiphysics nature of \glspl{pbr}, the importance of 3-D unstructured meshing capabilities, and the restrictive emphasis of earlier modeling tools on gas coolants, a new modeling tool is developed in this dissertation to enable application of the models described in Chapter \ref{sec:PhysicalModels} to multiscale analysis of single-phase \glspl{pbr}. This new application, Pronghorn, is a multi-dimensional, coarse-mesh, reactor analysis tool intended to accelerate the design and analysis cycle for \glspl{pbr} with computing requirements within reach of industry and regulatory stakeholders. 
+Motivated in Section \ref{sec:ph_motivation} by the tightly-coupled multiscale and multiphysics nature of \glspl{pbr}, the importance of 3-D unstructured meshing capabilities, and the restrictive emphasis of earlier modeling tools on gas coolants, a new modeling tool is developed in this research to enable application of the models described in Chapter \ref{sec:PhysicalModels} to multiscale analysis of single-phase \glspl{pbr}. This new application, Pronghorn, is a multi-dimensional, coarse-mesh, reactor analysis tool intended to accelerate the design and analysis cycle for \glspl{pbr} with computing requirements within reach of industry and regulatory stakeholders. 
 
 Multiscale analysis at its core is a form of multiphysics analysis\mdash a set of models are coupled together to account for physics feedback effects between various length scales. The key functional requirements in the development of new \gls{pbr} multiscale simulation capabilities are 1)~tightly-coupled solution and data transfer schemes between multiple physics and length scales relevant to nuclear reactors, 2)~efficient simulation on unstructured meshes, and 3)~flexible source code modification to include closures for non-gas coolants. Additionally, new capabilities should be developed with the goal of enhancing modeling tools available to the nuclear engineering community and designed with reuse and longevity in mind.
 
@@ -23,7 +23,7 @@ The use of a \gls{fe} spatial discretization permits the use of unstructured mes
 
 A simulation tool built on the \gls{moose} framework is referred to as an ``application.'' The hierarchical design and common class inheritance permit in-memory multiphysics coupling of these applications to enable prediction of complex interacting phenomena. At the time of writing, approximately 60 applications are tracked by \gls{moose}'s \gls{ci} system. Examples of applications in the nuclear engineering space include Rattlesnake neutron transport \cite{rattlesnake}; BISON nuclear fuels performance \cite{bison}; RELAP-7 and SAM systems-level \gls{th} \cite{relap7,hu}; and MARMOT phase field \cite{tonks}. The flexible multi-application data transfer and communication design permits wrapping of external applications by selectively overriding LibMesh \gls{fe} routines to call external libraries; examples of external wrappings include OpenMC Monte Carlo particle transport and Nek5000 spectral element \gls{cfd} \cite{romano, NEK5000, novak}. The \gls{moose} framework also contains a number of open source modules available to all applications, such as a common set of fluid properties and functional expansion data transfer capabilities \cite{wendt}. 
 
-The open source nature of the framework, large user and developer community in areas relevant to \gls{pbr} analysis, native capability for in-memory multiphysics simulations with both peer \gls{moose} applications and external wrapped tools, modular software design, and use of state-of-the-art 3-D unstructured mesh \gls{fe} and solver libraries all contribute to \gls{moose} being the ideal framework upon which to build the next-generation \gls{pbr} \gls{th} solver Pronghorn. As part of this dissertation, the Pronghorn application was developed from scratch to capitalize on the latest advancements in the \gls{moose} framework and its supporting libraries. The remainder of this section describes the numerical methods employed for discretization and solution of the models described in Chapter \ref{sec:PhysicalModels}. Section \ref{sec:fem} describes the \gls{fe} spatial discretization and \gls{mol} time discretization. Section \ref{sec:solution} discusses the Picard iteration of multiple applications and nonlinear solution with Newton-Krylov methods. Section \ref{sec:software} then concludes with a brief discussion of the software engineering design of the \gls{moose} framework and Pronghorn.
+The open source nature of the framework, large user and developer community in areas relevant to \gls{pbr} analysis, native capability for in-memory multiphysics simulations with both peer \gls{moose} applications and external wrapped tools, modular software design, and use of state-of-the-art 3-D unstructured mesh \gls{fe} and solver libraries all contribute to \gls{moose} being the ideal framework upon which to build the next-generation \gls{pbr} \gls{th} solver Pronghorn. As part of this research, the Pronghorn application was developed from scratch to capitalize on the latest advancements in the \gls{moose} framework and its supporting libraries. The remainder of this section describes the numerical methods employed for discretization and solution of the models described in Chapter \ref{sec:PhysicalModels}. Section \ref{sec:fem} describes the \gls{fe} spatial discretization and \gls{mol} time discretization. Section \ref{sec:solution} discusses the Picard iteration of multiple applications and nonlinear solution with Newton-Krylov methods. Section \ref{sec:software} then concludes with a brief discussion of the software engineering design of the \gls{moose} framework and Pronghorn.
 
 Throughout this discussion, several brief examples of \texttt{C++} source code and the hierarchical input file syntax are shown to highlight the modular nature and ease-of-use to encourage other applied math practitioners to consider the \gls{moose} framework for their applications. 
 
@@ -50,14 +50,14 @@ u=\sum_{j\ =\ 1}^NC_j\phi_j\ ,
 K(u_*)=f\ ,
 \eeq
 
-\noindent where \(K\) is a nonlinear operator that acts on the true solution \(u_*\) and \(f\) is a function that does not contain \(u_*\). In general, the approximate solution in Eq. \eqref{eq:WRExpansion} will not equal the true solution \(u_*\) such that the residual \(R\) is nonzero,
+\noindent where \(K\) is a nonlinear operator that acts on the true solution \(u_*\) and \(f\) is a function that does not contain \(u_*\). In general, the approximate solution in Eq.\ \eqref{eq:WRExpansion} will not equal the true solution \(u_*\) such that the residual \(R\) is nonzero,
 
 \beq
 \label{eq:residual}
 R(u)\equiv K(u)-f\ .
 \eeq
 
-\noindent Weighted residual methods seek the coefficients \(C_j\) in Eq. \eqref{eq:WRExpansion} that minimize the residual with respect to a particular norm. All weighted residual methods can be written in the form
+\noindent Weighted residual methods seek the coefficients \(C_j\) in Eq.\ \eqref{eq:WRExpansion} that minimize the residual with respect to a particular norm. All weighted residual methods can be written in the form
 
 \beq
 \label{eq:WR}
@@ -78,28 +78,28 @@ e\equiv u_*-u\ .
 \int_{\Omega}e^*u\ d\Omega=0\ .
 \eeq
 
-\noindent The error is in general unknown because the true solution is in general unknown. However, a good approximation of the error is the residual, since the residual is zero when the error is zero. Substituting the residual for the error in Eq. \eqref{eq:GalerkinErrorMin}, the Galerkin weighted residual method seeks a solution that minimizes the residual by requiring that it be orthogonal to the approximate solution,
+\noindent The error is in general unknown because the true solution is in general unknown. However, a good approximation of the error is the residual, since the residual is zero when the error is zero. Substituting the residual for the error in Eq.\ \eqref{eq:GalerkinErrorMin}, the Galerkin weighted residual method seeks a solution that minimizes the residual by requiring that it be orthogonal to the approximate solution,
 
 \beq
 \label{eq:GalerkinInt}
 \int_{\Omega}R^*u\ d\Omega=0\ .
 \eeq
 
-\noindent Comparing Eqs. \eqref{eq:WR} and \eqref{eq:GalerkinInt}, it is seen that the weight function must lie in the same space as the approximate solution with the exception of the trivial solution. Therefore, \(\psi\) may be expressed in the same basis as \(u\) in Eq. \eqref{eq:WRExpansion},
+\noindent Comparing Eqs. \eqref{eq:WR} and \eqref{eq:GalerkinInt}, it is seen that the weight function must lie in the same space as the approximate solution with the exception of the trivial solution. Therefore, \(\psi\) may be expressed in the same basis as \(u\) in Eq.\ \eqref{eq:WRExpansion},
 
 \beq
 \label{eq:PsiExpansion}
 \psi=\sum_{i\ =\ 1}^ND_i\phi_i\ ,
 \eeq
 
-\noindent where different scalar coefficients \(D_i\) are used for generality. More specifically, a Galerkin method with the approximate solution and weight function sharing the same function space is referred to as a Bubnov-Galerkin method. Writing Eq. \eqref{eq:GalerkinInt} with \(u\) given by Eq. \eqref{eq:WRExpansion} and \(\psi\) given by Eq. \eqref{eq:PsiExpansion} gives
+\noindent where different scalar coefficients \(D_i\) are used for generality. More specifically, a Galerkin method with the approximate solution and weight function sharing the same function space is referred to as a Bubnov-Galerkin method. Writing Eq.\ \eqref{eq:GalerkinInt} with \(u\) given by Eq.\ \eqref{eq:WRExpansion} and \(\psi\) given by Eq.\ \eqref{eq:PsiExpansion} gives
 
 \beq
 \label{eq:GalerkinInt2}
 \bigintsss_{\Omega}\left\lbrack R\left(\sum_{\ j\ =\ 1}^NC_j\phi_j\right)\right\rbrack^*\sum_{i\ =\ 1}^N\phi_i\ d\Omega=0\ ,
 \eeq
 
-\noindent where \(R(u)\) indicates that the residual \(R\) may be a general nonlinear function of \(u\). Requiring Eq. \eqref{eq:GalerkinInt2} to hold for all \(j\in N\) results in \(N\) equations for the \(N\) coefficients in \(u\),
+\noindent where \(R(u)\) indicates that the residual \(R\) may be a general nonlinear function of \(u\). Requiring Eq.\ \eqref{eq:GalerkinInt2} to hold for all \(j\in N\) results in \(N\) equations for the \(N\) coefficients in \(u\),
 
 \beq
 \label{eq:GalerkinInt3}
@@ -109,16 +109,16 @@ e\equiv u_*-u\ .
 \subsection{The Weak Form}
 \label{sec:weak_form}
 
-To ensure a finite integral in Eq. \eqref{eq:GalerkinInt3}, the shape functions must be sufficiently differentiable. Define the Hilbert-space norm in 1-D for a function \(\chi\) as
+To ensure a finite integral in Eq.\ \eqref{eq:GalerkinInt3}, the shape functions must be sufficiently differentiable. Define the Hilbert-space norm in 1-D for a function \(\chi\) as
 
 \beq
 \label{eq:HilbertNorm}
 \|\chi\|_{H^l(\Omega)}\equiv\left\lbrack\sum_{\ j\ =\ 0\ }^{l}\int_{\Omega}\frac{\partial^j\chi}{\partial x^j}\frac{\partial^j\chi}{\partial x^j}d\Omega\right\rbrack^{1/l}\ ,
 \eeq
 
-\noindent where \(l>0\) is an integer. For a weighted residual statement with highest derivative \(l\) on the shape functions, finite integrals require that the \(H^l(\Omega)\) norm be finite, or that \(u\in H^l(\Omega)\) and \(\psi\in H^l(\Omega)\). If the residual \(R\) contains higher than first-order derivatives in \(u\), differentiability requirements of the shape functions can be reduced by integrating the residual by parts to transfer some differentiability requirements to the weight function. The resulting equation is referred to as the ``weak form'' of the original ``strong form'' equation. Provided the weak form holds for all choices of \(\psi\), the weak form is equivalent to Eq. \eqref{eq:GalerkinInt3} and is solved in this work in place of Eq. \eqref{eq:GalerkinInt3}.
+\noindent where \(l>0\) is an integer. For a weighted residual statement with highest derivative \(l\) on the shape functions, finite integrals require that the \(H^l(\Omega)\) norm be finite, or that \(u\in H^l(\Omega)\) and \(\psi\in H^l(\Omega)\). If the residual \(R\) contains higher than first-order derivatives in \(u\), differentiability requirements of the shape functions can be reduced by integrating the residual by parts to transfer some differentiability requirements to the weight function. The resulting equation is referred to as the ``weak form'' of the original ``strong form'' equation. Provided the weak form holds for all choices of \(\psi\), the weak form is equivalent to Eq.\ \eqref{eq:GalerkinInt3} and is solved in this work in place of Eq.\ \eqref{eq:GalerkinInt3}.
 
-The weak form of the Navier-Stokes model is obtained multiplying Eq. \eqref{eq:PorousEquations} by \(\psi\) and integrating by parts where possible, giving
+The weak form of the Navier-Stokes model is obtained multiplying Eq.\ \eqref{eq:PorousEquations} by \(\psi\) and integrating by parts where possible, giving
 
 \begin{subequations}
 \label{eq:PronghornEquations_V2WeakForm}
@@ -149,7 +149,7 @@ The weak form of the Navier-Stokes model is obtained multiplying Eq. \eqref{eq:P
 \end{align}
 \end{subequations}
 
-\noindent Similarly, the weak form of the friction-dominated model in Eq. \eqref{eq:PrimitiveEqns} is
+\noindent Similarly, the weak form of the friction-dominated model in Eq.\ \eqref{eq:PrimitiveEqns} is
 
 \begin{subequations}
 \label{eq:PrimitiveWeakForms}
@@ -183,14 +183,14 @@ The weak form of the Navier-Stokes model is obtained multiplying Eq. \eqref{eq:P
 
 \noindent In Eqs. \eqref{eq:MomWeak} and \eqref{eq:Mom2Weak}, \(i=1,2,3\) represents each component of the momentum equation. The pressure kernel with strong form \(\epsilon\nabla P\) is first written as \(\nabla(\epsilon P)-P\nabla\epsilon\); then, the \(\nabla(\epsilon P)\) term is integrated by parts so that pressure appears in a boundary integral to provide a natural pressure \gls{bc}. 
 
-Finally, the weak form of the mesoscale and microscale models in Eqs. \eqref{eq:oem}, \eqref{eq:MesoscaleSolution}, and \eqref{eq:MicroscaleSolution} is
+Finally, the weak form of the meso and micro scale models in Eqs. \eqref{eq:oem}, \eqref{eq:MesoscaleSolution}, and \eqref{eq:MicroscaleSolution} is
 
 \beq
 \label{eq:MultiscaleWeak}
 \int_\Omega\left\lbrack\rho_\jmath C_{p,\jmath}\frac{\partial T_\jmath}{\partial t}\psi+k_\jmath\nabla T_\jmath\cdot\nabla\psi+Q\psi\right\rbrack d\Omega-\int_\Gamma k_\jmath\nabla T_\jmath\cdot\hat{n}\psi d\Gamma=0\ ,
 \eeq
 
-\noindent where \(\jmath=S\) and \(Q=\dot{q}_s\) for Eq. \eqref{eq:oem}; \(\jmath=\text{meso}\) and \(Q=\la\dot{q}\ra\) for Eq. \eqref{eq:MesoscaleSolution}; and \(\jmath=\text{micro}\) and \(Q=\hat{\dot{q}}\) for Eq. \eqref{eq:MicroscaleSolution}.
+\noindent where \(\jmath=S\) and \(Q=\dot{q}_s\) for Eq.\ \eqref{eq:oem}; \(\jmath=\text{meso}\) and \(Q=\la\dot{q}\ra\) for Eq.\ \eqref{eq:MesoscaleSolution}; and \(\jmath=\text{micro}\) and \(Q=\hat{\dot{q}}\) for Eq.\ \eqref{eq:MicroscaleSolution}.
 
 The \gls{moose} framework is designed based on object-oriented programming principles that abstract much of the numerical implementation of Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak}, such as numeric integration, physical-to-master mappings, and looping over the basis and weight function summations in Eqs. \eqref{eq:WRExpansion} and \eqref{eq:PsiExpansion}, to \gls{moose} framework classes and the LibMesh \gls{fe} library. Application developers simply need to override the quadrature point residual calculation of base \texttt{Kernel} and \texttt{BoundaryCondition} classes to represent their desired physics. For example, the source code responsible for residual calculation of the diffusive kernel contribution to Eqs. \eqref{eq:EnergyWeak} and \eqref{eq:Energy2Weak} at a quadrature point is shown in Listing \ref{lst:one}.
 
@@ -206,15 +206,15 @@ FluidEnergyDiffusiveFlux::computeQpResidual()
 \end{lstlisting}
 \end{minipage}
 
-\texttt{FluidEnergyDiffusiveFlux} is the kernel class name and \texttt{computeQpResidual} is the name of the base \texttt{Kernel} method that provides the residual calculation at a quadrature point. \texttt{\_kappa\_f} is the name of the \(\kappa_f\) material property coupled to the kernel; \texttt{\_grad\_T\_fluid} is the name of the gradient of the fluid temperature \(\nabla T_f\) coupled to the kernel; and \texttt{\_grad\_test} is the name of the gradient of the weight function \(\nabla\psi\), indexed by \texttt{\_i} as shown in Eq. \eqref{eq:PsiExpansion}. The base \texttt{Kernel} class loops over the \texttt{computeQpResidual} method at each quadrature point, with index \texttt{\_qp}, to construct the discretized residual.
+\texttt{FluidEnergyDiffusiveFlux} is the kernel class name and \texttt{computeQpResidual} is the name of the base \texttt{Kernel} method that provides the residual calculation at a quadrature point. \texttt{\_kappa\_f} is the name of the \(\kappa_f\) material property coupled to the kernel; \texttt{\_grad\_T\_fluid} is the name of the gradient of the fluid temperature \(\nabla T_f\) coupled to the kernel; and \texttt{\_grad\_test} is the name of the gradient of the weight function \(\nabla\psi\), indexed by \texttt{\_i} as shown in Eq.\ \eqref{eq:PsiExpansion}. The base \texttt{Kernel} class loops over the \texttt{computeQpResidual} method at each quadrature point, with index \texttt{\_qp}, to construct the discretized residual.
 
-Each of the kernels and \glspl{bc} in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are implemented in this manner in Pronghorn. Intermediate \texttt{Material} classes express all possible solution variables\mdash \(P\) and \(\rho_f\) for the mass equation; \(\vec{V}\), \(\vec{v}\), \(\rho_f\vec{V}\), and \(\rho_f\vec{v}\) for the momentum equations; \(T_f\) and \(\rho_fE_f\) for the fluid energy equation; and \(T_s\) for the solid energy equation\mdash as material properties. This enables a flexible coupling in the class constructors that is agnostic to the underlying set of solution variables. Unless otherwise noted, all integrals are evaluated with Gaussian quadrature rules in this dissertation.
+Each of the kernels and \glspl{bc} in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are implemented in this manner in Pronghorn. Intermediate \texttt{Material} classes express all possible solution variables\mdash \(P\) and \(\rho_f\) for the mass equation; \(\vec{V}\), \(\vec{v}\), \(\rho_f\vec{V}\), and \(\rho_f\vec{v}\) for the momentum equations; \(T_f\) and \(\rho_fE_f\) for the fluid energy equation; and \(T_s\) for the solid energy equation\mdash as material properties. This enables a flexible coupling in the class constructors that is agnostic to the underlying set of solution variables. Unless otherwise noted, all integrals are evaluated with Gaussian quadrature rules in this work.
 
 The multiscale closures are implemented by overriding the property evaluation of base \texttt{Material} classes. For example, the source code responsible for calculation of the effective fluid thermal conductivity \(\kappa_f\) at a quadrature point is shown in Listing \ref{lst:two}.
 
 \vspace{1em}
 \begin{minipage}[c]{0.92\linewidth}
-\begin{lstlisting}[caption={Pronghorn source code evaluation of \(\kappa_f\) by Eq. \eqref{eq:LinearPecletKappaFluid}.}, captionpos=b,label={lst:two}]
+\begin{lstlisting}[caption={Pronghorn source code evaluation of \(\kappa_f\) by Eq.\ \eqref{eq:LinearPecletKappaFluid}.}, captionpos=b,label={lst:two}]
 void
 LinearPecletKappaFluid::computeQpProperties()
 {
@@ -223,7 +223,7 @@ LinearPecletKappaFluid::computeQpProperties()
 \end{lstlisting}
 \end{minipage}
 
-\texttt{LinearPecletKappaFluid} is the material class name corresponding to the closure in Eq. \eqref{eq:LinearPecletKappaFluid} and \texttt{computeQpProperties} is the name of the base \texttt{Material} method that provides the material property calculation at a quadrature point. \texttt{\_kappa\_f} is the name of the computed property. \texttt{\_epsilon}, \texttt{\_k\_f}, and \texttt{\_Pe} are the names of the porosity \(\epsilon\), fluid thermal conductivity \(k_f\), and Peclet number \(Pe\), materials coupled to the \texttt{LinearPecletKappaFluid} material, respectively. \texttt{\_C0} is the name of a user-specified scaling parameter. Each of the closures in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are implemented in this manner in Pronghorn and consumed by kernel and \gls{bc} classes as required in the weak form.
+\texttt{LinearPecletKappaFluid} is the material class name corresponding to the closure in Eq.\ \eqref{eq:LinearPecletKappaFluid} and \texttt{computeQpProperties} is the name of the base \texttt{Material} method that provides the material property calculation at a quadrature point. \texttt{\_kappa\_f} is the name of the computed property. \texttt{\_epsilon}, \texttt{\_k\_f}, and \texttt{\_Pe} are the names of the porosity \(\epsilon\), fluid thermal conductivity \(k_f\), and Peclet number \(Pe\), materials coupled to the \texttt{LinearPecletKappaFluid} material, respectively. \texttt{\_C0} is the name of a user-specified scaling parameter. Each of the closures in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are implemented in this manner in Pronghorn and consumed by kernel and \gls{bc} classes as required in the weak form.
 
 \subsection{The Selection of Basis and Weight Functions}
 \label{sec:basis}
@@ -244,7 +244,7 @@ If \(\psi\) and \(\phi\) are nonzero over the entire domain, every region of the
 \phi_i(\Omega_j)=\delta_{ij}\ ,
 \eeq
 
-\noindent where \(\Omega_j\) is the coordinate describing the location of the \(j\)-th node and \(\delta_{ij}\) is the Kronecker delta. The number of nodes in the entire domain, \(N\), determines the number of basis functions used in the approximate solution in Eq. \eqref{eq:WRExpansion}. Unless otherwise noted, first-order Lagrange basis functions are used for all solution variables in this dissertation, though the \gls{moose} framework supports higher orders and many other shape function families, such as Hermite and monomial functions.
+\noindent where \(\Omega_j\) is the coordinate describing the location of the \(j\)-th node and \(\delta_{ij}\) is the Kronecker delta. The number of nodes in the entire domain, \(N\), determines the number of basis functions used in the approximate solution in Eq.\ \eqref{eq:WRExpansion}. Unless otherwise noted, first-order Lagrange basis functions are used for all solution variables in this work, though the \gls{moose} framework supports higher orders and many other shape function families, such as Hermite and monomial functions.
 
 The boundary terms in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are integrals over the entire boundary. The boundary may in general be decomposed into the portion on which Dirichelt conditions are specified, \(\Gamma_\text{Dirichlet}\), and the portion on which Neumann conditions are specified, \(\Gamma_\text{Neumann}\). The boundary is the union of these two boundaries
 
@@ -263,7 +263,7 @@ The boundary terms in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:M
 \subsection{Method of Lines Time Stepping}
 \label{sec:mol}
 
-The expansion used for the approximate solution in Eq. \eqref{eq:WRExpansion} is assumed separable in space and time. That is, the expansion coefficients \(C\) are only functions of time, while the basis functions \(\phi\) are only functions of space. All time derivatives in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are replaced by \gls{fd} approximations, a method that is often referred to as the \gls{mol}. For time step \(n+1\), all other terms in the weak form are evaluated at time \(m\) or time \(m+1\) for explicit and implicit \gls{fd} approximations, respectively.
+The expansion used for the approximate solution in Eq.\ \eqref{eq:WRExpansion} is assumed separable in space and time. That is, the expansion coefficients \(C\) are only functions of time, while the basis functions \(\phi\) are only functions of space. All time derivatives in Eqs. \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are replaced by \gls{fd} approximations, a method that is often referred to as the \gls{mol}. For time step \(n+1\), all other terms in the weak form are evaluated at time \(m\) or time \(m+1\) for explicit and implicit \gls{fd} approximations, respectively.
 
 The \gls{moose} framework abstracts much of the details of the \gls{mol} implementation to \gls{moose} framework classes and the \gls{petsc} library. For instance, there is no time indexing in the variables and material properties referenced in the example source snippets shown in Listings \ref{lst:one} and \ref{lst:two}. Application developers take advantage of polymorphism to represent time derivatives in the source implementation agnostic of the discretization, similar to the spatial representation shown in Section \ref{sec:weak_form}. For example, the source code responsible for residual calculation of the time derivative contribution to Eqs. \eqref{eq:MassWeak} and \eqref{eq:Mass2Weak} at a quadrature point is shown in Listing \ref{lst:three}.
 
@@ -278,7 +278,7 @@ MassTimeDerivative::computeQpResidual()
 \end{lstlisting}
 \end{minipage}
 
-\texttt{MassTimeDerivative} is the kernel class name, \texttt{\_drho\_f\_dt} is the name of the density time derivative \(\partial\rho_f/\partial t\) material coupled to the kernel, and \texttt{\_test} is the name of the weight function \(\psi\). Other terms have the same interpretation as in Listings \ref{lst:one} and \ref{lst:two}. Unless otherwise noted, an implicit Euler discretization is used for all time derivatives in this dissertation.
+\texttt{MassTimeDerivative} is the kernel class name, \texttt{\_drho\_f\_dt} is the name of the density time derivative \(\partial\rho_f/\partial t\) material coupled to the kernel, and \texttt{\_test} is the name of the weight function \(\psi\). Other terms have the same interpretation as in Listings \ref{lst:one} and \ref{lst:two}. Unless otherwise noted, an implicit Euler discretization is used for all time derivatives in this work.
 
 \subsection[Streamline Upwind Petrov-Galerkin Stabilization]{SUPG Stabilization}
 \label{sec:supg}
@@ -290,7 +290,7 @@ The continuous \gls{fem} is well-known to be conditionally stable for convection
 -\alpha_d\frac{\partial^2\upsilon}{\partial x^2}+V\frac{\partial \upsilon}{\partial x}=0\ ,
 \eeq
 
-\noindent where \(\alpha_d\) is the diffusivity, \(V\) is the velocity, and \(\upsilon\) is a transported scalar. For a linear Lagrange interpolation on uniform elements, the stability criterion for Eq. \eqref{eq:1DConvectionDiffusion} is straightforward to derive and is shown in ref. \cite{novak_manual}. This derivation yields
+\noindent where \(\alpha_d\) is the diffusivity, \(V\) is the velocity, and \(\upsilon\) is a transported scalar. For a linear Lagrange interpolation on uniform elements, the stability criterion for Eq.\ \eqref{eq:1DConvectionDiffusion} is straightforward to derive and is shown in ref. \cite{novak_manual}. This derivation yields
 
 \beq
 \label{eq:PeCriterion}
@@ -304,9 +304,9 @@ Pe_{el}>1\ ,
 Pe_{el}\equiv\frac{\|\vec{V}\|h_e}{2\alpha_d}\ ,
 \eeq
 
-\noindent where \(h_e\) is the element size. For generality, Eq. \eqref{eq:PeEl} is shown in terms of a general diffusivity \(\alpha_d\) rather than the thermal diffusivity \(k/\rho C_p\) used in the definition of \(Pe\) in Eq. \eqref{eq:PecletDef}. 
+\noindent where \(h_e\) is the element size. For generality, Eq.\ \eqref{eq:PeEl} is shown in terms of a general diffusivity \(\alpha_d\) rather than the thermal diffusivity \(k/\rho C_p\) used in the definition of \(Pe\) in Eq.\ \eqref{eq:PecletDef}. 
 
-It can be shown that a linear Lagrange interpolation of Eq. \eqref{eq:1DConvectionDiffusion} on uniform elements is equivalent to a central \gls{fd} approximation of both the diffusive and convective kernels. This symmetric discretization results in non-physical nodal oscillations for flows with \(Pe_{el}>1\) with magnitudes that tend to increase with \(Pe_{el}\) \cite{novak_manual,zienkiewicz}. 
+It can be shown that a linear Lagrange interpolation of Eq.\ \eqref{eq:1DConvectionDiffusion} on uniform elements is equivalent to a central \gls{fd} approximation of both the diffusive and convective kernels. This symmetric discretization results in non-physical nodal oscillations for flows with \(Pe_{el}>1\) with magnitudes that tend to increase with \(Pe_{el}\) \cite{novak_manual,zienkiewicz}. 
 
 Fig.\ \ref{fig:Convection_vs_Diffusion} illustrates typical convective and diffusive processes transporting a passive scalar in both space and time between the same \gls{ic} and the same end time. While diffusion is a symmetric phenomenon, convection transports in the direction of velocity such that the flow at a point is only dependent on the upstream conditions. This observation is the underlying cause of the numeric instability\mdash a symmetric discretization of the convective derivative is a poor representation of convective physics unless the symmetry of the diffusive process dominates the upwind nature of convection, or \(Pe_{el}<1\). The same conclusion can be shown in more rigorous manner in terms of the self-adjoint and non-self-adjoint properties of diffusion and convection operators, respectively \cite{zienkiewicz}.
 
@@ -328,23 +328,23 @@ Fig.\ \ref{fig:Convection_vs_Diffusion} illustrates typical convective and diffu
 
 For systems with some diffusion, the mesh can in theory be refined until \(Pe_{el}<1\); however, this strategy is often prohibitively expensive. This section describes an upwind Petrov-Galerkin method that supplements the weak forms in the fluid conservation equations with additional integrals that act to discretize the convective kernels with upwind approximations to better match the directional dependence of convection.
 
-Petrov-Galerkin methods differ from Bubnov-Galerkin methods in that the approximate solution and the weight function no longer live in the same function space; that is, \(\psi\) is no longer given by Eq. \eqref{eq:PsiExpansion}. For the Petrov-Galerkin methods considered here, the weight function is instead given as the sum of the original element-continuous weight functions \(\psi\) and an element-discontinuous function \(\psi^\star\),
+Petrov-Galerkin methods differ from Bubnov-Galerkin methods in that the approximate solution and the weight function no longer live in the same function space; that is, \(\psi\) is no longer given by Eq.\ \eqref{eq:PsiExpansion}. For the Petrov-Galerkin methods considered here, the weight function is instead given as the sum of the original element-continuous weight functions \(\psi\) and an element-discontinuous function \(\psi^\star\),
 
 \beq
 \label{eq:pgwf}
 \tilde{\psi}=\psi+\psi^\star\ ,
 \eeq
 
-\noindent where \(\tilde{\psi}\) represents the Petrov-Galerkin weight function and \(\psi\) is given by Eq. \eqref{eq:PsiExpansion}. The weighted residual statement in Eq. \eqref{eq:GalerkinInt3} becomes
+\noindent where \(\tilde{\psi}\) represents the Petrov-Galerkin weight function and \(\psi\) is given by Eq.\ \eqref{eq:PsiExpansion}. The weighted residual statement in Eq.\ \eqref{eq:GalerkinInt3} becomes
 
 \beq
 \label{eq:PG}
 \int_{\Omega}\left\lbrack R\left(C_j\phi_j\right)\right\rbrack^*\phi_i\ d\Omega+\int_{\Omega}\left\lbrack R\left(C_j\phi_j\right)\right\rbrack^*\psi^\star_i\ d\Omega=0\hspace{1cm}\text{for }j\in N\ .
 \eeq
 
-\noindent The first integral is the same Bubnov-Galerkin weighted residual statement from Eq. \eqref{eq:GalerkinInt3}. While the first integral in Eq. \eqref{eq:PG} is integrated by parts where possible, the second integral cannot be integrated by parts because \(\psi^\star\) is discontinuous across elements. If the approximate solution shape functions are sufficiently differentiable to have nonzero and finite derivatives in the second term, the Petrov-Galerkin method is consistent\mdash that is, the solution to Eq. \eqref{eq:PG} is the same as the solution to the Bubnov-Galerkin form in Eq. \eqref{eq:GalerkinInt3}.
+\noindent The first integral is the same Bubnov-Galerkin weighted residual statement from Eq.\ \eqref{eq:GalerkinInt3}. While the first integral in Eq.\ \eqref{eq:PG} is integrated by parts where possible, the second integral cannot be integrated by parts because \(\psi^\star\) is discontinuous across elements. If the approximate solution shape functions are sufficiently differentiable to have nonzero and finite derivatives in the second term, the Petrov-Galerkin method is consistent\mdash that is, the solution to Eq.\ \eqref{eq:PG} is the same as the solution to the Bubnov-Galerkin form in Eq.\ \eqref{eq:GalerkinInt3}.
 
-For a linear Lagrange interpolation of Eq. \eqref{eq:1DConvectionDiffusion} on uniform elements, selecting \(\psi^\star\) as
+For a linear Lagrange interpolation of Eq.\ \eqref{eq:1DConvectionDiffusion} on uniform elements, selecting \(\psi^\star\) as
 
 \beq
 \label{eq:psiStar}
@@ -353,9 +353,9 @@ For a linear Lagrange interpolation of Eq. \eqref{eq:1DConvectionDiffusion} on u
 
 \noindent is equivalent to a central \gls{fd} approximation of the diffusive kernel and an upwind approximation of the convective kernel that eliminates the \(Pe_{el}\) stability criterion \cite{zienkiewicz,brooks,novak_manual}. 
 
-In 1981, Brooks developed a consistent generalization of Eq. \eqref{eq:psiStar} to multi-dimensional, coupled, systems of convection-diffusion equations known as the \gls{supg} method that is now widely used in continuous \gls{fem} discretizations of convection-diffusion systems \cite{hauke,tezduyar,kirk,hauke_1998,TH1983,tezduyar1983,zienkiewicz,StabilizationReview}. The remainder of this section describes the application of the \gls{supg} stabilization scheme to the macroscale equations described in Chapter \ref{sec:PhysicalModels}. A detailed discussion of the stabilization is presented to illustrate the extension of the original \gls{supg} method to porous flows. 
+In 1981, Brooks developed a consistent generalization of Eq.\ \eqref{eq:psiStar} to multi-dimensional, coupled, systems of convection-diffusion equations known as the \gls{supg} method that is now widely used in continuous \gls{fem} discretizations of convection-diffusion systems \cite{hauke,tezduyar,kirk,hauke_1998,TH1983,tezduyar1983,zienkiewicz,StabilizationReview}. The remainder of this section describes the application of the \gls{supg} stabilization scheme to the macroscale equations described in Chapter \ref{sec:PhysicalModels}. A detailed discussion of the stabilization is presented to illustrate the extension of the original \gls{supg} method to porous flows. 
 
-The Navier-Stokes and friction-dominated fluid conservation equations are sufficiently different to warrant separate discussions of the \gls{supg} stabilization for each model. Stabilization of the Navier-Stokes model is described first due to its similarity to the conservative forms of convection-diffusion equations for which the \gls{supg} method was originally formulated. Rewrite the fluid conservation equations in the Navier-Stokes model in Eq. \eqref{eq:PorousEquations} in compact notation as
+The Navier-Stokes and friction-dominated fluid conservation equations are sufficiently different to warrant separate discussions of the \gls{supg} stabilization for each model. Stabilization of the Navier-Stokes model is described first due to its similarity to the conservative forms of convection-diffusion equations for which the \gls{supg} method was originally formulated. Rewrite the fluid conservation equations in the Navier-Stokes model in Eq.\ \eqref{eq:PorousEquations} in compact notation as
 
 \beq
 \label{eq:NSConcise}
@@ -394,7 +394,7 @@ The Navier-Stokes and friction-dominated fluid conservation equations are suffic
 \end{bmatrix}\ .
 \eeq
 
-\noindent For notational simplicity, \(\epsilon\) is shown within the time differentiation term in Eq. \eqref{eq:NSConcise} though the actual implementation assumes porosity is independent of time. Define a quasi-linear residual \(\vec{\mathscr{R}}\) as
+\noindent For notational simplicity, \(\epsilon\) is shown within the time differentiation term in Eq.\ \eqref{eq:NSConcise} though the actual implementation assumes porosity is independent of time. Define a quasi-linear residual \(\vec{\mathscr{R}}\) as
 
 \beq
 \label{eq:StrongResidual}
@@ -475,14 +475,14 @@ U_i\frac{\partial H_f}{\partial U_0} & U_i\frac{\partial H_f}{\partial U_1}+\del
 \int_\Omega\epsilon\left\lbrack\textbf{A}_i\left(\tau_{SUPG}\ \vec{\mathscr{R}}\right)\right\rbrack\cdot\frac{\partial\vec{W}}{\partial x_i}d\Omega\ ,
 \eeq
 
-\noindent where \(\tau_{SUPG}\) is a matrix of stabilization coefficients and \(\vec{W}\) is the vector of weight functions corresponding to each coupled equation. To clearly illustrate the indexing, rewrite Eq. \eqref{eq:supg1} as
+\noindent where \(\tau_{SUPG}\) is a matrix of stabilization coefficients and \(\vec{W}\) is the vector of weight functions corresponding to each coupled equation. To clearly illustrate the indexing, rewrite Eq.\ \eqref{eq:supg1} as
 
 \beq
 \label{eq:supg2}
 \int_\Omega\epsilon\textbf{A}_{i,jk\ }\tau_{SUPG,kl\ }\mathscr{R}_l\frac{\partial W_j}{\partial x_i}d\Omega\ .
 \eeq
 
-\noindent For the five coupled equations in Eq. \eqref{eq:NSConcise} in three spatial dimensions, \(j\), \(k\), \(l=1,2,3,4,5\) and \(i=1,2,3\). In other words, \(j\), \(k\), \(l\) represent the number of coupled equations and \(i\) represents the number of spatial dimensions. The weak form of the Navier-Stokes model with the \gls{supg} stabilization is then
+\noindent For the five coupled equations in Eq.\ \eqref{eq:NSConcise} in three spatial dimensions, \(j\), \(k\), \(l=1,2,3,4,5\) and \(i=1,2,3\). In other words, \(j\), \(k\), \(l\) represent the number of coupled equations and \(i\) represents the number of spatial dimensions. The weak form of the Navier-Stokes model with the \gls{supg} stabilization is then
 
 \beqa
 \label{eq:EqnWeakForm}
@@ -490,11 +490,11 @@ U_i\frac{\partial H_f}{\partial U_0} & U_i\frac{\partial H_f}{\partial U_1}+\del
 \int_\Omega\epsilon\left\lbrack\textbf{A}_i\left(\tau_{SUPG}\ \vec{\mathscr{R}}\right)\right\rbrack\cdot\frac{\partial\vec{W}}{\partial x_i}d\Omega=0\ ,
 \eeqa
 
-\noindent where integration by parts is applied only to the element-continuous terms. The first two integrals in Eq. \eqref{eq:EqnWeakForm} have already been presented in Eq. \eqref{eq:PronghornEquations_V2WeakForm}.
+\noindent where integration by parts is applied only to the element-continuous terms. The first two integrals in Eq.\ \eqref{eq:EqnWeakForm} have already been presented in Eq.\ \eqref{eq:PronghornEquations_V2WeakForm}.
 
-While perhaps not immediately apparent, Eq. \eqref{eq:supg1} is equivalent to upwinding in directions parallel to the velocity vector. To the \(j\)-th coupled equation is added an integral involving terms proportional to \(\vec{V}\cdot\nabla W_j\), \(\vec{\mathscr{R}}_u\cdot\nabla W_j\), and \(\partial W_j/\partial x_j\) (no summation implied), where \(\vec{\mathscr{R}}_u\) is the vector of momentum quasi-linear strong residuals. These new terms have a clear resemblance to the 1-D \(\psi^\star\) in Eq. \eqref{eq:psiStar} that introduced an upwind discretization of the convective derivative, but now generalized to coupled systems of equations. As an instructive example, Appendix \ref{sec:supg_app} shows the \gls{supg} integrals in Eq. \eqref{eq:EqnWeakForm} for the mass, momentum, and energy conservation equations in the Navier-Stokes model with the ideal gas \gls{eos}.
+While perhaps not immediately apparent, Eq.\ \eqref{eq:supg1} is equivalent to upwinding in directions parallel to the velocity vector. To the \(j\)-th coupled equation is added an integral involving terms proportional to \(\vec{V}\cdot\nabla W_j\), \(\vec{\mathscr{R}}_u\cdot\nabla W_j\), and \(\partial W_j/\partial x_j\) (no summation implied), where \(\vec{\mathscr{R}}_u\) is the vector of momentum quasi-linear strong residuals. These new terms have a clear resemblance to the 1-D \(\psi^\star\) in Eq.\ \eqref{eq:psiStar} that introduced an upwind discretization of the convective derivative, but now generalized to coupled systems of equations. As an instructive example, Appendix \ref{sec:supg_app} shows the \gls{supg} integrals in Eq.\ \eqref{eq:EqnWeakForm} for the mass, momentum, and energy conservation equations in the Navier-Stokes model with the ideal gas \gls{eos}.
 
-The friction-dominated model lacks convective terms in the momentum conservation equations and the fluid energy conservation equation is not written in conservative form. Rather than cast the friction-dominated model into the notation in Eq. \eqref{eq:NSConcise}, carrying through the algebra in Eq. \eqref{eq:supg1} shows that a term proportional to \(\vec{\mathscr{R}}_i\cdot\nabla W_0\) is added to the Navier-Stokes mass conservation equation. Extending this concept to the friction-dominated model, the following integral is added to the friction-dominated mass conservation equation,
+The friction-dominated model lacks convective terms in the momentum conservation equations and the fluid energy conservation equation is not written in conservative form. Rather than cast the friction-dominated model into the notation in Eq.\ \eqref{eq:NSConcise}, carrying through the algebra in Eq.\ \eqref{eq:supg1} shows that a term proportional to \(\vec{\mathscr{R}}_i\cdot\nabla W_0\) is added to the Navier-Stokes mass conservation equation. Extending this concept to the friction-dominated model, the following integral is added to the friction-dominated mass conservation equation,
 
 \beq
 \label{eq:fd1}
@@ -509,9 +509,9 @@ The friction-dominated model lacks convective terms in the momentum conservation
 \int_\Omega \tilde{\tau}\left(\epsilon\nabla P-\epsilon\rho_f\vec{g}+W\rho_f\vec{V}\right)\cdot\nabla\psi d\Omega=0\ .
 \eeqa
 
-\noindent The first two integrals in Eq. \eqref{eq:qqq1} have already been presented in Eq. \eqref{eq:Mass2Weak}. No additional integrals are added to the momentum conservation equations due to the lack of convective terms. 
+\noindent The first two integrals in Eq.\ \eqref{eq:qqq1} have already been presented in Eq.\ \eqref{eq:Mass2Weak}. No additional integrals are added to the momentum conservation equations due to the lack of convective terms. 
 
-Finally, the fluid energy conservation equation is stabilized using the single-equation form suggested by Eq. \eqref{eq:psiStar} by adding the following integral to the fluid energy conservation equation,
+Finally, the fluid energy conservation equation is stabilized using the single-equation form suggested by Eq.\ \eqref{eq:psiStar} by adding the following integral to the fluid energy conservation equation,
 
 \beq
 \label{eq:fd2}
@@ -527,7 +527,7 @@ Finally, the fluid energy conservation equation is stabilized using the single-e
 \int_\Omega\tilde{\tau}\left\lbrack-\nabla\cdot(\kappa_f\nabla T_f)+\alpha(T_f-T_s)-\dot{q}_f\right\rbrack\vec{V}\cdot\nabla \psi d\Omega=0\ .
 \eeqa
 
-\noindent The first two integrals in Eq. \eqref{eq:qqq2} have already been presented in Eq. \eqref{eq:Energy2Weak}. The \gls{supg} stabilization terms in Eq. \eqref{eq:supg1} for the Navier-Stokes model and Eqs. \eqref{eq:fd1} and \eqref{eq:fd2} for the friction-dominated model are implemented in Pronghorn in a similar manner as the other kernels as described in Section \ref{sec:weak_form}. 
+\noindent The first two integrals in Eq.\ \eqref{eq:qqq2} have already been presented in Eq.\ \eqref{eq:Energy2Weak}. The \gls{supg} stabilization terms in Eq.\ \eqref{eq:supg1} for the Navier-Stokes model and Eqs. \eqref{eq:fd1} and \eqref{eq:fd2} for the friction-dominated model are implemented in Pronghorn in a similar manner as the other kernels as described in Section \ref{sec:weak_form}. 
 
 \(\tau_{SUPG}\) represents a matrix of intrinsic time scales; for coupled systems of equations, each component in \(\tau_{SUPG}\) is a combination of the waves associated with the eigenvalues of the equation system. Rather than solve an eigenvalue problem at each quadrature point, computational efficiency motivates a diagonal approximation,
 
@@ -579,7 +579,7 @@ Three different time scales are considered in the construction of \(\tau_c\), \(
 \tau_\text{diffusive}=\frac{\rho_fC_{p,f}h_e^2}{4\left(\kappa_f/\epsilon\right)}\ .
 \eeq
 
-\noindent The scalar stabilization parameter \(\tilde{\tau}\) in the \gls{supg} stabilization of the friction-dominated model is taken as Eq. \eqref{eq:tau4}. The element size \(h_e\) is for simplicity taken as the minimum dimension of the element, though methods based on flow-aligned or element-averaged scales have been used elsewhere \cite{hauke_1998,hauke,tezduyar1983,tezduyar}. 
+\noindent The scalar stabilization parameter \(\tilde{\tau}\) in the \gls{supg} stabilization of the friction-dominated model is taken as Eq.\ \eqref{eq:tau4}. The element size \(h_e\) is for simplicity taken as the minimum dimension of the element, though methods based on flow-aligned or element-averaged scales have been used elsewhere \cite{hauke_1998,hauke,tezduyar1983,tezduyar}. 
 
 The selection of \(\tau_{SUPG}\) requires a balance between accuracy and stability\mdash too small a \(\tau_{SUPG}\) will still exhibit nodal oscillations, while too large a \(\tau_{SUPG}\) will result in excessive diffusion for basis functions with orders less than the highest derivative in the strong form \gls{pde}. The above definitions for \(\tau_c\), \(\tau_u\), and \(\tau_e\) are only approximate, and a multiplier \(\tilde{C}\) is used to scale the stabilization parameter. All simulations should be run for a number of \(\tilde{C}\) values to determine an appropriate balance between stability and accuracy. \
 
@@ -606,7 +606,7 @@ As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and c
 \label{fig:multiapp}
 \end{figure}
 
-Fig.\ \ref{fig:multiscale_pbr} shows an illustration of the length scale coupling in Pronghorn when the \gls{hsd} is used to describe the internal pebble heat transfer. The macroscale model is the master application, which controls the execution of the ``first-tier'' mesoscale sub-applications. Each mesoscale application controls the execution of the ``second-tier'' microscale sub-applications. In a single Picard iteration, the multiscale coupling procedure with the \gls{hsd} mesoscale and microscale model is as follows\mdash
+Fig.\ \ref{fig:multiscale_pbr} shows an illustration of the length scale coupling in Pronghorn when the \gls{hsd} is used to describe the internal pebble heat transfer. The macroscale model is the master application, which controls the execution of the ``first-tier'' mesoscale sub-applications. Each mesoscale application controls the execution of the ``second-tier'' microscale sub-applications. In a single Picard iteration, the multiscale coupling procedure with the \gls{hsd} meso and micro scale model is as follows\mdash
 
 \begin{enumerate}
 \itemsep0.3em
@@ -620,7 +620,7 @@ Fig.\ \ref{fig:multiscale_pbr} shows an illustration of the length scale couplin
 	\item The first-tier sub-applications calculate averaged power densities in each element of the mesoscale mesh.
 	\item The first-tier sub-applications transfer the averaged power densities as a source term to a microscale sub-application in each element.
 	\item The second-tier sub-applications solve the microscale models.
-	\item The first-tier sub-applications retrieve the microscale solution in each element of the mesoscale mesh and apply the continuity in heat flux and temperature \gls{bc} with the summation in Eq. \eqref{eq:MultiscaleSolution}.
+	\item The first-tier sub-applications retrieve the microscale solution in each element of the mesoscale mesh and apply the continuity in heat flux and temperature \gls{bc} with the summation in Eq.\ \eqref{eq:MultiscaleSolution}.
 	\end{enumerate}
 \end{enumerate}
 
@@ -635,28 +635,28 @@ It is important to note that this coupling algorithm only applies to steady-stat
 
 For generality, Fig.\ \ref{fig:multiscale_pbr} shows a number of microscale simulations in each pebble. As discussed in Section \ref{sec:mesomicro}, the thin fuel-matrix region of the \gls{pbfhr} modeled in Chapter \ref{sec:pbfhr} warrants the simplifying assumption that a single average microscale domain in each pebble captures the average particle heat transfer. Therefore, a single microscale domain is simulated in each mesoscale domain.
 
-As compared to the \gls{hsd} model, the multiscale coupling procedure is much simpler for the \gls{hl} model due to the use of a single differential equation to describe the pebble temperature distribution. For the \gls{hl} method, the above calculation sequence replaces step 4, and all its sub-steps, with solution of the \gls{hl} model in Eq. \eqref{eq:oem} in a first-tier sub-application. The \gls{hl} method therefore does not involve second-tier sub-applications. 
+As compared to the \gls{hsd} model, the multiscale coupling procedure is much simpler for the \gls{hl} model due to the use of a single differential equation to describe the pebble temperature distribution. For the \gls{hl} method, the above calculation sequence replaces step 4, and all its sub-steps, with solution of the \gls{hl} model in Eq.\ \eqref{eq:oem} in a first-tier sub-application. The \gls{hl} method therefore does not involve second-tier sub-applications. 
 
 \subsection{Newton-Krylov Nonlinear Solution}
 \label{sec:nonlinear}
 
-This section describes the solution of a nonlinear system of equations\mdash for the macroscale model, this refers to the four coupled equations in Eq. \eqref{eq:PorousEquations} or \eqref{eq:PrimitiveEqns}; for the mesoscale, this refers to the \gls{hl} model in Eq. \eqref{eq:oem} or the \gls{hsd} model in \eqref{eq:MesoscaleSolution}; and for the microscale, this refers to the \gls{hsd} model in Eq. \eqref{eq:MicroscaleSolution}. Notably, Pronghorn differs from many Navier-Stokes solvers in that the fluid conservation equations are solved together in the same matrix system, rather than with segregated solvers such as \gls{simple}.
+This section describes the solution of a nonlinear system of equations\mdash for the macroscale model, this refers to the four coupled equations in Eq.\ \eqref{eq:PorousEquations} or \eqref{eq:PrimitiveEqns}; for the mesoscale, this refers to the \gls{hl} model in Eq.\ \eqref{eq:oem} or the \gls{hsd} model in \eqref{eq:MesoscaleSolution}; and for the microscale, this refers to the \gls{hsd} model in Eq.\ \eqref{eq:MicroscaleSolution}. Notably, Pronghorn differs from many Navier-Stokes solvers in that the fluid conservation equations are solved together in the same matrix system, rather than with segregated solvers such as \gls{simple}.
 
-A Newton-Krylov method is used to solve the \gls{fe} discretized forms of the multiscale models presented in Section \ref{sec:weak_form} with the \gls{supg} stabilization terms given in Section \ref{sec:supg}. The nonlinear system of equations is a root-finding problem; extending Eq. \eqref{eq:residual} to the discretized case, this nonlinear system is
+A Newton-Krylov method is used to solve the \gls{fe} discretized forms of the multiscale models presented in Section \ref{sec:weak_form} with the \gls{supg} stabilization terms given in Section \ref{sec:supg}. The nonlinear system of equations is a root-finding problem; extending Eq.\ \eqref{eq:residual} to the discretized case, this nonlinear system is
 
 \beq
 \label{eq:nonlinear2}
 \vec{R}(\vec{u})=0\ ,
 \eeq
 
-\noindent where \(\vec{R}\) is the discrete nonlinear residual vector and \(\vec{u}\) is the discrete approximate nonlinear solution. A Newton-Krylov method first linearizes Eq. \eqref{eq:nonlinear2} to the form
+\noindent where \(\vec{R}\) is the discrete nonlinear residual vector and \(\vec{u}\) is the discrete approximate nonlinear solution. A Newton-Krylov method first linearizes Eq.\ \eqref{eq:nonlinear2} to the form
 
 \beq
 \label{eq:linear}
 \textbf{A}\vec{x}=\vec{b}\ ,
 \eeq
 
-\noindent where \(\textbf{A}\) is a matrix, \(\vec{x}\) is the linear solution vector, and \(\vec{b}\) is the \gls{rhs} vector; linearization with Newton's method is explained shortly. Following this linearization, the Newton-Krylov method involves two main loops\mdash 1)~an inner loop with index \(k\) that iteratively solves for \(\vec{x}\) in Eq. \eqref{eq:linear}; and 2)~an outer loop with index \(i\) that iteratively solves for \(\vec{u}\) in Eq. \eqref{eq:nonlinear2}.
+\noindent where \(\textbf{A}\) is a matrix, \(\vec{x}\) is the linear solution vector, and \(\vec{b}\) is the \gls{rhs} vector; linearization with Newton's method is explained shortly. Following this linearization, the Newton-Krylov method involves two main loops\mdash 1)~an inner loop with index \(k\) that iteratively solves for \(\vec{x}\) in Eq.\ \eqref{eq:linear}; and 2)~an outer loop with index \(i\) that iteratively solves for \(\vec{u}\) in Eq.\ \eqref{eq:nonlinear2}.
 
 Linearization is performed with Newton's method by forming a Taylor series approximation about the current nonlinear iterate,
 
@@ -665,7 +665,7 @@ Linearization is performed with Newton's method by forming a Taylor series appro
 \vec{R}(\vec{u}_{i+1})=\vec{R}(\vec{u}_i)+\frac{\partial\vec{R}(\vec{u}_i)}{\partial \vec{u}}(\vec{u}_{i+1}-\vec{u}_i)+\mathcal{O}(\vec{u}_{i+1}-\vec{u}_i)^2\ .
 \eeq
 
-\noindent Setting Eq. \eqref{eq:TaylorSeriesResidual} to zero and neglecting higher-order terms, a linear form is obtained,
+\noindent Setting Eq.\ \eqref{eq:TaylorSeriesResidual} to zero and neglecting higher-order terms, a linear form is obtained,
 
 \beq
 \label{eq:linear3}
@@ -686,7 +686,7 @@ Linearization is performed with Newton's method by forming a Taylor series appro
 \vec{\delta}_i\equiv\vec{u}_{i+1}-\vec{u}_i\ .
 \eeq
 
-\noindent Comparing Eq. \eqref{eq:linear3} with the general linear form in Eq. \eqref{eq:linear} shows that \textbf{A} represents \(\textbf{J}\), \(\vec{b}\) represents \(-\vec{R}\), and \(\vec{x}\) represents \(\vec{\delta}_i\). To match the convention used in most linear algebra texts, the notation in Eq. \eqref{eq:linear} is used in the remainder of this section to describe the linear problem in Eq. \eqref{eq:linear3}.
+\noindent Comparing Eq.\ \eqref{eq:linear3} with the general linear form in Eq.\ \eqref{eq:linear} shows that \textbf{A} represents \(\textbf{J}\), \(\vec{b}\) represents \(-\vec{R}\), and \(\vec{x}\) represents \(\vec{\delta}_i\). To match the convention used in most linear algebra texts, the notation in Eq.\ \eqref{eq:linear} is used in the remainder of this section to describe the linear problem in Eq.\ \eqref{eq:linear3}.
 
 To summarize the Newton-Krylov method, the inner loop iteratively solves for \(\vec{x}_k\) until the norm of the linear residual in the \(k\)-th iteration, \(\vec{r}_k\), is less than a specified tolerance \(\varepsilon_l\),
 
@@ -716,7 +716,7 @@ The nonlinear problem is converged once the norm of the nonlinear residual in th
 \|\vec{R}(\vec{u}_i)\|\leq\varepsilon_n\ .
 \eeq
 
-\noindent The \gls{gmres} method, a Krylov subspace iterative method commonly used to solve non-symmetric linear systems, is used for solution of Eq. \eqref{eq:linear} \cite{saad}. A Krylov space is a vector space built by repeatedly applying a matrix to a vector. The Krylov space \(\mathcal{K}_k\) built by repeatedly applying \(\textbf{A}\) to \(\vec{r}_0\) is
+\noindent The \gls{gmres} method, a Krylov subspace iterative method commonly used to solve non-symmetric linear systems, is used for solution of Eq.\ \eqref{eq:linear} \cite{saad}. A Krylov space is a vector space built by repeatedly applying a matrix to a vector. The Krylov space \(\mathcal{K}_k\) built by repeatedly applying \(\textbf{A}\) to \(\vec{r}_0\) is
 
 \begin{equation}
 \label{eq:krylov_space}
@@ -725,7 +725,7 @@ The nonlinear problem is converged once the norm of the nonlinear residual in th
 
 \noindent In each linear iteration, the \gls{gmres} method computes the \((k+1)\)-th linear iterate from the space \(\vec{x}_0+\mathcal{K}_k\) by minimizing the L$^2$ norm of the linear residual over \(\vec{x}_0+\mathcal{K}_k\). 
 
-The convergence of iterative linear solvers such as \gls{gmres} generally depends on the condition number and location and clustering of the eigenvalues of \textbf{A} \cite{trefethen}. The total number of linear iterations can be dramatically reduced by preconditioning the linear system, or applying a preconditioner matrix \textbf{M} in such a way as to reduce the condition number and/or shift the eigenvalue spectrum \cite{benzi}. \gls{gmres} and other linear solvers based on minimizing residuals typically employ a ``right'' preconditioning process, which applies \textbf{M} to the linear system in Eq. \eqref{eq:linear} as
+The convergence of iterative linear solvers such as \gls{gmres} generally depends on the condition number and location and clustering of the eigenvalues of \textbf{A} \cite{trefethen}. The total number of linear iterations can be dramatically reduced by preconditioning the linear system, or applying a preconditioner matrix \textbf{M} in such a way as to reduce the condition number and/or shift the eigenvalue spectrum \cite{benzi}. \gls{gmres} and other linear solvers based on minimizing residuals typically employ a ``right'' preconditioning process, which applies \textbf{M} to the linear system in Eq.\ \eqref{eq:linear} as
 
 \beq
 \textbf{A}\textbf{M}^{-1}(\textbf{M}\vec{x})=\vec{b}\ ,
@@ -733,7 +733,7 @@ The convergence of iterative linear solvers such as \gls{gmres} generally depend
 
 \noindent so that the residual is unchanged. \gls{petsc} options are exposed directly to \gls{moose} applications, enabling the use of a large set of preconditioners \cite{petsc}. Preconditioner selection is often problem-specific, but an \gls{asm} \gls{smp} with \gls{ilu} on sub-blocks is often sufficient.
 
-\gls{ad}, sometimes referred to as ``algorithmic differentiation,'' is used to calculate the Jacobians in Eq. \eqref{eq:JacobianDef} \cite{ad}. Operator overloads are defined for all of the fundamental arithmetic operators, such as addition, subtraction, multiplication, and division, as well as for elementary functions such as exponentials and logarithms. These overloads then systematically apply the chain rule to the sequence of arithmetic operations used to construct the residual \(\vec{R}\) to compute a working precision accurate estimate of the derivatives of \(\vec{R}\) with respect to \(\vec{u}\). The use of \gls{ad} enables faster application development by avoiding the by-hand derivation of nonlinear residual derivatives. In many cases, \gls{ad} also decreases the number of linear and nonlinear iterations due to the more accurate Jacobian evaluation. The use of \gls{ad} also allows seamless interchange between different sets of solution variables without any modifications to the kernel and \gls{bc} classes that would otherwise be required for by-hand Jacobian evaluation.
+\gls{ad}, sometimes referred to as ``algorithmic differentiation,'' is used to calculate the Jacobians in Eq.\ \eqref{eq:JacobianDef} \cite{ad}. Operator overloads are defined for all of the fundamental arithmetic operators, such as addition, subtraction, multiplication, and division, as well as for elementary functions such as exponentials and logarithms. These overloads then systematically apply the chain rule to the sequence of arithmetic operations used to construct the residual \(\vec{R}\) to compute a working precision accurate estimate of the derivatives of \(\vec{R}\) with respect to \(\vec{u}\). The use of \gls{ad} enables faster application development by avoiding the by-hand derivation of nonlinear residual derivatives. In many cases, \gls{ad} also decreases the number of linear and nonlinear iterations due to the more accurate Jacobian evaluation. The use of \gls{ad} also allows seamless interchange between different sets of solution variables without any modifications to the kernel and \gls{bc} classes that would otherwise be required for by-hand Jacobian evaluation.
 
 \section{Software Engineering Design}
 \label{sec:software}
