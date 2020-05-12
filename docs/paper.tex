@@ -33,6 +33,9 @@
 \newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
 \newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
 
+\usepackage{makecell}
+\renewcommand\theadfont{\bfseries}
+
 \renewcommand{\arraystretch}{1.2}
 
 \definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
@@ -54,7 +57,7 @@
 
 \newcommand{\legacymomentum}{\epsilon\nabla P-\epsilon\rho_f\vec{g}+W\rho_f\vec{V}=0}
 \newcommand{\legacymass}{\epsilon\frac{\partial\rho_f}{\partial t}+\nabla\cdot\left\lbrack\frac{\epsilon^2}{W}\left(\rho_f\vec{g}-\nabla P\right)\right\rbrack=0}
-\newcommand{\legacyfluidenergy}{\epsilon\rho_fC_{p,f,}\frac{\partial T_f}{\partial t}+\epsilon\rho_fC_{p,f}\vec{V}\cdot\nabla T_f-\nabla\cdot(\kappa_f\nabla T_f)+\alpha(T_f-T_s)-\dot{q}_f=0}
+\newcommand{\legacyfluidenergy}{\epsilon\rho_fC_{p,f}\frac{\partial T_f}{\partial t}+\epsilon\rho_fC_{p,f}\vec{V}\cdot\nabla T_f-\nabla\cdot(\kappa_f\nabla T_f)+\alpha(T_f-T_s)-\dot{q}_f=0}
 \newcommand{\legacysolidenergy}{\solidenergyconservation}
 
 \lstset{language=C++,

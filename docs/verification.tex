@@ -20,7 +20,7 @@ To enable reproduction of the simulations presented in this chapter, Appendix \r
 \section{Method of Manufactured Solutions}
 \label{sec:mms}
 
-The \gls{mms} is used to verify correct source code implementation of all contributions to the residuals in Eqs. \eqref{eq:PronghornEquations_V2WeakForm} and \eqref{eq:PrimitiveWeakForms}\mdash that is, all kernels and \gls{bc} objects.
+The \gls{mms} is used to verify correct source code implementation of all contributions to the residuals in Eqs.\ \eqref{eq:PronghornEquations_V2WeakForm} and \eqref{eq:PrimitiveWeakForms}\mdash that is, all kernels and \gls{bc} objects.
 
 A user-specified solution to a particular governing equation is ``manufactured'' by adding an appropriate forcing term to that equation \cite{roache}. For example, the diffusion equation with unity diffusivity has the strong form
 
@@ -313,7 +313,7 @@ V_{y,p}=-2UR^2\frac{xy}{(x^2+y^2)^2}\ ,
 \nabla\left(\frac{1}{2}V_iV_i+\frac{P}{\rho_f}\right)=0\ .
 \eeq
 
-\noindent To obtain the solution for pressure, apply Eq.\ \eqref{eq:B1} at the free-stream conditions of \(\vec{V}=U\vec{e}_x\) and \(P=P_\infty\) in combination with the velocity solutions in Eqs. \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic} to give
+\noindent To obtain the solution for pressure, apply Eq.\ \eqref{eq:B1} at the free-stream conditions of \(\vec{V}=U\vec{e}_x\) and \(P=P_\infty\) in combination with the velocity solutions in Eqs.\ \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic} to give
 
 \beq
 \label{eq:PPressure}
@@ -338,7 +338,7 @@ C_{P,p}=1-4\sin^2(\theta)\ ,
 \noindent where \(\theta\) is the angle relative to the front of the cylinder. 
 \end{comment}
 
-\noindent Eqs. \eqref{eq:V1Analytic}, \eqref{eq:V2Analytic}, and \eqref{eq:PPressure}, are referred to here as the ``potential flow solution.''
+\noindent Eqs.\ \eqref{eq:V1Analytic}, \eqref{eq:V2Analytic}, and \eqref{eq:PPressure}, are referred to here as the ``potential flow solution.''
 
 The Mach number \(Ma\) is defined as
 
@@ -347,11 +347,11 @@ The Mach number \(Ma\) is defined as
 Ma\equiv\frac{\|\vec{V}\|}{c}\ 
 \eeq
 
-\noindent and represents the proximity of the flow to supersonic conditions. By writing the stagnation pressure as a Taylor series in terms of the Mach number for an ideal gas, compressibility effects are small for Mach numbers less than about 0.3. Therefore, in the limit of zero Mach number, Pronghorn's compressible Euler solution should predict velocities and pressures that match the potential flow solution. However, a flow simulation at exactly zero Mach number would correspond to a stagnant fluid for which matching the nonzero velocities in Eqs. \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic} would not be possible. Therefore, the objective of comparing the compressible Euler solution with the incompressible potential flow solution is only to show that the difference between the two solutions decreases as the Mach number decreases. This investigation verifies both 1)~correct numerical implementation of the inviscid form of the Navier-Stokes macroscale model and 2)~the mechanically compressible dependence on the fluid \gls{eos}.
+\noindent and represents the proximity of the flow to supersonic conditions. By writing the stagnation pressure as a Taylor series in terms of the Mach number for an ideal gas, compressibility effects are small for Mach numbers less than about 0.3. Therefore, in the limit of zero Mach number, Pronghorn's compressible Euler solution should predict velocities and pressures that match the potential flow solution. However, a flow simulation at exactly zero Mach number would correspond to a stagnant fluid for which matching the nonzero velocities in Eqs.\ \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic} would not be possible. Therefore, the objective of comparing the compressible Euler solution with the incompressible potential flow solution is only to show that the difference between the two solutions decreases as the Mach number decreases. This investigation verifies both 1)~correct numerical implementation of the inviscid form of the Navier-Stokes macroscale model and 2)~the mechanically compressible dependence on the fluid \gls{eos}.
 
 Three different values of the Mach number are considered\mdash 0.08, 0.16, and 0.32. Each Mach number is a factor of two larger than the next-smallest value, and a Mach number of 0.32 is just above the classically-quoted value of 0.3 below which compressibility effects are insignificant.
 
-A number of different metrics are used to assess the difference between the compressible Euler and incompressible potential flow solutions. The relative L$^2$ norm of the $x$-velocity, $y$-velocity, and pressure are evaluated over the entire domain and are represented as \(\|V_x-V_{x,p}\|/\|V_{x,p}\|\), \(\|V_y-V_{y,p}\|/\|V_{y,p}\|\), and \(\|P-P_p\|/\|P_p\|\), respectively. From Eqs. \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic}, the potential flow velocity at the top of the cylinder is \(2U\). While the three norms listed earlier are computed over the entire domain, a point indicator of the velocity difference is useful for assessing error contributions due to the finite geometry. Therefore, the relative difference in the velocity at the top of the cylinder is included and represented as \(|V_x(0, R)-2U|/2U\).
+A number of different metrics are used to assess the difference between the compressible Euler and incompressible potential flow solutions. The relative L$^2$ norm of the $x$-velocity, $y$-velocity, and pressure are evaluated over the entire domain and are represented as \(\|V_x-V_{x,p}\|/\|V_{x,p}\|\), \(\|V_y-V_{y,p}\|/\|V_{y,p}\|\), and \(\|P-P_p\|/\|P_p\|\), respectively. From Eqs.\ \eqref{eq:V1Analytic} and \eqref{eq:V2Analytic}, the potential flow velocity at the top of the cylinder is \(2U\). While the three norms listed earlier are computed over the entire domain, a point indicator of the velocity difference is useful for assessing error contributions due to the finite geometry. Therefore, the relative difference in the velocity at the top of the cylinder is included and represented as \(|V_x(0, R)-2U|/2U\).
 
 A mesh refinement study is performed for the largest Mach number of 0.32 in the same fashion as in Section \ref{sec:natural_convection}. A starting mesh is uniformly refined until the relative change in the three L$^2$ norms described in the preceding paragraph is less than 5\% between two successive meshes. The finer of these two meshes is then used for all other Mach numbers.
 

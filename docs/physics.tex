@@ -1,18 +1,18 @@
 \chapter{Multiscale Models for Pebble Bed Reactors}
 \label{sec:PhysicalModels}
 
-Many man-made and natural systems exhibit wide ranges in temporal and/or spatial scales such that the use of models applicable to the ``smallest common denominator'' scale for all length scales are computationally impractical. Examples of such systems include Earth's climate, drugs targeting cancer cell growth, and \glspl{pbr}. Multiscale analysis is based on decomposing a complex system into a number of important temporal and spatial length scales, each described by different models, that are aggregated together in an intelligent manner to obtain a representative solution for the relevant physical phenomena on all length scales. The underlying motivation is to enable comprehensive physics predictions at significantly reduced computational cost relative to fine-scale modeling of all scales. 
+Many systems exhibit wide ranges in temporal and/or spatial scales such that the use of models applicable to the ``smallest common denominator'' scale for all length scales are computationally impractical. Examples of such systems include Earth's climate, drugs targeting cancer cell growth, fluid flow, and \glspl{pbr}. Multiscale analysis is based on decomposing a complex system into a number of important temporal and spatial length scales, each described by different models, that are aggregated together in an intelligent manner to obtain a representative solution for the relevant physical phenomena on all length scales. The underlying motivation is to enable comprehensive physics predictions at significantly reduced computational cost relative to fine-scale modeling of all scales. 
 
 \glspl{pbr} are naturally described in terms of three length scales\mdash 1)~the macroscale, defined over the entire reactor core, which encompasses the pebble bed, reflectors, and structural materials; 2)~the mesoscale, defined over a single pebble; and 3)~the microscale, defined over a single fuel particle. Fig.\ \ref{fig:multiscale} depicts these three length scales for the pebble bed region. For a typical \gls{pbr}, the characteristic macro, meso, and micro length scales are approximately \(5\times10^0\) m, \(5\times10^{-2}\) m, and \(1\times10^{-3}\) m, respectively, such that the mesoscale is approximately 100 times smaller than the macroscale and the microscale is approximately 50 times smaller than the mesoscale. 
 
+By assuming fine length scales are periodic with respect to coarse length scales, \glspl{bc} from the coarser-length solution are applied to finer-scale models to obtain representative thermal and flow predictions for all length scales. This section describes the multiscale modeling approach developed in this dissertation in terms of the three length scales shown in Fig.\ \ref{fig:multiscale}. Section \ref{sec:macro_deriv} discusses the macroscale model, while Section \ref{sec:mesomicro} discusses the meso and micro scale models. Finally, Section \ref{sec:MacroAssumptions} elaborates on the most important limitations, assumptions, and knowledge gaps in this multiscale application to \glspl{pbr}. The interested reader will find detailed derivations and additional discussion in the theory manual accompanying the software implementation of these concepts \cite{novak_manual}. 
+
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\linewidth]{figs/multiscale_pbr.png}
+\includegraphics[width=0.9\linewidth]{figs/multiscale_pbr.png}
 \caption{Decomposition of a \gls{pbr} into three length scales (adapted from \cite{aufiero_2016,pebble_cut,pebble_uncut,triso_closeup,hales}).}
 \label{fig:multiscale}
 \end{figure}
-
-By assuming fine length scales are periodic with respect to coarse length scales, \glspl{bc} from the coarser-length solution are applied to finer-scale models to obtain representative thermal and flow predictions for all length scales. This section describes the multiscale modeling approach developed in this dissertation in terms of the three length scales shown in Fig.\ \ref{fig:multiscale}. Section \ref{sec:macro_deriv} discusses the macroscale model, while Section \ref{sec:mesomicro} discusses the meso and micro scale models. Finally, Section \ref{sec:MacroAssumptions} elaborates on the most important limitations, assumptions, and knowledge gaps in this multiscale application to \glspl{pbr}. The interested reader will find detailed derivations and additional discussion in the theory manual accompanying the software implementation of these concepts \cite{novak_manual}. 
 
 \section{Macroscale Model}
 \label{sec:macro_deriv}
@@ -23,9 +23,9 @@ However, on a scale encompassing small groups of pebbles or blocks, averaged flo
 
 A porous media in general refers to a solid matrix with interconnected voids filled with gas and/or liquid. A diverse set of systems have been modeled as porous media, ranging from the flow of water through permeable subterranean rock to conductive heat flow through composite materials \cite{diersch}. Within the nuclear engineering field, porous media models are commonly applied to flow and heat transfer in tube-in-shell heat exchangers \cite{ge_prhr}, quenched corium heaps \cite{magallon,raverdy}, tritium breeder blankets in fusion reactors \cite{xu_cfetr,zhang2016,guo2006}, and pin-fueled fission reactors \cite{zarifi}. For application to \glspl{pbr}, the solid matrix is interpreted as the stacked reflector blocks and randomly heaped pebbles, while the interconnected voids correspond to the fluid interstices between the solids and the machined flow channels within blocks. The solid phase in a porous media is often referred to as ``particles;'' to avoid confusion with the particles within \gls{pbr} fuels, ``pebbles'' is used to refer to the solid phase on the macroscale, while ``particles'' is used to refer to the \glspl{cfp}.
 
-This section presents the derivation of the spatially homogenized Navier-Stokes equations with conjugate heat transfer. While ``Navier-Stokes'' strictly refers to the momentum conservation equations for a Newtonian fluid, this work follows a looser convention of referring to the set of coupled mass, momentum, and energy equations together as the Navier-Stokes equations. This is performed to differentiate from a different set of coupled equations referred to as the ``friction-dominated'' equations that differ from the Navier-Stokes equation set in the mass, momentum, and energy equations.
+This section presents the derivation of the spatially homogenized Navier-Stokes equations with conjugate heat transfer. While ``Navier-Stokes'' strictly refers to the momentum conservation equations for a Newtonian fluid, this work follows a looser convention of referring to the set of coupled mass, momentum, and energy equations together as the Navier-Stokes equations. This is performed to differentiate from a different set of coupled equations referred to as the ``friction-dominated'' equations derived later that differ from the Navier-Stokes equation set in the mass, momentum, and energy equations.
 
-A nondimensional analysis in Section \ref{sec:NonDim} justifies omission of certain terms for reactor applications, and Section \ref{sec:BCs} presents the accompanying \glspl{bc}. Together with a set of closures described in Section \ref{sec:Closures} that approximate the effect of local fluid flow and heat transfer on the macroscale, these porous media equations are used to describe the macroscale in \glspl{pbr}. Spatial averaging eliminates the need to explicitly resolve the individual solid and fluid phases, resulting in orders of magnitude reduction in mesh complexity and element count. Further, the macroscale effects of turbulence are considered in the closures presented in Section \ref{sec:Closures} rather than through \gls{rans} models. Together, these simplifications result in many orders of magnitude reduction in computational cost required to predict locally-averaged flow and heat transfer in \glspl{pbr}.
+A nondimensional analysis in Section \ref{sec:NonDim} justifies omission of certain terms for reactor applications, while Sections \ref{sec:BCs} and \ref{sec:Closures} present the accompanying \glspl{bc} and model closures, respectively. Spatial averaging eliminates the need to explicitly resolve the individual solid and fluid phases, resulting in orders of magnitude reduction in mesh complexity and element count. Further, the macroscale effects of turbulence are considered in the closures presented in Section \ref{sec:Closures} rather than through \gls{rans} models. Together, these simplifications result in many orders of magnitude reduction in computational cost required to predict locally-averaged flow and heat transfer in \glspl{pbr}.
 
 A detailed derivation of the spatially homogenized Navier-Stokes equations is presented in order to provide background for how application of porous media theory to nuclear systems differs from the more ubiquitous applications found in the chemical and geological engineering fields, as well as to highlight the most important assumptions used in the method that are rarely addressed. 
 
@@ -46,7 +46,7 @@ Conservation of mass, momentum, and energy for a compressible Newtonian continuu
 \frac{\partial (\rho E)}{\partial t}+\nabla\cdot(\rho H\vec{V})=\rho \vec{g}\cdot\vec{V}+\nabla\cdot(\vec{V}\tau)+\nabla\cdot(k\nabla T)+\dot{q}\ .
 \eeq
 
-\noindent In Eqs. \eqref{eq:ContinuityNonPorous}--\eqref{eq:EnergyNonPorous}, \(\rho\) is the density; \(\vec{V}\) is the velocity; \(\vec{g}\) is the gravitational acceleration vector; \(P\) is the thermodynamic pressure; \(\tau\) is the deviatoric stress tensor, defined as
+\noindent In Eqs.\ \eqref{eq:ContinuityNonPorous}--\eqref{eq:EnergyNonPorous}, \(\rho\) is the density; \(\vec{V}\) is the velocity; \(\vec{g}\) is the gravitational acceleration vector; \(P\) is the thermodynamic pressure; \(\tau\) is the deviatoric stress tensor, defined as
 
 \beq
 \label{eq:TauDef}
@@ -67,7 +67,7 @@ E\equiv e+\frac{1}{2}\vec{V}\cdot\vec{V}\ ,
 H\equiv E+\frac{P}{\rho}\ ;
 \eeq
 
-\noindent \(k\) is the thermal conductivity; \(T\) is the temperature; and \(\dot{q}\) is the volumetric heat source. In Eqs. \eqref{eq:ContinuityNonPorous}--\eqref{eq:EnergyNonPorous}, it has been assumed that the only body force is gravity, the heat flux consists only of conductive contributions that are represented by Fourier's law, and volumetric energy dissipative effects are negligible \cite{batchelor}.
+\noindent \(k\) is the thermal conductivity; \(T\) is the temperature; and \(\dot{q}\) is the volumetric heat source. In Eqs.\ \eqref{eq:ContinuityNonPorous}--\eqref{eq:EnergyNonPorous}, it has been assumed that the only body force is gravity, the heat flux consists only of conductive contributions that are represented by Fourier's law, and volumetric energy dissipative effects are negligible \cite{batchelor}.
 
 Eq.\ \eqref{eq:EnergyNonPorous} represents conservation of total energy, which from Eq.\ \eqref{eq:TotalEnergyDef} is the sum of kinetic and thermal energy. For low-speed flows, several terms can be neglected in Eq.\ \eqref{eq:EnergyNonPorous} while simultaneously simplifying the application of \glspl{bc}. Rather than present this simplified energy conservation equation without explanation, a brief description of the derivation process is provided to correct a common misunderstanding and to clearly outline the strong form of the neglected terms.
 
@@ -101,20 +101,20 @@ h\equiv e+\frac{P}{\rho}\ ;
 
 \noindent and \(d/dt\) is the material derivative. In deriving Eq.\ \eqref{eq:InternalEnergy}, the entropy differential in the \(Tds\) substitution for the heat path integral in the first law was expressed as a chain rule in terms of temperature and pressure with \((\partial s/\partial P)_T\) obtained from the Maxwell relation for Gibbs free energy and \((\partial s/\partial T)_P\) obtained from manipulation of Eq.\ \eqref{eq:CpDef}. 
 
-Eqs. \eqref{eq:EnergyNonPorous} and \eqref{eq:InternalEnergy} both represent conservation of energy; Eq.\ \eqref{eq:InternalEnergy} is equivalent to Eq.\ \eqref{eq:EnergyNonPorous} minus a statement of mechanical energy conservation. Many heat transfer texts implicitly assume that \(C_p\) is constant such that the first term on the \gls{lhs} of Eq.\ \eqref{eq:InternalEnergy} can be written as \(\partial(\rho C_{p}T)/\partial t+\nabla\cdot(\rho C_pT\vec{V})\) by inserting the mass conservation equation in Eq.\ \eqref{eq:ContinuityNonPorous}. However, the most general statement of internal energy conservation is given in Eq.\ \eqref{eq:InternalEnergy}. In the spatial homogenization that follows, both Eq.\ \eqref{eq:EnergyNonPorous} and Eq.\ \eqref{eq:InternalEnergy} are considered in order to illustrate two different forms of the porous media conservation of energy equation\mdash total energy conservation will be applied to high-speed flows, while internal energy conservation will be applied to low-speed flows.
+Eqs.\ \eqref{eq:EnergyNonPorous} and \eqref{eq:InternalEnergy} both represent conservation of energy; Eq.\ \eqref{eq:InternalEnergy} is equivalent to Eq.\ \eqref{eq:EnergyNonPorous} minus a statement of mechanical energy conservation. Many heat transfer texts implicitly assume that \(C_p\) is constant such that the first term on the \gls{lhs} of Eq.\ \eqref{eq:InternalEnergy} can be written as \(\partial(\rho C_{p}T)/\partial t+\nabla\cdot(\rho C_pT\vec{V})\) by inserting the mass conservation equation in Eq.\ \eqref{eq:ContinuityNonPorous}. However, the most general statement of internal energy conservation is given in Eq.\ \eqref{eq:InternalEnergy}. In the spatial homogenization that follows, both Eq.\ \eqref{eq:EnergyNonPorous} and Eq.\ \eqref{eq:InternalEnergy} are considered in order to illustrate two different forms of the porous media conservation of energy equation\mdash total energy conservation will be applied to high-speed flows, while internal energy conservation will be applied to low-speed flows.
 
 All conservation equations presented in this Section apply to a compressible continuum. A compressible macroscale model is important for predicting fluid flow and heat transfer in \glspl{pbr}, since the hundreds of degrees temperature rise over the core makes the \(\frac{1}{\rho}d\rho/dt\approx0\) incompressibility assumption and linear Boussinesq-type approximations invalid \cite{elmo}. 
 
-The porous media equations are obtained by averaging Eqs. \eqref{eq:ContinuityNonPorous}, \eqref{eq:NSFullForm}, \eqref{eq:EnergyNonPorous}, and \eqref{eq:InternalEnergy} over a \gls{rev} consisting of a mixture of fluid and solid phases. Fig.\ \ref{fig:rev} shows a schematic of a \gls{rev} in a generic two-phase domain. The \gls{rev} characteristic dimension is \(L\), while the pore scale characteristic dimension is \(l\).
+The porous media equations are obtained by averaging Eqs.\ \eqref{eq:ContinuityNonPorous}, \eqref{eq:NSFullForm}, \eqref{eq:EnergyNonPorous}, and \eqref{eq:InternalEnergy} over a \gls{rev} consisting of a mixture of fluid and solid phases. Fig.\ \ref{fig:rev} shows a schematic of a \gls{rev} in a generic two-phase domain. The \gls{rev} characteristic dimension is \(L\), while the pore scale characteristic dimension is \(l\).
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=0.4\linewidth]{figs/rev.png}
-\caption{Schematic of a \gls{rev} in a multiphase domain. The \gls{rev} has characteristic dimension \(L\), while the pore scale has characteristic dimension \(l\).}
+\caption{Schematic of a \gls{rev} in a multiphase domain. The \gls{rev} has characteristic dimension \(L\), while the pore scale has characteristic dimension \(l\). The blue regions represent the solid phase, while all other regions represent the fluid phase.}
 \label{fig:rev}
 \end{figure}
 
-\noindent Several important notational definitions are needed. Consider a generic field \(\Phi\) in a multi-phase domain. In an approach very similar to the temporal averaging of the Navier-Stokes equations to obtain the \gls{rans} equations, represent \(\Phi\) as the sum of its average \(\la\Phi\ra\) and a fluctuating component \(\hat{\Phi}\) with zero average,
+Several important notational definitions are needed. Consider a generic field \(\Phi\) in a multi-phase domain. In an approach very similar to the temporal averaging of the Navier-Stokes equations to obtain the \gls{rans} equations, represent \(\Phi\) as the sum of its average \(\la\Phi\ra\) and a fluctuating component \(\hat{\Phi}\) with zero average,
 
 \beq
 \label{eq:PM_back}
@@ -128,7 +128,7 @@ The porous media equations are obtained by averaging Eqs. \eqref{eq:ContinuityNo
 \la\Phi\ra\equiv\frac{1}{\volume}\int_{\volume}\Phi d\volume ,
 \eeq
 
-\noindent and \(\volume\) indicates a volume. Eq.\ \eqref{eq:AverageDef} represents the average over all phases. An average over the \(k\) phase is defined as
+\noindent where \(\volume\) indicates a volume. Eq.\ \eqref{eq:AverageDef} represents the average over all phases. An average over the \(k\) phase is defined as
 
 \beq
 \label{eq:AvgDef2}
@@ -174,7 +174,7 @@ The porosity \(\epsilon\) for phase \(k\) is the fraction of the total volume oc
 
 \noindent This work considers two-phase fluid-solid domains; an \(f\) subscript refers to the fluid phase and an \(s\) subscript refers to the solid phase. The notational convention used throughout is that \(\epsilon_f\equiv\epsilon\) represents the porosity of the fluid and \(\epsilon_s\equiv1-\epsilon\) represents the porosity of the solid. Models for porosity are described in Section \ref{sec:Porosity}. 
 
-Combining Eqs. \eqref{eq:PhaseAverage}--\eqref{eq:PorosityAvg} provides the relationship between intrinsic and extrinsic averages,
+Combining Eqs.\ \eqref{eq:PhaseAverage}--\eqref{eq:PorosityAvg} provides the relationship between intrinsic and extrinsic averages,
 
 \beq
 \label{eq:DupuitF}
@@ -190,20 +190,16 @@ Combining Eqs. \eqref{eq:PhaseAverage}--\eqref{eq:PorosityAvg} provides the rela
 
 \noindent where \(\vec{v}\) is the extrinsic fluid velocity, also referred to as the superficial velocity. \(\vec{V}\) is the intrinsic fluid velocity, also referred to as the interstitial velocity. 
 
-Appendix \ref{sec:PorousMediaMath} provides mathematical identities relating the spatial averages of gradients to the gradients of spatial averages and the spatial averages of time derivatives to the time derivatives of spatial averages. The key requirement for the use of these identities is that a spatial average be independent of the size of the volume over which it is averaged. Similar restrictions abound in other forms of statistical analysis, such as in requirements of large numbers of coin tosses to accurately estimate the probability of landing tails-up. With the length scales defined in Fig.\ \ref{fig:rev}, this requirement can be expressed as
+Appendix \ref{sec:PorousMediaMath} provides mathematical identities relating the spatial averages of gradients to the gradients of spatial averages and the spatial averages of time derivatives to the time derivatives of spatial averages. For example, Eq.\ \eqref{eq:TimeAvgDerivativeb} relates the spatial average of a time derivative to the time derivative of a spatial average plus an integral over the phase interface. The key requirement for the use of these identities is that a spatial average be independent of the size of the volume over which it is averaged. Similar restrictions abound in other forms of statistical analysis, such as in requirements of large numbers of coin tosses to accurately estimate the probability of landing tails-up. With the length scales defined in Fig.\ \ref{fig:rev}, this requirement can be expressed as
 
 \beq
 \label{eq:LengthReqs}
 l\ll L\ .
 \eeq
 
-\noindent For packed beds of spherical pebbles, \(l\) is usually taken as the pebble diameter \(d_p\) or the hydraulic diameter \(D\), which is proportional to \(d_p\). The \gls{rev} scale \(L\) is larger than \(l\) but smaller than the largest bed dimension. The extrinsic and intrinsic averages are functions of space; the average at a location \(\vec{x}\) is interpreted as an average over a \gls{rev} with characteristic dimension \(L\) centered about \(\vec{x}\). A Taylor series analysis performed in Appendix \ref{sec:PorousMediaMath} shows that the assumption that averages are independent of the size of the \gls{rev} is accurate to \(\mathcal{O}(l/L)^2\).
+\noindent For packed beds of spherical pebbles, \(l\) is usually taken as either the pebble diameter \(d_p\) or the hydraulic diameter \(D\), which is proportional to \(d_p\). The \gls{rev} scale \(L\) is larger than \(l\) but smaller than the largest bed dimension. The extrinsic and intrinsic averages are functions of space; the average at a location \(\vec{x}\) is interpreted as an average over a \gls{rev} with characteristic dimension \(L\) centered about \(\vec{x}\). A Taylor series analysis performed in Appendix \ref{sec:PorousMediaMath} shows that the assumption that averages are independent of the size of the \gls{rev} is accurate to \(\mathcal{O}(l/L)^2\).
 
-The spatially homogenized conservation equations are now derived using the identities in Appendix \ref{sec:PorousMediaMath}; any notation not explicitly defined here is defined in Appendix \ref{sec:PorousMediaMath}. It is assumed throughout that thermal and pressure gradients are small relative to velocity gradients such that fluctuations in density, thermal conductivity, and isobaric specific heat capacity are much smaller than fluctuations in velocity and can hence be assumed zero \cite{gray}. It is also assumed that the solid-fluid interface is stationary such that \(\vec{V}=\vec{w}\) on the interface and \(\vec{w}=0\), where \(\vec{w}\) is the interface velocity. For conciseness, these assumptions are made implicitly while progressing through the derivation, though explicit tracking of these additional terms may be found elsewhere \cite{novak_manual}.
-
-The identities derived in Appendix \ref{sec:PorousMediaMath} relate spatial averages of time derivatives, gradients, and products to time derivatives, gradients, and products of spatial averages. For example, Eq.\ \eqref{eq:TimeAvgDerivativeb} relates the spatial average of a time derivative to the time derivative of a spatial average plus an integral over the phase interface. The use of each particular identity from Appendix \ref{sec:PorousMediaMath} should be clear from the nature of each kernel, though subtle details will be noted as appropriate.
-
-%Beginning with the mass conservation equation in Eq.\ \eqref{eq:ContinuityNonPorous}, the time derivative is averaged using Eqs. \eqref{eq:TimeAvgDerivativeb} and \eqref{eq:Dispersion}, while the advective term is averaged using Eqs. \eqref{eq:AvgGrdGrdAvga} and Eq.\ \eqref{eq:Dispersion}, giving
+The spatially homogenized conservation equations are now derived using the identities in Appendix \ref{sec:PorousMediaMath}; any notation not explicitly defined here is defined in Appendix \ref{sec:PorousMediaMath}. It is assumed throughout that thermal and pressure gradients are small relative to velocity gradients such that fluctuations in density, thermal conductivity, and isobaric specific heat capacity are much smaller than fluctuations in velocity and can hence be assumed zero \cite{gray}. It is also assumed that the solid-fluid interface is stationary such that \(\vec{V}=\vec{w}\) on the interface and \(\vec{w}=\vec{0}\), where \(\vec{w}\) is the interface velocity. For conciseness, these assumptions are made implicitly while progressing through the derivation, though explicit tracking of these additional terms may be found elsewhere \cite{novak_manual}. The use of each particular identity from Appendix \ref{sec:PorousMediaMath} should be clear from the nature of each kernel, though subtle details will be noted as appropriate.
 
 Spatial averaging of the mass conservation equation in Eq.\ \eqref{eq:ContinuityNonPorous} gives
 
@@ -221,7 +217,7 @@ Spatial averaging of the mass conservation equation in Eq.\ \eqref{eq:Continuity
 
 \noindent where \(\rho_f\) represents the intrinsic average of fluid density and \(\vec{V}\) represents the intrinsic average of fluid velocity.
 
-%Moving next to the momentum conservation equation in Eq.\ \eqref{eq:NSFullForm}, the time derivative is averaged using Eqs. \eqref{eq:TimeAvgDerivativeb} and \eqref{eq:Dispersion}, while the advective, normal stress and deviatoric stress terms are averaged using Eqs. \eqref{eq:AvgGrdGrdAvg} and \eqref{eq:Dispersion3}, giving
+%Moving next to the momentum conservation equation in Eq.\ \eqref{eq:NSFullForm}, the time derivative is averaged using Eqs.\ \eqref{eq:TimeAvgDerivativeb} and \eqref{eq:Dispersion}, while the advective, normal stress and deviatoric stress terms are averaged using Eqs.\ \eqref{eq:AvgGrdGrdAvg} and \eqref{eq:Dispersion3}, giving
 
 Spatial averaging of the momentum conservation equation in Eq.\ \eqref{eq:NSFullForm} gives
 
@@ -238,7 +234,7 @@ Spatial averaging of the momentum conservation equation in Eq.\ \eqref{eq:NSFull
 \nabla\phi_{g,f}\equiv -g\vec{e}_z\ ,
 \eeq
 
-%\noindent where averaging was performed using Eqs. \eqref{eq:AvgGrdGrdAvgb} and \eqref{eq:Dispersion}, with 
+%\noindent where averaging was performed using Eqs.\ \eqref{eq:AvgGrdGrdAvgb} and \eqref{eq:Dispersion}, with 
 
 \noindent Terms containing the fluctuation of \(\vec{g}\) are set to zero because the gravitational acceleration vector is constant. 
 
@@ -296,7 +292,7 @@ One more constitutive relationship is required to close the momentum equation. T
 
 \noindent where the viscous term in Eq.\ \eqref{eq:MomEqnStep2} has been replaced by a distributed loss friction term that captures the  \(\epsilon\la\mu_f\ra\mathscr{A}(\textbf{I}+\mathscr{E})^{-1}\) and \(\epsilon\la\mu_f\ra\mathscr{B}(\textbf{I}+\mathscr{E})^{-1}\) terms. The sum of these two terms (with \(\mathscr{A}\) divided by \(\la\rho_f\ra^f\) to obtain the proper units) is denoted as \(W\), a combined Darcy and Forchheimer friction factor. A distributed loss friction model is usually sufficient to capture the interphase drag because the length over which the deviatoric stress acts is on the order of several pore diameters \cite{kececioglu}. Models for \(W\) are described in Section \ref{sec:W}.
 
-Some porous media models also include a Brinkman viscous stress term to allow no-slip \glspl{bc} to be applied on boundaries. Brinkman's model expresses the viscous stress term in Eq.\ \eqref{eq:DeviatoricStressApprox} as the sum the Darcy and Forchheimer drag discussed previously plus a velocity laplacian with effective viscosity \(\tilde{\mu}\); such a term is shown in Eq.\ \eqref{eq:MomEqnStep3a} \cite{nield,auwerda_2011,tecdoc1163}. Brinkman's model does not have the same validation basis as either Darcy's or Forchheimer's drag terms, and is generally thought to only be applicable for \(\epsilon>0.8\). At lower porosities, the solid matrix impedes direct transfer of momentum due to viscous forces and the majority of stresses are communicated via pressure \cite{nield}. For completeness, a Brinkman model is shown in the spatially homogenized momentum equation, though the term is usually negligibly small for high Reynolds number reactor applications. Models for \(\tilde{\mu}\) are described in Section \ref{sec:BrinkmanMu}.
+Some porous media models also include a Brinkman viscous stress term to allow no-slip \glspl{bc} to be applied on boundaries. Brinkman's model expresses the viscous stress term in Eq.\ \eqref{eq:DeviatoricStressApprox} as the sum the Darcy and Forchheimer drag discussed previously plus a velocity laplacian with effective viscosity \(\tilde{\mu}\); such a term is shown in Eq.\ \eqref{eq:MomEqnStep3a} \cite{nield,auwerda_2011,tecdoc1163}. Brinkman's model does not have the same validation basis as either Darcy's or Forchheimer's drag terms, and is generally thought to only be applicable for \(\epsilon>0.8\). At lower porosities, the solid matrix impedes direct transfer of momentum due to viscous forces and the majority of stresses are communicated via pressure \cite{nield}. For completeness, a Brinkman model is included, though the term is usually negligibly small for high Reynolds number reactor applications. Models for \(\tilde{\mu}\) are described in Section \ref{sec:BrinkmanMu}.
 
 For notational simplicity, Eq.\ \eqref{eq:MomEqnStep3a} is written as
 
@@ -307,9 +303,7 @@ For notational simplicity, Eq.\ \eqref{eq:MomEqnStep3a} is written as
 
 \noindent where \(\rho_f\) and \(\vec{V}\) have the same interpretation as in Eq.\ \eqref{eq:PorousMass} and \(P\) represents the intrinsic average of pressure.
 
-Only the energy equations remain to be spatially homogenized. Scaling analysis in Section \ref{sec:NonDim} justifies the omission of the viscous heating terms\mdash the \(\nabla\cdot(\vec{V}\tau)\) term in Eq.\ \eqref{eq:EnergyNonPorous} and the \(\tau\colon\nabla\vec{V}\) term in Eq.\ \eqref{eq:InternalEnergy}. Section \ref{sec:NonDim} also justifies neglecting the compression work term proportional to \(dP/dt\). Rather than carry the viscous heating and compression work terms through the derivation for completeness, notational simplicity motivates its omission at the beginning of this derivation. 
-
-% For the total energy conservation in Eq.\ \eqref{eq:EnergyNonPorous}, the time derivative is averaged using Eqs. \eqref{eq:TimeAvgDerivativeb} and \eqref{eq:Dispersion}, while the advective and conductive terms are averaged using Eqs. \eqref{eq:AvgGrdGrdAvg} and \eqref{eq:Dispersion3}, giving
+Only the energy equations remain to be spatially homogenized. Scaling analysis in Section \ref{sec:NonDim} justifies the omission of the viscous heating terms\mdash the \(\nabla\cdot(\vec{V}\tau)\) term in Eq.\ \eqref{eq:EnergyNonPorous} and the \(\tau\colon\nabla\vec{V}\) term in Eq.\ \eqref{eq:InternalEnergy}. Section \ref{sec:NonDim} also justifies neglecting the compression work term proportional to \(dP/dt\). Rather than carry these terms through the derivation for completeness, notational simplicity motivates their omission at the beginning of this derivation. 
 
 Spatial homogenization of the total energy conservation equation in Eq.\ \eqref{eq:EnergyNonPorous} gives
 
@@ -319,9 +313,7 @@ Spatial homogenization of the total energy conservation equation in Eq.\ \eqref{
 &\hspace{0.5cm}\nabla\cdot\left( \frac{\la k_f\ra^f}{\volume}\int_{S_i}\hat{T}\hat{n}_fdS\right)+\frac{1}{\volume}\int_{S_i}k_f\nabla T_f\cdot\hat{n}_fdS+\epsilon\la\rho_f\ra^f\la\vec{V}_f\ra^f\cdot\la\vec{g}\ra^f+\la \dot{q}_f\ra\ .
 \eeqa
 
-% The gravitational power and volumetric heat source terms were transformed using Eq.\ \eqref{eq:Dispersion}. 
-
-\noindent The surface integral with integrand \(\hat{T}_f\hat{n}_f\) represents the ``tortuosity heat flux.'' The tortuosity heat flux is often very small because convection dominates conduction, and hence is neglected \cite{nakayama}. The surface integral with integrand \(k_f\nabla T_f\cdot\hat{n}_f\) represents the average heat flux at the phase boundary, which is represented by a convective flux closure as
+\noindent The surface integral with integrand \(\hat{T}_f\hat{n}_f\) represents the ``tortuosity heat flux.'' The tortuosity heat flux is often very small because convection dominates conduction, and hence is neglected \cite{nakayama}. The surface integral with integrand \(k_f\nabla T_f\cdot\hat{n}_f\) represents the average heat flux at the phase boundary, which is modeled with a convective flux closure as
 
 \beq
 \label{eq:ConvecCoolClosure}
@@ -350,7 +342,7 @@ a_w=\lim_{\delta\ \to\ 0} \frac{\text{wetted area in domain of length } \delta}{
 &\hspace{1cm}\nabla\cdot\left(\la k_f\ra^f\epsilon\nabla\la T_f\ra^f\right)+\epsilon\la\rho_f\ra^f\la\vec{V}_f\ra^f\cdot\la\vec{g}\ra^f+\alpha\left(\la T_s\ra^s-\la T_f\ra^f\right)+\la \dot{q}_f\ra\ .
 \eeqa
 
-\noindent Before introducing the final closure for the \(\nabla\cdot\left(\la\rho_f\ra^f\la\hat{H}_f\hat{\vec{V}}_f\ra\right)\) term, which will be shared by the spatially homogenized internal energy equation, first homogenize the internal energy equation in Eq.\ \eqref{eq:InternalEnergy}, giving
+\noindent Before introducing the final closure for the \(\nabla\cdot(\la\rho_f\ra^f\la\hat{H}_f\hat{\vec{V}}_f\ra)\) term, which will be shared by the spatially homogenized internal energy equation, first homogenize the internal energy equation in Eq.\ \eqref{eq:InternalEnergy}, giving
 
 \beqa
 \label{eq:PorousT}
@@ -360,21 +352,23 @@ a_w=\lim_{\delta\ \to\ 0} \frac{\text{wetted area in domain of length } \delta}{
 
 \noindent where the spatial homogenization performed for terms shared by the total energy and internal energy equations have been inserted. The tortuosity heat flux term has also been neglected.
 
-Eqs. \eqref{eq:Energy2} and \eqref{eq:PorousT} still leave one term that requires closure\mdash the \(\nabla\cdot(\la\rho_f\ra^f\la\hat{H}_f\hat{\vec{V}}_f\ra)\) term in Eq.\ \eqref{eq:Energy2} and the \(\la\rho_f\ra^f\la C_{p,f}\ra^f\la\hat{\vec{V}}_f\cdot\hat{\nabla T_f}\ra\) term in Eq.\ \eqref{eq:PorousT}. These two terms represent enhancements in advective energy transport due to the porous structure, a phenomenon referred to as ``thermal dispersion.'' Thermal dispersion accounts for the effects of changes in flow direction caused by solid obstructions, recirculation flows within the pores, and eddy diffusion in turbulence. Thermal dispersion is represented with a gradient diffusion model,
+Eqs.\ \eqref{eq:Energy2} and \eqref{eq:PorousT} still leave one term that requires closure\mdash the \(\nabla\cdot(\la\rho_f\ra^f\la\hat{H}_f\hat{\vec{V}}_f\ra)\) term in Eq.\ \eqref{eq:Energy2} and the \(\la\rho_f\ra^f\la C_{p,f}\ra^f\la\hat{\vec{V}}_f\cdot\hat{\nabla T_f}\ra\) term in Eq.\ \eqref{eq:PorousT}. These two terms represent enhancements in advective energy transport due to the porous structure, a phenomenon referred to as ``thermal dispersion.'' Thermal dispersion accounts for the effects of changes in flow direction caused by solid obstructions, recirculation flows within the pores, and eddy diffusion in turbulence. Thermal dispersion is represented with a gradient diffusion model,
 
 \beq
 \label{eq:ThermalDispersion}
 \la\rho_f\ra^f\la C_{p,f}\ra^f\la\hat{\vec{V}}_f\cdot\hat{\nabla T_f}\ra= -\nabla\cdot(\tilde{\kappa}_f\nabla \la T_f\ra^f)\ ,
 \eeq
 
-\noindent where \(\tilde{\kappa}_f\) is the thermal dispersion conductivity, which is in general a second-order tensor \cite{nakayama}. While Eq.\ \eqref{eq:ThermalDispersion} is shown in terms of the dispersion kernel in Eq.\ \eqref{eq:PorousT}, a similar interpretation exists for the dispersion kernel in Eq.\ \eqref{eq:Energy2}. The effective fluid thermal conductivity \(\kappa_f\) represents the sum of molecular and dispersion conductivity, 
+\noindent where \(\tilde{\kappa}_f\) is the thermal dispersion conductivity, which is in general a second-order tensor \cite{nakayama}. While Eq.\ \eqref{eq:ThermalDispersion} is shown in terms of the dispersion kernel in Eq.\ \eqref{eq:PorousT}, a similar interpretation exists for the dispersion kernel in Eq.\ \eqref{eq:Energy2}. 
+
+The effective fluid thermal conductivity \(\kappa_f\) then represents the sum of molecular and dispersion conductivity, 
 
 \beq
 \label{eq:KappaFluidDef1}
-\kappa_f\equiv\epsilon k_f+\tilde{\kappa}_f\ .
+\kappa_f\equiv\epsilon k_f+\tilde{\kappa}_f\ ,
 \eeq
 
-\noindent Models for \(\kappa_f\) are described in Section \ref{sec:Kappa}. Inserting Eqs. \eqref{eq:ThermalDispersion} and \eqref{eq:KappaFluidDef1} into Eqs. \eqref{eq:Energy2} and \eqref{eq:PorousT} gives
+\noindent where the molecular contribution arises from the spatial homogenization of the \(\nabla\cdot(k\nabla T)\) kernel. Models for \(\kappa_f\) are described in Section \ref{sec:Kappa}. Inserting Eqs.\ \eqref{eq:ThermalDispersion} and \eqref{eq:KappaFluidDef1} into Eqs.\ \eqref{eq:Energy2} and \eqref{eq:PorousT} gives
 
 \beqa
 \label{eq:Energy3}
@@ -390,7 +384,7 @@ Eqs. \eqref{eq:Energy2} and \eqref{eq:PorousT} still leave one term that require
 \nabla\cdot\left(\kappa_f\nabla\la T_f\ra^f\right)+\alpha\left(\la T_s\ra^s-\la T_f\ra^f\right)+\la \dot{q}_f\ra\ .
 \eeqa
 
-\noindent For notational simplicity, Eqs. \eqref{eq:Energy3} and \eqref{eq:PorousT1} are rewritten as
+\noindent For notational simplicity, Eqs.\ \eqref{eq:Energy3} and \eqref{eq:PorousT1} are rewritten as
 
 \beq
 \label{eq:EnergyBalance7}
@@ -417,15 +411,14 @@ The conservation of solid energy equation can be derived by spatially homogenizi
 
 \beq
 \label{eq:Kappa}
-\kappa_s\equiv\kappa_{\textrm{radiation}}+\kappa_{\textrm{fluid conduction}}+\kappa_{\textrm{solid conduction}}\ .
+\kappa_s\equiv\kappa_{\textrm{radiation}}+\kappa_{\textrm{conduction}}+\kappa_{\textrm{contact}}\ .
 \eeq
 
-\noindent Thermal equilibrium is often assumed for geophysical applications, and is even the default in FLUENT's porous media model \cite{fluent}. The inclusion of unique energy conservation equations for the phases with the convective heat transfer term in Eq.\ \eqref{eq:ConvecCoolClosure} is essential for modeling of reactor systems due to the volumetric heat sources and the different material properties of the phases \cite{becker,novak_sana}.
+\noindent Thermal equilibrium is often assumed for geophysical applications, and is even the default in FLUENT's porous media model \cite{fluent}. The inclusion of unique energy conservation equations is essential for modeling of reactor systems due to the volumetric heat sources and the different material properties of the phases \cite{becker,novak_sana}.
 
-In summary, the mass, momentum, and energy conservation equations were spatially homogenized by averaging over a \gls{rev} consisting of a mixture of fluid and solid. Several different models are considered for the macroscale, motivated by the wide range in \gls{th} conditions in \glspl{pbr} and the improved nonlinear convergence behavior that can be obtained by neglecting certain physics kernels. The inviscid Navier-Stokes model represented by Eqs. \eqref{eq:PorousMass}, \eqref{eq:MomEqnStep3} with \(\tilde{\mu}=0\), and \eqref{eq:EnergyBalance7} has two solutions as the Mach number tends to zero\mdash an incompressible limit and an acoustic limit. For nearly incompressible fluids such as molten salts, solution of a compressible model may be an inaccurate representation of the incompressible solution because the incompressible limit is a singular limit of the compressible flow equations \cite{guillard}. A model that neglects the compression work term may provide a better representation of the incompressible solution and enable vastly improved numerical convergence.
+In summary, the mass, momentum, and energy conservation equations were spatially homogenized by averaging over a \gls{rev} consisting of a mixture of fluid and solid. Several different models are considered for the macroscale, motivated by the wide range in \gls{th} conditions in \glspl{pbr} and the improved nonlinear convergence behavior that can be obtained by neglecting certain physics kernels. For instance, the inviscid Navier-Stokes model represented by Eqs.\ \eqref{eq:PorousMass}, \eqref{eq:MomEqnStep3} with \(\tilde{\mu}=0\), and \eqref{eq:EnergyBalance7} has two solutions as the Mach number tends to zero\mdash an incompressible limit and an acoustic limit. For nearly incompressible fluids such as molten salts, solution of a compressible model may be an inaccurate representation of the incompressible solution because the incompressible limit is a singular limit of the compressible flow equations \cite{guillard}. A model that neglects the compression work term may provide a better representation of the incompressible solution and enable vastly improved numerical convergence.
 
 Two different models are used depending on the flow conditions and desired level of accuracy\mdash a Navier-Stokes model and a friction-dominated model. The spatially homogenized Navier-Stokes equations on the macroscale are
-
 \begin{subequations}
 \label{eq:PorousEquations}
 \begin{align}
@@ -436,10 +429,9 @@ Two different models are used depending on the flow conditions and desired level
 \end{align}
 \end{subequations}
 
-\noindent Eq.\ \eqref{eq:PorousEquations} is referred to here as the ``Navier-Stokes model.'' All terms in Eqs. \eqref{eq:PMass}--\eqref{eq:PEnergy} have the same form as the local compressible Navier-Stokes equations except the Brinkman stress term, which has the same local form as the incompressible Navier-Stokes viscous stress in order to match literature closures for \(\tilde{\mu}\). An inviscid flow model can be obtained as a simplification of Eq.\ \eqref{eq:PorousEquations} with \(\tilde{\mu}=0\).
+\noindent Eq.\ \eqref{eq:PorousEquations} is referred to here as the ``Navier-Stokes model.'' All terms in Eqs.\ \eqref{eq:PMass}--\eqref{eq:PEnergy} have the same form as the local compressible Navier-Stokes equations except the Brinkman stress term, which has the same local form as the incompressible Navier-Stokes viscous stress in order to match literature closures for \(\tilde{\mu}\). An inviscid flow model can be obtained as a simplification of Eq.\ \eqref{eq:PorousEquations} with \(\tilde{\mu}=0\).
 
 For slowly-evolving, low Reynolds number flows, several additional approximations can be made to simplify Eq.\ \eqref{eq:PorousEquations}. Momentum conservation is assumed dominated by friction effects such that changes in pressure are instantaneously reflected as changes in momentum. The total derivative of momentum in Eq.\ \eqref{eq:PMom} is set to zero, giving a pseudo-steady momentum equation. The Brinkman viscosity is also set to zero. Substituting this pseudo-steady momentum equation into the mass conservation in Eq.\ \eqref{eq:PMass} then gives a pressure Poisson equation. Further, compression work is assumed negligible such that energy conservation is well approximated by Eq.\ \eqref{eq:EnergyBalanceT}. Together, these assumptions give,
-
 \begin{subequations}
 \label{eq:PrimitiveEqns}
 \begin{align}
@@ -456,14 +448,14 @@ For slowly-evolving, low Reynolds number flows, several additional approximation
 
 \noindent Eq.\ \eqref{eq:PrimitiveEqns} is referred to here as the ``friction-dominated model.'' This friction-dominated model has been widely used for the analysis of \glspl{pbr} \cite{hossain, nouri, tecdoc1163}.  
 
-Pebbles move continuously through the bed in online refueling operation. Depending on the design, pebbles cycle between 2 and 10 times over a period of several years. The velocity of these motions is orders of magnitude smaller than the fluid velocity. The kinetic energy of pebbles in fluidized beds such as liquid salt systems are also negligibly small \cite{mardus_hall}. Therefore, porosity is assumed independent of time such that it is moved outside the time derivatives in Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}.
+Pebbles move continuously through the bed in online refueling operation. Depending on the design, pebbles cycle between 2 and 10 times over a period of several years. The velocity of these motions is orders of magnitude smaller than the fluid velocity. The kinetic energies of pebbles in fluidized beds such as liquid salt systems are also negligibly small \cite{mardus_hall}. Therefore, porosity is assumed independent of time such that it is moved outside the time derivatives in Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}.
 
-As will be discussed at greater length in Chapter \ref{sec:ph}, Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} may be solved for a number of different solution variables to enable general simulation of compressible and incompressible flows, flexible application of the \glspl{bc} described in Section \ref{sec:BCs}, and better numerical convergence in the presence of certain material discontinuities \cite{hauke_1998}. These solution variables are the primitive interstitial set \(P\), \(\vec{V}\), and \(T_f\); the primitive superficial set \(P\), \(\vec{v}\), and \(T_f\); the mixed interstitial set \(P\), \(\rho_f\vec{V}\), and \(T_f\); the mixed superficial set \(P\), \(\rho_f\vec{v}\), and \(T_f\); and the conservative interstitial set \(\rho_f\), \(\rho_f\vec{V}\), and \(\rho_fE_f\).
+As will be discussed at greater length in Chapter \ref{sec:ph}, Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} may be solved for a number of different solution variables to enable general simulation of compressible and incompressible flows, flexible application of the \glspl{bc} described in Section \ref{sec:BCs}, and better numerical convergence in the presence of certain material discontinuities \cite{hauke_1998}. These solution variables are the primitive interstitial set \(P\), \(\vec{V}\), and \(T_f\); the primitive superficial set \(P\), \(\vec{v}\), and \(T_f\); the mixed interstitial set \(P\), \(\rho_f\vec{V}\), and \(T_f\); the mixed superficial set \(P\), \(\rho_f\vec{v}\), and \(T_f\); and the conservative interstitial set \(\rho_f\), \(\rho_f\vec{V}\), and \(\rho_fE_f\).
 
 \subsection{Non-Dimensional Analysis}
 \label{sec:NonDim}
 
-This section presents a brief scaling analysis of the momentum and energy conservation equations to justify omission of the viscous heating term from Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} and the compression work term from Eq.\ \eqref{eq:PrimitiveEqns}. For notational simplicity, this scaling analysis is performed starting from the local conservation equations because small terms were neglected at the outset of the spatial homogenization procedure, rather than carried through to be neglected at the conclusion.
+This section presents a brief scaling analysis of the momentum and energy conservation equations to justify omission of the viscous heating term from Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} and the compression work term from Eq.\ \eqref{eq:PrimitiveEqns}. For notational simplicity, this scaling analysis is performed starting from the local conservation equations because small terms were neglected at the outset of the spatial homogenization procedure, rather than carried through to be neglected at the conclusion.
 
 Scaling analysis begins with the \gls{1d} form of momentum conservation in Eq.\ \eqref{eq:NSFullForm}. Define the following nondimensional quantities,
 
@@ -480,7 +472,6 @@ t^+=\frac{t}{L/V_o},\quad V^+=\frac{V}{V_o},\quad P^+=\frac{P}{\rho_oV_o^2},\qua
 \eeqa
 
 \noindent where the viscous term is represented symbolically as \(\diamond\) and \(Re\) is the Reynolds number. For a generic porous medium characterized by two different velocity scales \(v\) and \(V\) and two different length scales \(d_p\) and \(D\), there are many manners in which the Reynolds number can be defined. The two most common definitions are
-
 \begin{subequations}
 \label{eq:RePorousGeneral}
 \begin{align}
@@ -491,7 +482,7 @@ Re_h=&\ \frac{\rho \|\vec{V}\|D}{\mu}\ .
 \end{align}
 \end{subequations}
 
-\noindent Both Eqs. \eqref{eq:RePorousGeneralA} and \eqref{eq:RePorousGeneralB} are used throughout this work depending on whether the domain in question is porous or open, respectively. 
+\noindent Both Eqs.\ \eqref{eq:RePorousGeneralA} and \eqref{eq:RePorousGeneralB} are used throughout this work depending on whether the domain in question is porous or open, respectively. 
 
 Non-dimensionalization of the energy conservation equation is performed beginning from the \gls{1d} form of Eq.\ \eqref{eq:InternalEnergy} with the volumetric heat source omitted for simplicity. In addition to Eq.\ \eqref{eq:NondimensionalQuantities}, define
 
@@ -500,7 +491,7 @@ Non-dimensionalization of the energy conservation equation is performed beginnin
 T^+=\frac{T}{\Delta T}\ .
 \eeq
 
-\noindent Inserting Eqs. \eqref{eq:NondimensionalQuantities} and \eqref{eq:Nondim11} into the \gls{1d} form of Eq.\ \eqref{eq:InternalEnergy} with constant thermal conductivity and dividing through by the coefficient on the advective term gives
+\noindent Inserting Eqs.\ \eqref{eq:NondimensionalQuantities} and \eqref{eq:Nondim11} into the \gls{1d} form of Eq.\ \eqref{eq:InternalEnergy} with constant thermal conductivity and dividing through by the coefficient on the advective term gives
 
 \beq
 \label{eq:NondimensionalTemperatureEqn}
@@ -530,43 +521,40 @@ Ec=\frac{\|\vec{V}\|^2}{C_{p}\Delta T}\ ;
 Br=\frac{\mu \|\vec{V}\|^2}{k\Delta T}\ .
 \eeq
 
-\noindent Viscous heating is negligible if \(Br/Pe\ll1\) and compression work is negligible if \(\beta Ec\ll1\). Table \ref{table:TypicalData} provides estimates of these dimensionless numbers for five representative reactor designs\mdash the sodium-cooled \gls{pfbr}, the helium-cooled \gls{thtr}, the \gls{flibe}-cooled \gls{pbfhr}, the water-cooled \gls{ap1000}, and the CO$_2$-cooled \gls{agr}. For all five designs, both viscous heating and compression work are orders of magnitude less significant than energy advection and can therefore be neglected from the macroscale model.
-
-While \(Re\gg1\) for most applications, the Brinkman viscous stress is retained in the macroscale model for completeness and application of no-slip \glspl{bc}. Likewise, \(Pe\gg1\) for all systems considered, but thermal energy conduction is retained in the macroscale model because the gradient diffusion model for thermal dispersion always requires a diffusive kernel.
+\noindent Viscous heating is negligible if \(Br/Pe\ll1\) and compression work is negligible if \(\beta Ec\ll1\). Table \ref{table:TypicalData} provides estimates of these dimensionless numbers for five representative reactor designs\mdash the sodium-cooled \gls{pfbr}, the helium-cooled \gls{thtr}, the \gls{flibe}-cooled \gls{pbfhr}, the water-cooled \gls{ap1000}, and the CO$_2$-cooled \gls{agr}. 
 
 \begin{table}[!h]
-\caption{Operating conditions and approximate nondimensional numbers for representative nuclear reactor designs \cite{pfbr,pfbrTH,thtr_1990,pbfhr,ap1000,ap1000_2,nonbol}. All material properties are evaluated at the median of the operating temperature range. Temperatures are listed as ``inlet/outlet.''}
+\caption{Approximate operating conditions and nondimensional numbers for representative nuclear reactor designs \cite{pfbr,pfbrTH,thtr_1990,pbfhr,ap1000,ap1000_2,nonbol}. Temperatures are listed as ``inlet/outlet.''}
 \centering
-\begin{tabular}{|l |l l l l l|}
-\hline\hline
- 								& PFBR		& THTR 			& PB-FHR 				& AP-1000 			& AGR\Tstrut\Bstrut \\
-\hline
- Coolant							& sodium			& helium				& \gls{flibe}				& water				& CO\textsubscript{2}\Tstrut\\
- Power (MWth)				& 1250			& 750				& 236				& 3400				& 1623\\
- Fuel	 geometry							& assembly		& pebble				& pebble				& assembly			& assembly\Bstrut\\
- \hline
-Pressure (\si{\mega\pascal})						& 0.1				& 4.0					& 0.1					& 15.5				& 4.1\Tstrut\\
-Temperature(\si{\celsius})				& 400/550		& 250/750				& 600/700				& 280/325				& 340/640\\
+\begin{tabular}{@{}l l l l l l@{}}
+\toprule
+\textbf{Parameter} & \textbf{PFBR} & \textbf{THTR} & \textbf{PB-FHR} & \textbf{AP-1000} & \textbf{AGR}\\
+\midrule
+Coolant							& sodium			& helium				& \gls{flibe}				& water				& CO\textsubscript{2}\\
+Power (MWth)				& 1250			& 750				& 236				& 3400				& 1623\\
+Fuel	 geometry							& assembly		& pebble				& pebble				& assembly			& assembly\\
+Pressure (\si{\mega\pascal})						& 0.1				& 4.0					& 0.1					& 15.5				& 4.1\\
+Temperature (\si{\celsius})				& 400/550		& 250/750				& 600/700				& 280/325				& 340/640\\
 Flowrate (\si{\kilo\gram\per\second})						& 6390			& 298				& 976				& 13700				& 4060\\
-Velocity (\si{\meter\per\second})						& 4.8				& 12.0				& 0.4					& 4.8				& 1.6\Bstrut\\
- \hline
- \(D\) (mm)						& 5.0				& 26.0				& 13.0				& 11.7			& 38.0\Tstrut\\
+Velocity (\si{\meter\per\second})						& 4.8				& 12.0				& 0.4					& 4.8				& 1.6\\
+ \(D\) (mm)						& 5.0				& 26.0				& 13.0				& 11.7			& 38.0\\
  \(\rho\) (\si{\kilo\gram\per\cubic\meter})			& 840			& 2.5					& 2000				& 720			& 28\\
  \(\mu\) (\(10^{-5}\) Pa\(\cdot\)s)			& 25				& 3.9					& 680				& 8.7				& 3.4\\
  \(k\) (\si{\watt\per\meter\per\kelvin})					& 139			& 0.30				& 1.10				& 0.56			& 0.05\\
  \(C_p\) (\si{\joule\per\kilo\gram\per\kelvin})				& 1268			& 5195				& 2416				& 5534			& 1157\Bstrut\\
-  \hline
- \(Pr\)							& 0.002			& 0.67				& 15.0				& 0.86			& 0.79\Tstrut\\
+ \(Pr\)							& 0.002			& 0.67				& 15.0				& 0.86			& 0.79\\
  \(Br\)							& \(2.7\times10^{-7}\)& \(3.7\times10^{-5}\)	& \(9.9\times10^{-6}\)	& \(7.8\times10^{-5}\)	& \(5.8\times10^{-6}\)\\
  \(Re\)							& \(8.2\times10^{+4}\)	& \(2.0\times10^{+4}\)		& \(1.5\times10^{+3}\)		& \(4.6\times10^{+5}\)		& \(5.0\times10^{+4}\)\\
  \(Pe\)							& \(1.8\times10^{+2}\)	& \(1.3\times10^{+4}\)		& \(2.3\times10^{+4}\)		& \(4.0\times10^{+5}\)		& \(4.0\times10^{+4}\)\\
  \(Ec\) & \(1.2\times10^{-4}\) & \(5.5\times10^{-5}\) & \(6.6\times10^{-7}\) & \(9.0\times10^{-5}\) & \(7.4\times10^{-6}\)\\
  \(Br/Pe\)							& \(1.5\times10^{-9}\)& \(2.8\times10^{-9}\)	& \(4.3\times10^{-10}\)	& \(2.0\times10^{-10}\)	& \(1.5\times10^{-10}\)\\
- \(\Delta T/T\) & \(2.2\times10^{-1}\) & \(9.6\times10^{-1}\) & \(1.1\times10^{-1}\) & \(8.3\times10^{-2}\) & \(4.9\times10^{-1}\)\Bstrut\\
-\hline
+ \(\Delta T/T\) & \(2.2\times10^{-1}\) & \(9.6\times10^{-1}\) & \(1.1\times10^{-1}\) & \(8.3\times10^{-2}\) & \(4.9\times10^{-1}\)\\
+\bottomrule
 \end{tabular}
 \label{table:TypicalData}
 \end{table}
+
+For all five designs, both viscous heating and compression work are orders of magnitude less significant than energy advection and can therefore be neglected from the macroscale model. But while \(Re\gg1\) for most applications, the Brinkman viscous stress is retained in the macroscale model for completeness and application of no-slip \glspl{bc}. Likewise, \(Pe\gg1\) for all systems considered, but thermal energy conduction is retained in the macroscale model because the gradient diffusion model for thermal dispersion always requires a diffusive kernel.
 
 \subsection{Boundary and Initial Conditions}
 \label{sec:BCs}
@@ -575,11 +563,11 @@ This section describes the \glspl{bc} and \glspl{ic} for the macroscale conserva
 
 \subsubsection{The Fluid Conservation Equations}
 
-Despite the mixed hyperbolic-parabolic character of the fluid conservation equations, advection dominates diffusion at reactor conditions such that well-posed \glspl{bc} can be based on well-posed conditions for purely hyperbolic systems. The hyperbolic versions of the fluid conservation equations are obtained by omitting all diffusive kernels from Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}. Such a hyperbolic equation in \(n_{sd}\) spatial dimensions has eigenvalues \(-\vec{V}\cdot\hat{n}-c\), \(-\vec{V}\cdot\hat{n}+c\), and \(-\vec{V}\cdot\hat{n}\), where \(c\) is the speed of sound, \(\hat{n}\) is the boundary unit outward normal, and the \(\vec{V}\cdot\hat{n}\) eigenvalue occurs once for each spatial dimension \cite{rohde}. 
+Despite the mixed hyperbolic-parabolic character of the fluid conservation equations, advection dominates diffusion at reactor conditions such that well-posed \glspl{bc} can be based on well-posed conditions for purely hyperbolic systems. The hyperbolic versions of the fluid conservation equations are obtained by omitting all diffusive kernels from Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}. Such a hyperbolic equation in \(n_{sd}\) spatial dimensions has eigenvalues \(-\vec{V}\cdot\hat{n}-c\), \(-\vec{V}\cdot\hat{n}+c\), and \(-\vec{V}\cdot\hat{n}\), where \(c\) is the speed of sound, \(\hat{n}\) is the boundary unit outward normal, and the \(\vec{V}\cdot\hat{n}\) eigenvalue occurs once for each spatial dimension \cite{rohde}. 
 
 All flows are assumed subsonic such that \(\|\vec{V}\|<c\). On inlet and no-penetration boundaries, \(n_{sd}+1\) eigenvalues are positive and one eigenvalue is negative, which requires imposition of \(n_{sd}+1\) conditions. On outlet boundaries, one eigenvalue is positive and \(n_{sd}+1\) eigenvalues are negative, which requires imposition of one condition.
 
-The \gls{fe} discretization described in Section \ref{sec:fem} converts the strong forms in Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} to weak forms that contain both volume and surface integrals. The surface integrals represent flux \glspl{bc} that must be specified regardless of the type of boundary\mdash inflow, outflow, or no-penetration\mdash unless a Dirichlet \gls{bc} already strongly enforces a condition on that boundary. For example, the Navier-Stokes mass conservation equation weak form in Eq.\ \eqref{eq:MassWeak} contains the following surface integral,
+The \gls{fe} discretization described in Section \ref{sec:fem} converts the strong forms in Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} to weak forms that contain both volume and surface integrals. The surface integrals represent flux \glspl{bc} that must be specified regardless of the type of boundary\mdash inflow, outflow, or no-penetration\mdash unless a Dirichlet \gls{bc} already strongly enforces a condition on that boundary. For example, the Navier-Stokes mass conservation equation weak form in Eq.\ \eqref{eq:MassWeak} contains the following surface integral,
 
 \beq
 \label{eq:q1}
@@ -592,9 +580,9 @@ The \gls{fe} discretization described in Section \ref{sec:fem} converts the stro
 \int_{\Gamma}\epsilon\dot{m}d\Gamma\ .
 \eeq
 
-\noindent On boundaries where a mass flowrate is not specified and no Dirichlet condition is applied, the weak form still contains the surface integral in Eq.\ \eqref{eq:q1}, which must be evaluated using the implicit solution values for \(\rho_f\) and \(\vec{V}\). This is referred to here as an ``implicit,'' or ``free'' \gls{bc}. 
+\noindent On boundaries where a mass flowrate is not specified and no Dirichlet condition is applied, the weak form still contains the surface integral in Eq.\ \eqref{eq:q1}, which must be evaluated using the implicit solution values for \(\rho_f\) and \(\vec{V}\). This is referred to here as an ``implicit'' \gls{bc}. 
 
-This distinction between imposed and implicit \glspl{bc} is important for understanding the \gls{bc} requirements. On each boundary, a Dirichlet or Neumann condition must be applied to each conservation equation simply due to the nature of the boundary integrals in the \gls{fe} weak form\hspace{0.02cm}\footnote{While ``Neumann'' conditions strictly refer to \glspl{bc} where the derivative is enforced, here the looser convention of referring to all integrated \glspl{bc} as ``Neumann'' is followed.}. In \(n_{sd}\) spatial dimensions, this results in \(n_{sd}+2\) conditions on each boundary. The eigenvalue analysis then provides information on what subset of these conditions must be imposed by the modeler, rather than implicit. The eigenvalue analysis for inlet and no-penetration boundaries shows the \(n_{sd}+1\) conditions corresponding to positive eigenvalues must be of Dirichlet or specified Neumann type, while the remaining condition corresponding to the negative eigenvalue must be of implicit Neumann type. On outlet boundaries, one condition must be of Dirichlet or specified Neumann type, while the remaining \(n_{sd}+1\) conditions must be of implicit Neumann type. 
+This distinction between imposed and implicit \glspl{bc} is important for understanding the \gls{bc} requirements for the macroscale model. On each boundary, a Dirichlet or Neumann condition must be applied to each conservation equation simply due to the nature of the boundary integrals in the \gls{fe} weak form\hspace{0.02cm}\footnote{While ``Neumann'' conditions strictly refer to \glspl{bc} where the derivative is enforced, here the looser convention of referring to all integrated \glspl{bc} as ``Neumann'' is followed.}. In \(n_{sd}\) spatial dimensions, this results in \(n_{sd}+2\) conditions on each boundary. The eigenvalue analysis then provides information on what subset of these conditions must be imposed by the modeler, rather than implicit. The eigenvalue analysis for inlet and no-penetration boundaries shows the \(n_{sd}+1\) conditions corresponding to positive eigenvalues must be of Dirichlet or specified Neumann type, while the remaining condition corresponding to the negative eigenvalue must be of implicit Neumann type. On outlet boundaries, one condition must be of Dirichlet or specified Neumann type, while the remaining \(n_{sd}+1\) conditions must be of implicit Neumann type. 
 
 The remainder of this section describes Dirichlet and Neumann \glspl{bc} for the fluid conservation equations subject to these constraints. Neumann \glspl{bc} are additive within the numerical implementation, so are discussed individually. On inlet boundaries, temperature and either velocity or momentum are specified. Velocity and momentum may be specified in either an interstitial or superficial basis. On outlet boundaries, pressure is specified. On solid walls and \(r\)-\(z\) symmetry boundaries, mass conservation requires the no-penetration condition. On solid walls, the tangential velocity component may optionally be set to zero with what is referred to as a ``no-slip'' condition. On solid boundaries, the solid temperature or heat flux may be specified. 
 
@@ -629,7 +617,7 @@ The boundary is the union of the inlet \(\Gamma_\text{in}\), outlet \(\Gamma_\te
 
 Finally, an \(i\) subscript refers to an ``imposed,'' or specified, value, while any term lacking a subscript refers to the implicit solution value. Functional notation, such as \(\rho_f(P,T_f)\), indicates the use of the \gls{eos} to obtain \(\rho_f\) from \(P\) and \(T_f\). 
 
-For the mass conservation equation in Eqs. \eqref{eq:PMass} and \eqref{eq:PMass2}, the outlet condition for pressure as the nonlinear variable is
+For the mass conservation equation in Eqs.\ \eqref{eq:PMass} and \eqref{eq:PMass2}, the outlet condition for pressure as the nonlinear variable is
 
 \beq
 \label{eq:MassOut1}
@@ -657,7 +645,7 @@ P=P_i\text{ for }\Gamma\in\Gamma_\text{out}\ ,
 \end{dcases}\ .
 \eeq
 
-\noindent For the momentum conservation equation in Eqs. \eqref{eq:PMom} and \eqref{eq:PMom2}, a Dirichlet value of velocity or momentum is specified on the inlet. If the nonlinear variable is interstitial velocity, the inlet \gls{bc} is
+\noindent For the momentum conservation equation in Eqs.\ \eqref{eq:PMom} and \eqref{eq:PMom2}, a Dirichlet value of velocity or momentum is specified on the inlet. If the nonlinear variable is interstitial velocity, the inlet \gls{bc} is
 
 \beq
 \label{eq:q6}
@@ -708,7 +696,6 @@ P=P_i\text{ for }\Gamma\in\Gamma_\text{out}\ ,
 \eeq
 
 \noindent For no-slip solid walls, additional Dirichlet-type \glspl{bc} are one of
-
 \begin{subequations}
 \begin{align}
 \vec{V}=&\ \vec{0}\text{ for }\Gamma\in\Gamma_\text{wall, no-slip}\ ,\\
@@ -752,7 +739,7 @@ P=P_i\text{ for }\Gamma\in\Gamma_\text{out}\ ,
 \end{dcases}\ .
 \eeq
 
-\noindent For the energy conservation equation in Eqs. \eqref{eq:PEnergy} and \eqref{eq:PEnergy2}, a Dirichlet value of temperature is specified on the inlet and on walls where temperature is specified. If the nonlinear variable is temperature, this \gls{bc} is
+\noindent For the energy conservation equation in Eqs.\ \eqref{eq:PEnergy} and \eqref{eq:PEnergy2}, a Dirichlet value of temperature is specified on the inlet and on walls where temperature is specified. If the nonlinear variable is temperature, this \gls{bc} is
 
 \beq
 T_f=T_{f,i}\text{ for }\Gamma\in\Gamma_\text{in}\cup\Gamma_\text{wall, temperature}\ ,
@@ -765,7 +752,7 @@ T_f=T_{f,i}\text{ for }\Gamma\in\Gamma_\text{in}\cup\Gamma_\text{wall, temperatu
 \rho_fE_f=\rho_f(P,T_{f,i})\left\lbrack e_f(P,T_{f,i})+\frac{1}{2}\vec{V}\cdot\vec{V}\right\rbrack\text{ for }\Gamma\in\Gamma_\text{in}\cup\Gamma_\text{wall, temperature}\ .
 \eeq
 
-\noindent For brevity, Eq.\ \eqref{eq:q5} is written in terms of the implicit values of velocity at the inlet rather than the many combinations of specified velocity and momentum as represented by Eqs. \eqref{eq:q6}--\eqref{eq:q7}. Because Dirichlet \glspl{bc} are strongly imposed within the \gls{fe} discretization, no approximation is made in this notational simplification. 
+\noindent For brevity, Eq.\ \eqref{eq:q5} is written in terms of the implicit values of velocity at the inlet rather than the many combinations of specified velocity and momentum as represented by Eqs.\ \eqref{eq:q6}--\eqref{eq:q7}. Because Dirichlet \glspl{bc} are strongly imposed within the \gls{fe} discretization, no approximation is made in this notational simplification. 
 
 No advective flux integral appears in the weak form of Eq.\ \eqref{eq:PEnergy2}. The Neumann-type \glspl{bc} for the advective flux integral in Eq.\ \eqref{eq:PEnergy} for the remaining boundaries are
 
@@ -827,14 +814,14 @@ h_c(T_s-T_\infty) & \Gamma\in\Gamma_\text{heat flux (convection)}\\
 \subsection{Closures}
 \label{sec:Closures}
 
-This section describes models used for the macroscale closures\mdash the porosity, \(\epsilon\), in Section \ref{sec:Porosity}; the interphase friction factor, \(W\), in Section \ref{sec:W}; the Brinkman viscosity, \(\tilde{\mu}\), in Section \ref{sec:BrinkmanMu}; the interphase convective heat transfer coefficient, \(\alpha\), in Section \ref{sec:alpha}; the effective fluid thermal conductivity, \(\kappa_f\), in Section \ref{sec:Kappa}; and the effective solid thermal conductivity, \(\kappa_s\), in Section \ref{sec:KappaS}. Each discussion coincides with a description of the salient physical phenomena represented by that closure to provide context and background necessary to understand modeling choices made in later sections. In addition, the intrinsic phase-averaged fluid properties \(\rho_f\), \(C_{p,f}\), \(k_f\), and \(\mu_f\) are described in Section \ref{sec:FPs}. A description of the intrinsic phase-averaged solid properties \(\rho_s\), \(C_{p,s}\), and \(k_s\) is deferred until Section \ref{sec:meso_props} to collocate the discussion with property models used for the meso length scales.
+This section describes models used for the macroscale closures\mdash the porosity, \(\epsilon\); the interphase friction factor, \(W\); the Brinkman viscosity, \(\tilde{\mu}\); the interphase convective heat transfer coefficient, \(\alpha\); the effective fluid thermal conductivity, \(\kappa_f\); and the effective solid thermal conductivity, \(\kappa_s\). Each discussion coincides with a description of the salient physical phenomena represented by that closure to provide context and background necessary to understand modeling choices made in later chapters. In addition, the intrinsic phase-averaged fluid properties \(\rho_f\), \(C_{p,f}\), \(k_f\), and \(\mu_f\) are described in Section \ref{sec:FPs}. A description of the intrinsic phase-averaged solid properties \(\rho_s\), \(C_{p,s}\), and \(k_s\) is deferred until Section \ref{sec:meso_props} to collocate the discussion with property models used for the meso length scales.
 
-The macroscale porous media model derived in Section \ref{sec:macro_deriv} is applicable to a wide range of physical systems. However, unless otherwise noted, all closures described Sections \ref{sec:Porosity}--\ref{sec:KappaS} apply to random packed beds comprised of smooth, uniform diameter, spherical pebbles.
+The macroscale porous media model derived in Section \ref{sec:macro_deriv} is applicable to a wide range of physical systems. However, unless otherwise noted, all closures described Sections \ref{sec:Porosity}--\ref{sec:KappaS} apply to random packed beds comprised of uniform diameter spherical pebbles.
 
 \subsubsection{Porosity}
 \label{sec:Porosity}
 
-The porosity represents the fluid volume fraction in each \gls{rev} and has an important impact on flow and heat transfer\mdash all other closures described in Sections \ref{sec:W}--\ref{sec:KappaS} are generally dependent on porosity. Porosity also impacts the local flow area and appears in every kernel in the macroscale conservation equations. Lower porosities result in more tortuous fluid paths, and consequentially higher drag and greater convective heat transfer. Depending on the relative thermal conductivities of the phases, the conduction components of the effective solid thermal conductivity may increase or decrease with porosity, while the larger void spaces associated with higher porosities increase radiation heat transfer \cite{you}. 
+The porosity represents the fluid volume fraction in each \gls{rev} and has an important impact on flow and heat transfer\mdash all other closures described in Sections \ref{sec:W}--\ref{sec:KappaS} are generally dependent on porosity. Porosity also impacts the local flow area and appears in most kernels in the macroscale conservation equations. Lower porosities result in more tortuous fluid paths, and consequentially frictional momentum losses and greater convective heat transfer. Depending on the relative thermal conductivities of the phases, the conduction components of the effective solid thermal conductivity may increase or decrease with porosity, while the larger void spaces associated with higher porosities increase the effective radiation heat transfer component \cite{you}. 
 
 The random packing of beds is often numerically modeled with the \gls{dem}, where Newton's laws of motion are solved for a collection of granular pebbles considering friction, contact plasticity, gravity, and a variety of potentials \cite{duToit2008,auwerda2013,rycroft,abdalla,suikkanen,y_li,auwerda_2011,zhang2016}. Alternatively, experimentalists may fill a container with spheres, pour in a wax or resin that is allowed to solidify, and then chop the container into pieces for weighing after melting of the wax or resin \cite{goodling,benenati,roblee}. Other techniques such as image analysis, photography, radiography, and centripetal acceleration have been used \cite{goodling1985,mueller,giese}. A mesh is then superimposed on this data, and the porosity in each cell of the mesh evaluated as a volume average over that cell plus a number of that cell's neighboring cells. This spatial dependence may then be directly used in a physics application or correlated with a functional fit. 
 
@@ -844,7 +831,7 @@ The porosity is a function of the distance from walls and free surfaces. In the 
 
 Experiments built with half and quarter spheres near boundaries to obtain uniform porosity still observe some flow channeling near walls, which likely occurs due to flow alignment and less mixing of opposing streamlines behind pebbles \cite{mickley}. Therefore, the bypass effect is not entirely related to the magnitude of porosity, though porosities near unity are representative of the near-wall regions.
 
-In the axial direction, the porosity is a damped, oscillatory function of the distance from bounding walls with smooth transitions to unity near free surfaces \cite{auwerda2013,duToit2008,y_li,sun,abdalla}. Unlike the radial profile, the axial profile is dependent on the weight of the pebbles \cite{duToit2008}. However, most simulations of \glspl{pbr} neglect the axial dependence of porosity, likely due to the lack of models for the axial distribution \cite{becker, becker2003, duToit2006, lim, nouri, tecdoc1163, baggemann, ge}. An approximate method for extending radial porosity distributions to include axial dependence is developed later in this section.
+In the axial direction, the porosity is a damped, oscillatory function of the distance from bounding walls with smooth transitions to unity near free surfaces that depend on the weight of the pebbles \cite{auwerda2013,duToit2008,y_li,sun,abdalla}. However, most simulations of \glspl{pbr} neglect the axial dependence of porosity, likely due to the lack of models for the axial distribution \cite{becker, becker2003, duToit2006, lim, nouri, tecdoc1163, baggemann, ge}. An approximate method for extending radial porosity distributions to include axial dependence is developed later in this section.
 
 Most porosity models require specification of the infinite-bed porosity \(\epsilon_\infty\), or the porosity in the absence of wall effects. The infinite-bed porosity is very dependent on the filling procedure, and may range from 0.35 for vibration shakedowns to 0.44 for slowly draining fluid from a fluidized bed \cite{klerk}. Without knowledge of the packing procedure or experimental measurements, \(\epsilon_\infty\) is often set to 0.40. 
 
@@ -857,22 +844,22 @@ The simplest porosity distribution considered is a uniform profile
 \epsilon=\epsilon_\infty\ .
 \eeq
 
-\noindent Table \ref{table:DpDbed} provides the core dimensions and bed to pebble diameter ratio for a number of \glspl{pbr} and experimental facilities. For annular beds, the bed diameter \(d_\text{bed}\) is taken as the difference between the outer diameter \(D_o\) and inner diameter \(D_i\). For all systems except the SANA facility, \(d_\text{bed}/d_p\) is larger than the 10 to 30 range required for wall effects to constitute a small portion of the overall flow. For these large beds, the assumption of a constant porosity is often a reasonable model for prediction of bulk bed effects such as pressure drop.
+\noindent Table \ref{table:DpDbed} provides the core dimensions and bed to pebble diameter ratio for a number of \glspl{pbr} and experimental facilities. For annular beds, the bed diameter \(d_\text{bed}\) is taken as the difference between the outer diameter \(D_o\) and inner diameter \(D_i\). For all systems except the SANA facility, \(d_\text{bed}/d_p\) is larger than the 10 to 30 range required for wall effects to constitute a small portion of the overall flow. For these large beds, the assumption of a constant porosity is often a reasonable model for prediction of bulk effects such as pressure drop and average temperature rise.
 
-\begin{table}[!h]
-\caption{Approximate core dimensions and \(d_\text{bed}/d_p\) ratios for several packed bed reactors and experimental facilities \cite{gao,htrpm,pbfhr,boer,SANA,thtr_1990}.}
+\begin{table}[h!]
+\caption{Approximate core dimensions for several packed beds \cite{gao,htrpm,pbfhr,boer,SANA,thtr_1990}.}
 \centering
-\begin{tabular}{|r |c| c c c c c|}
-\hline\hline
-System & Bed Type & Height (m) & \(D_i\) (m) & \(D_o\) (m) & \(d_p\) (m) & \(d_\text{bed}/d_p\)\Tstrut\Bstrut \\
-\hline
-HTR-10 & cylindrical & \hspace{0.5em}2.0 & --- & 1.8 & 0.06 & 30.0\Tstrut\\
+\begin{tabular}{l l c c c c c}
+\toprule
+\textbf{System} & \textbf{Bed Type} & \textbf{Height (\si{\meter})} & \textbf{{\boldmath\(D_i\)} (\si{\meter})} & \textbf{{\boldmath\(D_o\)} (\si{\meter})} & \textbf{{\boldmath\(d_p\)} (\si{\meter})} & \textbf{{\boldmath\(d_\text{bed}/d_p\)}} \\
+\midrule
+HTR-10 & cylindrical & \hspace{0.5em}2.0 & --- & 1.8 & 0.06 & 30.0\\
 HTR-PM & cylindrical & 11.0 & --- & 3.0 & 0.06 & 50.0\\
 PB-FHR & annular & \hspace{0.5em}4.5 & 0.70 & 2.5 & 0.03 & 30.0\\
 PBMR-400 & annular & 11.0 & 2.0\color{white}0\color{black}& 3.7 & 0.03 & 28.3\\
 SANA & annular & \hspace{0.5em}1.0 & 0.14 & 1.5 & 0.06 & 11.3\\
-THTR & cylindrical & \hspace{0.5em}6.0 & --- & 5.6 & 0.06 & 93.3\Bstrut\\
-\hline
+THTR & cylindrical & \hspace{0.5em}6.0 & --- & 5.6 & 0.06 & 93.3\\
+\bottomrule
 \end{tabular}
 \label{table:DpDbed}
 \end{table}
@@ -972,14 +959,14 @@ D=\frac{\epsilon}{1-\epsilon}d_p\ ,
 -\nabla P\frac{\epsilon^3}{1-\epsilon}\frac{d_p}{\rho v^2}=A\frac{1-\epsilon}{Re}+B\ .
 \eeq
 
-\noindent The \gls{lhs} of Eq.\ \eqref{eq:PressureDropFa} represents the friction factor for non-porous flows, while the \gls{lhs} of Eq.\ \eqref{eq:PressureDropF2a} represents the friction factor for porous flows. The spatial homogenization of the momentum conservation equation in Section \ref{sec:macro_deriv} related the frictional pressure drop to a distributed loss in terms of \(W\) as
+\noindent The \gls{lhs} of Eq.\ \eqref{eq:PressureDropFa} represents the friction factor for non-porous flows, while the \gls{lhs} of Eq.\ \eqref{eq:PressureDropF2a} represents the friction factor for sphere-packed porous flows. The spatial homogenization of the momentum conservation equation in Section \ref{sec:macro_deriv} related the frictional pressure drop to a distributed loss in terms of \(W\) as
 
 \beq
 \label{eq:W1}
 \epsilon\nabla P= -W\rho_f\vec{V}\ .
 \eeq
 
-\noindent Combining Eqs. \eqref{eq:PressureDropF2a} and \eqref{eq:W1} provides the relationship between the friction factor and \(W\) for a spherical pebble porous media,
+\noindent Combining Eqs.\ \eqref{eq:PressureDropF2a} and \eqref{eq:W1} provides the relationship between the friction factor and \(W\) for a spherical pebble porous media,
 
 \beq
 W\equiv \left\lbrack A\frac{1-\epsilon}{Re}+B\right\rbrack\frac{(1-\epsilon)\|\vec{V}\|}{d_p}\ ,
@@ -988,7 +975,6 @@ W\equiv \left\lbrack A\frac{1-\epsilon}{Re}+B\right\rbrack\frac{(1-\epsilon)\|\v
 \noindent where the term in square brackets is the porous media friction factor defined in Eq.\ \eqref{eq:PressureDropF2a}. Models for \(W\) can therefore be specified in terms of the coefficients \(A\) and \(B\).
 
 The pebble bed is assumed isotropic such that \(W\) is a scalar. While the near-wall regions of pebble beds are far from isotropic, a lack of experimental and numerical data for these regions requires the use of isotropic models within the bed. Many models have been developed for isotropic drag in random packings of spheres. The Ergun model, perhaps the most widely-used packed bed drag correlation, sets \(A\) and \(B\) as \cite{ergun}
-
 \begin{subequations}
 \label{eq:Ergun}
 \begin{align}
@@ -998,7 +984,6 @@ B=&\ 1.75\ .
 \end{subequations}
 
 \noindent Eq.\ \eqref{eq:Ergun} is valid for \(1<Re<10^4\) \cite{eisfeld,nield,ergun,avigni}. A model developed by \gls{kta} from experimental data more closely matching gas-cooled \gls{pbr} conditions sets \(A\) and \(B\) as \cite{KTA}
-
 \begin{subequations}
 \label{eq:W_KTA}
 \begin{align}
@@ -1007,7 +992,7 @@ B=&\ 3\left(\frac{Re}{1-\epsilon}\right)^{-0.1}\ .
 \end{align}
 \end{subequations}
 
-\noindent Eq.\ \eqref{eq:W_KTA} is valid for \(1<Re_h<10^5\) and \(0.36<\epsilon<0.42\). Both Eqs. \eqref{eq:Ergun} and \eqref{eq:W_KTA} have been widely used for \gls{pbr} analysis \cite{gao, becker, becker2003, auwerda_2011,kececioglu,avigni,suikkanen,ge,scarlat,y_li,cai}. Eq.\ \eqref{eq:W_KTA} differs qualitatively from Eq.\ \eqref{eq:Ergun} in that pressure drop predictions are more in line with drag reduction effects seen in the fully turbulent regime \cite{fand,kececioglu,KTA,barree,nield_2000} that may be partially attributable to more efficient streamlining and/or limits on the growth of separated boundary layers due to the sphere packing.
+\noindent Eq.\ \eqref{eq:W_KTA} is valid for \(1<Re_h<10^5\) and \(0.36<\epsilon<0.42\). Both Eqs.\ \eqref{eq:Ergun} and \eqref{eq:W_KTA} have been widely used for \gls{pbr} analysis \cite{gao, becker, becker2003, auwerda_2011,kececioglu,avigni,suikkanen,ge,scarlat,y_li,cai}. Eq.\ \eqref{eq:W_KTA} differs qualitatively from Eq.\ \eqref{eq:Ergun} in that pressure drop predictions are more in line with drag reduction effects seen in the fully turbulent regime \cite{fand,kececioglu,KTA,barree,nield_2000} that may be partially attributable to more efficient streamlining and/or limits on the growth of separated boundary layers due to the sphere packing.
 
 For anisotropic media such as reflector blocks and tube banks, Eq.\ \eqref{eq:W1} is modified to
 
@@ -1016,7 +1001,7 @@ For anisotropic media such as reflector blocks and tube banks, Eq.\ \eqref{eq:W1
 \epsilon\frac{\partial P}{\partial x_i}=-W_{ij}\rho_fV_j\ ,
 \eeq
 
-\noindent where \(W\) is a diagonal tensor with \(W_{11}\), \(W_{22}\), and \(W_{33}\) each described in terms of different \(A\) and \(B\) coefficients. Combining Eqs. \eqref{eq:TotalPressureDrop} with \eqref{eq:W2} provides the relationship between the friction factor and \(W\) for generic porous media without the use of the spherical pebble hydraulic diameter in Eq.\ \eqref{eq:Dh},
+\noindent where \(W\) is a diagonal tensor with \(W_{11}\), \(W_{22}\), and \(W_{33}\) each described in terms of different \(A\) and \(B\) coefficients. Combining Eqs.\ \eqref{eq:TotalPressureDrop} with \eqref{eq:W2} provides the relationship between the friction factor and \(W\) for generic porous media without the use of the spherical pebble hydraulic diameter in Eq.\ \eqref{eq:Dh},
 
 \beq
 \label{eq:W3}
@@ -1028,7 +1013,7 @@ W_{ij}=\frac{\epsilon\|\vec{V}\|}{D}\left(\frac{A_{ij}}{Re_h}+B_{ij}\right)\ .
 \subsubsection{Brinkman Viscosity}
 \label{sec:BrinkmanMu}
 
-The Brinkman stress term with effective viscosity \(\tilde{\mu}\) augments the distributed loss friction model described in Section \ref{sec:W}. There is substantial disagreement on appropriate models for the Brinkman viscosity, which tends to affect reactor flows in a very thin region near walls \cite{auwerda_2011,giese,vafai,tecdoc1163}. Generally, \(\tilde{\mu}\) increases with Reynolds number because of enhanced mixing, though this may be dependent on the solid shape \cite{giese}. 
+The Brinkman stress term with effective viscosity \(\tilde{\mu}\) augments the distributed loss friction model described in Section \ref{sec:W}. There is substantial disagreement on appropriate models for the Brinkman viscosity, which only tends to affect reactor flows in a very thin region near walls \cite{auwerda_2011,giese,vafai,tecdoc1163}. Generally, \(\tilde{\mu}\) increases with Reynolds number because of enhanced mixing, though this may be dependent on the solid shape \cite{giese}. 
 
 Due to a lack of more refined models applicable to \gls{pbr} conditions, the Brinkman viscosity is given as
 
@@ -1037,7 +1022,7 @@ Due to a lack of more refined models applicable to \gls{pbr} conditions, the Bri
 \tilde{\mu}=\epsilon\Upsilon\mu\ ,
 \end{equation}
 
-\noindent where \(\Upsilon\) is a constant. Auwerda et.\ al select \(\Upsilon=100\) somewhat arbitrarily for helium-cooled \glspl{pbr}, but because the Brinkman stress term has little experimental basis, \(\Upsilon\) is set to zero unless otherwise noted \cite{auwerda_2011}.
+\noindent where \(\Upsilon\) is a constant. Auwerda et.\ al select \(\Upsilon=100\) somewhat arbitrarily for helium-cooled \glspl{pbr}, but because the Brinkman stress term has little experimental basis, \(\Upsilon\) is set to zero in this work unless otherwise noted \cite{auwerda_2011}.
 
 \subsubsection{Interphase Convective Heat Transfer Coefficient}
 \label{sec:alpha}
@@ -1066,12 +1051,12 @@ Nu=\left\lbrack1+1.5(1-\epsilon)\right\rbrack\left(2+\sqrt{Nu_{\textrm{lam}}^2+N
 
 \beq
 \label{eq:NuLam}
-Nu_{\textrm{lam}}=0.664\left(\frac{Re}{\epsilon}\right)^{0.5} Pr^{1/3}\ ,
+Nu_{\textrm{lam}}\equiv0.664\left(\frac{Re}{\epsilon}\right)^{0.5} Pr^{1/3}\ ,
 \eeq
 
 \beq
 \label{eq:NuTurb}
-Nu_{\textrm{turb}}=\frac{0.037\left(\frac{Re}{\epsilon}\right)^{0.8} Pr}{1+2.443\left(\frac{Re}{\epsilon}\right)^{-0.1}\left(Pr^{2/3}-1\right)}\ ,
+Nu_{\textrm{turb}}\equiv\frac{0.037\left(\frac{Re}{\epsilon}\right)^{0.8} Pr}{1+2.443\left(\frac{Re}{\epsilon}\right)^{-0.1}\left(Pr^{2/3}-1\right)}\ ,
 \eeq
 
 \noindent where \(Pr\) is the Prandtl number, defined as
@@ -1099,7 +1084,7 @@ Finally, a model developed by Wakao based on heat and mass transfer data gives \
 Nu=2+1.1Pr^{1/3}Re^{0.6}\ .
 \eeq
 
-\noindent Eq.\ \eqref{eq:Wakao} is valid for \(15\leq Re\leq8500\) and \(\epsilon=0.4\). Eqs. \eqref{eq:GnielinskiPebblebed}, \eqref{eq:KTA}, and \eqref{eq:Wakao} are commonly used for analysis of \glspl{pbr} \cite{auwerda_2011, becker, becker2003,avigni,gao, suikkanen,scarlat,y_li,xin_wang_thesis,cai}.
+\noindent Eq.\ \eqref{eq:Wakao} is valid for \(15\leq Re\leq8500\) and \(\epsilon=0.4\). Eqs.\ \eqref{eq:GnielinskiPebblebed}, \eqref{eq:KTA}, and \eqref{eq:Wakao} are commonly used for analysis of \glspl{pbr} \cite{auwerda_2011, becker, becker2003,avigni,gao, suikkanen,scarlat,y_li,xin_wang_thesis,cai}.
 
 \subsubsection{Effective Fluid Thermal Conductivity}
 \label{sec:Kappa}
@@ -1123,9 +1108,7 @@ The effective fluid thermal conductivity \(\kappa_f\) represents thermal dispers
 \subsubsection{Effective Solid Thermal Conductivity}
 \label{sec:KappaS}
 
-The effective solid thermal conductivity \(\kappa_s\) represents three effective heat transfer mechanisms in the solid phase. Models for \(\kappa_s\) generally consider three different effects\mdash 1)~conduction in a pebble and radiation between pebbles across a transparent fluid, which is represented by \(\kappa_\text{radiation}\); 2)~conduction in a pebble and conduction in the fluid between pebbles, which is represented by \(\kappa_\textrm{fluid conduction}\); and 3)~conduction in a pebble and conduction between pebbles at contact areas, which is represented by \(\kappa_\textrm{solid conduction}\).
-
-These three heat transfer mechanisms are measured by assuming the fluid is stagnant to avoid ``double-counting'' the convection effects represented by the convection kernels in Eqs. \eqref{eq:PEnergy} and \eqref{eq:PEnergy2}. In \glspl{loca} or other conditions where convective cooling capabilities are severely degraded, \(\kappa_s\) represents the primary heat transfer removal mechanisms. 
+The effective solid thermal conductivity \(\kappa_s\) represents three effective heat transfer mechanisms in the solid phase\mdash 1)~conduction in a pebble and radiation between pebbles across a transparent fluid, which is represented by \(\kappa_\text{radiation}\); 2)~conduction in a pebble and conduction in the fluid between pebbles, which is represented by \(\kappa_\textrm{conduction}\); and 3)~conduction in a pebble and conduction between pebbles at contact areas, which is represented by \(\kappa_\textrm{contact}\). These three heat transfer mechanisms are measured by assuming the fluid is stagnant to avoid ``double-counting'' the convection effects represented by the convection kernels in Eqs.\ \eqref{eq:PEnergy} and \eqref{eq:PEnergy2}. In \glspl{loca} or other conditions where convective cooling capabilities are severely degraded, \(\kappa_s\) represents the primary heat transfer removal mechanisms. 
 
 Models for the three components of \(\kappa_s\) are typically derived analytically from a unit cell consisting of two half-spheres in contact surrounded by a cylindrical annulus of fluid \cite{breitbach}. Parallel and series heat transfer processes occur in the various regions of the unit cell, and differences in \glspl{bc} result in a multitude of \(\kappa_s\) models. Based on this unit cell, Breitbach and Barthels develop a model for \(\kappa_\text{radiation}\) as
 
@@ -1147,7 +1130,7 @@ B=1.25\left(\frac{1-\epsilon}{\epsilon}\right)^{10/9}\ ,
 
 \begin{equation}
 \label{eq:KappaFluidConductionZS}
-\kappa_{\textrm{fluid conduction}}=\left(1-\sqrt{1-\epsilon}\right)k_f+\sqrt{1-\epsilon}\ \mathscr{K}_{SF}k_f\ ,
+\kappa_{\textrm{conduction}}=\left(1-\sqrt{1-\epsilon}\right)k_f+\sqrt{1-\epsilon}\ \mathscr{K}_{SF}k_f\ ,
 \end{equation}
 
 \noindent where \(\mathscr{K}_{SF}\) is given\hspace{0.02cm}\footnote{A typo is unfortunately present in this equation in the author's 2019 journal article \cite{novak_sana}} as
@@ -1188,26 +1171,26 @@ F=S_F\frac{P}{N_A}\ ,
 \noindent where \(S_F\) is a factor that relates the total force to the vertical component, assumed to be the pressure \(P\) due to pebble weight. The pressure is approximated as
 
 \begin{equation}
-P(z)=(1-\epsilon_\infty)\rho_s\volume(z)|g_z|\ ,
+P=(1-\epsilon_\infty)\rho_s\Delta z|g|\ ,
 \end{equation}
 
-\noindent where \(\volume(z)\) is the volume of the bed above elevation \(z\) and \(|g_z|\) is the magnitude of the axial component of the gravitational acceleration. Interpolation is performed between ordered lattice \(N_A\), \(N_L\), and \(S_F\) values given in Table \ref{table:ChanTien}.
+\noindent where \(\Delta z\) is the distance below the top of the bed. Interpolation is performed between ordered lattice \(N_A\), \(N_L\), and \(S_F\) values given in Table \ref{table:ChanTien}.
 
 \begin{table}[!h]
-\caption{Values in the Chan and Tien model for various ordered packings \cite{chan}.}
+\caption{Parameters in the Chan and Tien model for various ordered packings \cite{chan}.}
 \centering
-\begin{tabular}{|c| c c c|}
-\hline\hline
-& Simple cubic & Body-centered cubic & Face-centered cubic\Bstrut\Tstrut \\
-\hline
-\(N_A\) & \(\frac{1}{d_p^2}\) & \(\frac{3}{4d_p^2}\) & \(\frac{2}{\sqrt{3}d_p^2}\) \Tstrut\\
-\(N_L\) & \(\frac{1}{d_p}\) & \(\frac{\sqrt{3}}{d_p}\) & \(\frac{\sqrt{3}}{\sqrt{2}d_p}\) \Tstrut\\
-\(S_F\) & 1 & \(\frac{\sqrt{3}}{4}\)& \(\frac{1}{\sqrt{6}}\) \Tstrut\\
-\(\epsilon\) & 0.48 & 0.32 & 0.26\Tstrut\Bstrut\\
-\hline
+\begin{tabular}{c c c c}
+\toprule
+\textbf{Parameter} & \textbf{Simple Cubic} & \textbf{Body-Centered Cubic} & \textbf{Face-Centered Cubic}\\
+\midrule
+\(N_A\) & \(1/d_p^2\) & \(3/4/d_p^2\) & \(\sqrt{4/3}/d_p^2\)\Bstrut\\
+\(N_L\) & \(1/d_p\) & \(\sqrt{3}/d_p\) & \(\sqrt{3/2}/d_p\)\Bstrut\\
+\(S_F\) & 1 & \(\sqrt{3}/4\)& \(1/\sqrt{6}\)\Bstrut\\
+\(\epsilon\) & 0.48 & 0.32 & 0.26\\
+\bottomrule
 \end{tabular}
 \label{table:ChanTien}
-\end{table}
+\end{table} 
 
 Most models for \(\kappa_s\) are only applicable within the bulk region of the bed. Within a half pebble diameter of the walls, better agreement with experimental data is obtained by either using a different set of correlations altogether \cite{auwerda_2011} or through application of a multiplicative constant \cite{tecdoc1163}. Two approaches are considered\mdash applying a multiplier of 0.5 to \(\kappa_s\) or using the Tsotsas model for \(\kappa_\text{radiation}\) \cite{visser}, 
 
@@ -1216,7 +1199,7 @@ Most models for \(\kappa_s\) are only applicable within the bulk region of the b
 \kappa_\text{radiation}=\left(1-\sqrt{1-\epsilon}\right)\frac{4\sigma\bar{T}^3d_p}{k_f\left(2\varepsilon-1\right)}+\sqrt{1-\epsilon}\left\lbrack\frac{k_f\left(2\varepsilon-1\right)}{4\sigma\bar{T}^3d_p}+\lambda\right\rbrack^{-1}\ .
 \end{equation}
 
-\noindent To obtain continuity with the bulk value of \(\kappa_\text{radiation}\), the minimum of Eqs. \eqref{eq:KappaRadiationBB} and \eqref{eq:Tsotsas} is used in the near-wall region.
+\noindent To obtain continuity with the bulk value of \(\kappa_\text{radiation}\), the minimum of Eqs.\ \eqref{eq:KappaRadiationBB} and \eqref{eq:Tsotsas} is used in the near-wall region.
 
 For general porous media not composed of randomly-heaped spheres, a volume average of the phase thermal conductivities is typically used,
 
@@ -1230,25 +1213,10 @@ For general porous media not composed of randomly-heaped spheres, a volume avera
 
 The intrinsic phase averaged fluid properties \(\rho_f\), \(C_{p,f}\), \(\mu_f\), and \(k_f\) are obtained from literature correlations in terms of the intrinsic phase average temperature \(T_f\). Models for specific fluids and well as generic \glspl{eos} are described at greater length in Appendix \ref{sec:props}.
 
-
-
-
-% The ``near miss" method, where the pebble diameter is set to 99.5\% of its actual value, is often used to avoid this issue \cite{bai,ge,lee2007,li_pbwr,nijemeisland,song}.
-
-%However, porous media models will not perfectly correspond to averaged \gls{cfd} results - porous media models generally overpredict pressure drop relative to \gls{cfd} models \cite{ge, wu2010}.
-
-%Some of the limitations of porous media models could be partially overcome by coupling Pronghorn with a \gls{cfd} code; bulk simulation results from Pronghorn could be used as \glspl{bc} on \gls{cfd} closure generation simulations that feed back more accurate drag and heat transfer correlations into Pronghorn. For example, \gls{cfd} simulations of pebbles show a strong dependence of heat transfer and drag on the assumed pebble packing \cite{lee2007,zhang2018,ferng,song}, which would justify the use of \gls{cfd} models to refine correlations developed based on bulk bed properties. However, this multi-scale combination is nontrivial. Future efforts will involve multi-scale analysis with Pronghorn and detailed \gls{cfd}.
-
-%Due to the tighter packing, enhanced turbulent mixing, and lack of larger pore spaces to support heat-transport-degrading vortices, \gls{fcc} lattices have higher velocities (about 35\% higher peak velocities) and better convective cooling (about 50\% higher Nusselt number) than \gls{bcc} lattices, which may be nonconservative in predicting fuel temperatures \cite{ferng,song}. More tortuous fluid paths in \gls{fcc} lattices do result in higher pressure drops, which is conservative \cite{song}. However, both \gls{bcc} and \gls{fcc} lattices differ considerably from randomly-generated beds. Pressure drops for a randomly-generated gas-cooled bed were 5.5 times larger than that in a \gls{bcc} lattice of nearly equal porosity, while velocities were two times larger \cite{zhang2018}.
-
-%The very high heat capacity of graphite, a significant constituent in the moderating and structural material in most \gls{htr} designs, necessitates the use of implicit time-stepping to eliminate stability-related time step constraints to make day-long transient simulations feasible \cite{htrpm, tyobeka}. Because Pronghorn is based on the \gls{moose} framework, all explicit and implicit time stepping schemes available in \gls{petsc} may be utilized. Pronghorn uses the \gls{fem} for spatial discretization of its governing equations, permitting the use of unstructured meshes that are important for capturing complicated converging/diverging core structures common to \gls{pbr} designs. 
-
-%Pronghorn does not assume incompressibility, though many comparable simulations of gas-cooled systems have assumed incompressibility \cite{latifi}.
-
 \section{Meso and Micro Scale Models}
 \label{sec:mesomicro}
 
-The porous media solid energy conservation equation derived in Section \ref{sec:macro_deriv} describes the evolution of the \gls{rev}-averaged solid surface temperature \(T_s\). The meso length scale characterizes ``representative'' solid pebbles with surface temperature \(T_s\) within the macroscale domain. Fig.\ \ref{fig:meso} illustrates this concept; Fig.\ \ref{fig:mesoa} shows a solid surface temperature distribution obtained by solution of the macroscale model. Boundaries of solid pebbles are shown as dotted black lines, but due to the \gls{rev} averaging procedure, this mesoscale structure is spatially homogenized on the macroscale. To avoid confusion with the \glspl{cfp} within the fuel pebbles, the phrase ``pebble'' is used in reference to Fig.\ \ref{fig:meso}, despite the solid phase not having spherical shape. If the mesoscale is assumed periodic with respect to the coarser length scale, the solid surface temperature from the macroscale may be used as a uniform surface temperature \gls{bc} on a number of representative solid pebbles throughout the macroscale domain. Fig.\ \ref{fig:mesob} shows the same pebbles from Fig.\ \ref{fig:mesoa}, now with solid boundaries whose colors represent the magnitude of the temperature \gls{bc} on each pebble. The color of each pebble's boundary is obtained using the ``eyedropper'' feature in Microsoft PowerPoint to obtain the color at the centroid of each pebble's volume in Fig.\ \ref{fig:mesoa}. Conceptually, this process is quite similar to the process used to obtain the mesoscale surface \gls{bc} on pebbles.
+The porous media solid energy conservation equation derived in Section \ref{sec:macro_deriv} describes the evolution of the \gls{rev}-averaged solid surface temperature \(T_s\). The meso length scale characterizes ``representative'' solid pebbles with surface temperature \(T_s\) within the macroscale domain. Fig.\ \ref{fig:meso} illustrates this concept; Fig.\ \ref{fig:mesoa} shows a solid surface temperature distribution obtained by solution of the macroscale model. Boundaries of solid pebbles are shown as dotted black lines, but due to the \gls{rev} averaging procedure, this mesoscale structure is spatially homogenized on the macroscale\hspace{0.02cm}\footnote{To avoid confusion with the \glspl{cfp} within the fuel pebbles, the phrase ``pebble'' is used in reference to Fig.\ \ref{fig:meso}, despite the solid phase not having spherical shape.}. If the mesoscale is assumed periodic with respect to the coarser length scale, the solid surface temperature from the macroscale may be used as a uniform surface temperature \gls{bc} on a number of representative solid pebbles throughout the macroscale domain. Fig.\ \ref{fig:mesob} shows the same pebbles from Fig.\ \ref{fig:mesoa}, now with solid boundaries whose colors represent the magnitude of the temperature \gls{bc} on each pebble. The color of each pebble's boundary is obtained using the ``eyedropper'' feature in Microsoft PowerPoint to obtain the color at the centroid of each pebble's volume in Fig.\ \ref{fig:mesoa}. Conceptually, this process is quite similar to the process used to obtain the mesoscale surface \gls{bc} on pebbles.
 
 \begin{figure}[!h]
 \centering
@@ -1268,7 +1236,7 @@ The porous media solid energy conservation equation derived in Section \ref{sec:
 \label{fig:meso}
 \end{figure}
 
-The spatial distribution of pebbles within the macroscale domain is usually unknown, so the use of the identical pebble representation in Figs. \ref{fig:mesoa} and \ref{fig:mesob} is purely pedagogical. Given the assumption of mesoscale periodicity, the solid surface temperature at each position \(\vec{x}\) in the macroscale domain represents a uniform surface temperature on a representative solid pebble centered at \(\vec{x}\). For the non-spherical pebbles in Fig.\ \ref{fig:mesoa}, each representative pebble may be considered a spherical pebble with a diameter averaged over the actual diameter distribution. 
+The spatial distribution of pebbles within the macroscale domain is usually unknown, so the use of the identical pebble representation in Figs. \ref{fig:mesoa} and \ref{fig:mesob} is purely pedagogical. Given the assumption of mesoscale periodicity, the solid surface temperature at each position \(\vec{x}\) in the macroscale domain represents a uniform surface temperature on a representative solid pebble centered at \(\vec{x}\).
 
 In solid-fluid mixtures consisting of a homogeneous or multi-layer homogeneous solid phase, the heat equation may readily be applied to estimate the internal solid temperature distribution,
 
@@ -1277,9 +1245,9 @@ In solid-fluid mixtures consisting of a homogeneous or multi-layer homogeneous s
 \rho_S C_{p,S}\frac{\partial T_S}{\partial t}-\nabla\cdot\left(k_S\nabla T_S\right)-\dot{q}_S=0\ ,
 \eeq
 
-\noindent where \(\rho_S\) is the solid density, \(C_{p,S}\) is the solid isobaric specific heat capacity, \(k_S\) is the solid thermal conductivity, \(T_S\) is the internal solid temperature, and \(\dot{q}_S\) is the volumetric heat source. The \(S\) subscript indicates that the thermal properties, volumetric heat source, and temperature correspond to the interior of the solid phase, and is distinct from the \(s\) subscript used to denote the intrinsic phase averaged quantities in the macroscale solid energy conservation equations in Eqs. \eqref{eq:PSEnergy} and \eqref{eq:PSEnergy2}.
+\noindent where \(\rho_S\) is the solid density, \(C_{p,S}\) is the solid isobaric specific heat capacity, \(k_S\) is the solid thermal conductivity, \(T_S\) is the internal solid temperature, and \(\dot{q}_S\) is the volumetric heat source. The \(S\) subscript indicates that the thermal properties, volumetric heat source, and temperature correspond to the interior of the solid phase, and is distinct from the \(s\) subscript used to denote the intrinsic phase averaged quantities in the macroscale solid energy conservation equations in Eqs.\ \eqref{eq:PSEnergy} and \eqref{eq:PSEnergy2}.
 
-To reinforce the conceptual difference between \(s\) and \(S\) subscripts, consider a hypothetical pebble design consisting of three concentric layers of UO$_2$, helium, and zircaloy. Then, \(k_S\) might be specified as
+To reinforce the conceptual difference between \(s\) and \(S\) subscripts, consider a hypothetical pebble design consisting of three concentric layers of \gls{uo2}, helium, and zircaloy. Then, \(k_S\) might be specified as
 
 \beq
 k_S(r, T_S)=\begin{dcases}
@@ -1289,20 +1257,20 @@ k_{\text{zircaloy}}(T_S) & r_2 \leq r < d_p/2\ ,
 \end{dcases}
 \eeq
 
-\noindent where \(k_{\text{UO}_2}\), \(k_\text{helium}\), and \(k_\text{zircaloy}\) are temperature-dependent thermal conductivity correlations for each layer. The spatial dependence is listed in terms of the radial coordinate due to the uniform surface temperature \gls{bc} and interpretation of each representative pebble as a sphere with average radius \(d_p/2\). \(r_1\) indicates the boundary between the UO$_2$ and helium regions and \(r_2\) indicates the boundary between the helium and zircaloy regions. Similar piecewise expressions would be used for the heat source and the other properties of the solid. Conversely, properties with an \(s\) subscript differ are homogenized over the entire solid phase.
+\noindent where \(k_{\text{UO}_2}\), \(k_\text{helium}\), and \(k_\text{zircaloy}\) are temperature-dependent thermal conductivity correlations for each layer. The spatial dependence is listed in terms of the radial coordinate due to the uniform surface temperature \gls{bc} and interpretation of each representative pebble as a sphere with radius \(d_p/2\). \(r_1\) indicates the boundary between the \gls{uo2} and helium regions and \(r_2\) indicates the boundary between the helium and zircaloy regions. Similar piecewise expressions would be used for the heat source and the other properties of the solid. Conversely, properties with an \(s\) subscript differ are homogenized over the entire solid phase, which would be computed as some average of \(k_{\text{UO}_2}\), \(k_\text{helium}\), and \(k_\text{zircaloy}\).
 
-Systems to which this multi-layer homogeneous solid modeling approach is readily applicable include homogeneous graphite pebbles commonly used near outer reflectors in \glspl{pbr} and conventional multi-layer pincell fuels in \glspl{lwr}. \gls{pbr} fuels, on the other hand, are extremely heterogeneous. Fig.\ \ref{fig:pbmr_pebble} shows a pictorial rendering of the fuel pebble design for the \gls{pbmr}, which is representative of many other \gls{pbr} fuels \cite{tecdoc1694}. The pebble consists of two main regions\mdash 1)~a central fuel-matrix region containing approximately 15,000 \glspl{cfp} randomly distributed in a graphite matrix, and 2)~a homogeneous graphite shell protecting the central fuel-matrix region from erosion. The micro length scale characterizes ``representative'' heterogeneous structures within the mesoscale domain; for application to the fuel-matrix region of \gls{pbr} fuels, these heterogeneous structures are the \glspl{cfp}.
+Systems to which this multi-layer homogeneous solid modeling approach is readily applicable include homogeneous graphite pebbles commonly used near outer reflectors in \glspl{pbr} and conventional multi-layer pincell fuels in \glspl{lwr}. \gls{pbr} fuels, on the other hand, are extremely heterogeneous. Fig.\ \ref{fig:pbmr_pebble} shows a pictorial rendering of the fuel pebble design for the \gls{pbmr}, which is representative of many other \gls{pbr} fuels \cite{tecdoc1694}. The pebble consists of two main regions\mdash 1)~a central fuel-matrix region containing approximately 15,000 \glspl{cfp} randomly distributed in a graphite matrix and 2)~a homogeneous graphite shell. The micro length scale characterizes ``representative'' heterogeneous structures within the mesoscale domain; for application to the fuel-matrix region of \gls{pbr} fuels, these heterogeneous structures are the \glspl{cfp}.
+
+Many other solid fuel forms encountered in nuclear applications share this heterogeneous character. \gls{fcm} fuels consist of conventional \glspl{cfp} dispersed in a \gls{sic} matrix and fabricated into cylindrical pellets that are intended to replace \gls{uo2} pellets in \glspl{lwr} \glspl{htgr} \cite{lu,snead_fcm}. For the conversion of research reactors from high- to low-enriched uranium, either the fuel loading or fissile atom density must be increased to retain the same reactor performance. As the size of the reactors are typically fixed, high fissile density dispersion fuels consisting of U$_3$Si$_2$ or UMo particles in an aluminum matrix have been used \cite{mistarihi,jeong2015}. A fast reactor fuel design consisting of metallic-coated fissile kernels surrounded by a fuel powder matrix has also been proposed \cite{abdalla}.
 
 \begin{figure}[!h]
 \centering
   \includegraphics[width=0.85\linewidth]{figs/pbmr_pebble.png}
-\caption{Schematic of the \gls{pbmr} fuel pebble design with colors indicating different material compositions.}
+\caption{Schematic of the \gls{pbmr} fuel pebble design with colors indicating material composition.}
 \label{fig:pbmr_pebble}
 \end{figure}
 
-Many other solid fuel forms encountered in nuclear applications share this heterogeneous character. \gls{fcm} fuels consist of conventional \glspl{cfp} dispersed in a \gls{sic} matrix and fabricated into cylindrical pellets that are intended to replace UO$_2$ pellets in \glspl{lwr} \glspl{htgr} \cite{lu,snead_fcm}. For the conversion of research reactors from high- to low-enriched uranium, either the fuel loading or fissile atom density must be increased to retain the same reactor performance. As the size of the reactors are typically fixed, high fissile density dispersion fuels consisting of U$_3$Si$_2$ or UMo particles in an aluminum matrix have been used \cite{mistarihi,jeong2015}. A fast reactor fuel design consisting of metallic-coated fissile kernels surrounded by a fuel powder matrix has also been proposed \cite{abdalla}.
-
-The different material properties of the \gls{cfp} layers, combined with the localization of the fission heat source to the central \gls{cfp} kernel, necessitates models to describe the microscale structure beyond Eq.\ \eqref{eq:oem} without explicit representation of all 15,000 particles. Rudimentary models based on volume-averaging the fuel-matrix properties and heat source as inputs to Eq.\ \eqref{eq:oem} may significantly underpredict fissile kernel temperatures \cite{brown_fcm,kamalpour, novak_2019}.
+The different material properties of the \gls{cfp} layers, combined with the localization of the fission heat source to the central \gls{cfp} kernel, makes Eq.\ \eqref{eq:oem} incapable to capturing the heat transfer in such a heterogeneous geometry. Rudimentary models based on volume-averaging the fuel-matrix properties and heat source as inputs to Eq.\ \eqref{eq:oem} may significantly underpredict fissile kernel temperatures \cite{brown_fcm,kamalpour, novak_2019}.
 
 Multiscale analysis of heterogeneous solids is a large research field, especially in the analysis of conduction through composite materials; as such, a wide variety of methods have been proposed and used. A brief discussion of this research area provides larger context to this work. 
 
@@ -1310,7 +1278,9 @@ One obvious multiscale model is based on extending the \gls{rev} homogenization 
 
 A second method, referred to as ``multiscale expansion,'' expresses the temperature as a Taylor series expansion of successive corrections of order \(1\), \(\varsigma\), \(\varsigma^2\), \(\cdots\), where \(\varsigma\) is a small parameter. This ansatz is then plugged into the heat conduction equation and like terms collected to yield a separate differential equation for each correction \cite{weinan}. 
 
-While the spatial homogenization is a natural companion to the macroscale porous media method, its implementation and use is considered as a future research activity. The multiscale expansion method, while mathematically rigorous, results in many unique physics kernels with low reuse potential in a modular computing framework. This method is therefore also not pursued further. The remainder of this section describes two models investigated in this dissertation\mdash the \gls{hl} method and the \gls{hsd} method. Justification for their use over the macroscale homogenization and multiscale expansion methods is provided alongside a technical description.
+While the spatial homogenization is a natural companion to the macroscale porous media method, its implementation and use is considered as a future research activity. The multiscale expansion method, while mathematically rigorous, results in many unique physics kernels with low reuse potential in a modular computing framework. This method is therefore also not pursued further. The remainder of this section describes the two models investigated in this dissertation\mdash the \gls{hl} method and the \gls{hsd} method. Justification for their use over the macroscale homogenization and multiscale expansion methods is provided alongside a technical description.
+
+\subsection{The Homogeneous Layers Method}
 
 The \gls{hl} method blends aspects of a multilayer homogeneous solid that can be described by Eq.\ \eqref{eq:oem} with consideration of the \gls{cfp} layers thermal resistance and heat source localization. The \gls{hl} method is based on symmetrically smearing heterogeneities into a \gls{1d} multilayer solid while preserving volume fractions. Fig.\ \ref{fig:pbmr_hlm} shows one possible representation of the \gls{pbmr} pebble in Fig.\ \ref{fig:pbmr_pebble} with the \gls{hl} method. The total mass of each material is conserved and the geometric structure of the \glspl{cfp} is approximated as a multilayer spherical shell; 15,000 randomly-distributed particles have been simplified to a single pseudo-particle at the expense of a distortion in the thermal resistance seen by the kernel and the separation of a continuous matrix into isolated regions.
 
@@ -1321,9 +1291,9 @@ The \gls{hl} method blends aspects of a multilayer homogeneous solid that can be
 \label{fig:pbmr_hlm}
 \end{figure}
 
-Conserving volume fractions of the materials in the fuel-matrix region does not provide a sufficient number of constraints to determine 1)~the number of pseudo-particles; 2)~the location of the pseudo-particles; and 3)~the relative thicknesses of the ``inner'' and ``outer'' layers of non-kernel materials in the pseudo-particles. An infinite number of \gls{hl} representations of the pebble in Fig.\ \ref{fig:pbmr_pebble} can be conceived, so several additional requirements are arbitrarily imposed. 
+However, conserving volume fractions of the materials in the fuel-matrix region does not provide a sufficient number of constraints to determine 1)~the number of pseudo-particles, 2)~the location of the pseudo-particles, and 3)~the relative thicknesses of the ``inner'' and ``outer'' layers of non-kernel materials in the pseudo-particles. An infinite number of \gls{hl} representations of the pebble in Fig.\ \ref{fig:pbmr_pebble} can be conceived, so several additional requirements are arbitrarily imposed. 
 
-The number of pseudo-particles \(N_p\) is set as the only free parameter. First, the fuel-matrix region is divided into \(N_p\) equal-volume spherical shells. Consider a shell spanning \(r_i\leq r\leq r_o\) with total volume \(\volume\) given as
+The number of pseudo-particles \(N_p\) is the only free parameter. First, the fuel-matrix region is divided into \(N_p\) equal-volume spherical shells. Consider a shell spanning \(r_i\leq r\leq r_o\) with total volume \(\volume\) given as
 
 \beq
 \volume=\frac{4}{3}\pi\left(r_o^3-r_i^3\right)\ .
@@ -1343,7 +1313,9 @@ The number of pseudo-particles \(N_p\) is set as the only free parameter. First,
 
 \noindent A similar process is then performed for the materials in the \gls{cfp}, where the \gls{pf} of each material in the \gls{cfp} is used to determine the relative volume occupied in the segment.
 
-The \gls{hl} method has no direct correlation to the actual geometry, and temperature solutions should only be used to predict integral metrics such as maximum and average material-wise temperatures. The \gls{hl} method also lacks the mathematical rigor of the approaches described previously. However, the \gls{hl} method is considered here for two reasons \mdash1)~the method is simple to implement and representative of the limitations in single-\gls{pde} fuel models used in many legacy \gls{th} tools; and 2)~the \gls{hl} method has recently been used in preliminary steady-state modeling of \gls{fcm} fuels \cite{brown_fcm} and transient analysis of the Mark-1 \gls{pbfhr} \cite{xin_wang_thesis} that is the subject of the modeling in Chapter \ref{sec:pbfhr}.
+The \gls{hl} method has no direct correlation to the actual geometry, and temperature solutions should only be used to predict integral metrics such as maximum and average material-wise temperatures. However, the \gls{hl} method is considered here for two reasons \mdash1)~the method is simple to implement and representative of the limitations in single-\gls{pde} fuel models used in many legacy \gls{th} tools; and 2)~the \gls{hl} method has recently been used in preliminary steady-state modeling of \gls{fcm} fuels \cite{brown_fcm} and transient analysis of the Mark-1 \gls{pbfhr} \cite{xin_wang_thesis} that is the subject of the modeling in Chapter \ref{sec:pbfhr}.
+
+\subsection{The Heat Source Decomposition Method}
 
 The second multiscale model considered is the \gls{hsd} method, which is based on the concept of superposition solutions to linear differential equations \cite{stainsby}. If the heat equation is linear, it may be split into different models for the meso and micro length scales that are superimposed to obtain an approximate temperature solution. A description of the \gls{hsd} method begins by splitting the heterogeneous heat source \(\dot{q}\) into an average \(\la\dot{q}\ra\) and a fluctuation \(\hat{\dot{q}}\),
 
@@ -1386,10 +1358,10 @@ In summary, application of the \gls{hsd} method to the \gls{pbmr} pebble in Fig.
 \item Decompose the heat source into an average and a fluctuation according to Eq.\ \eqref{eq:heat_source_decomp}.
 \item Solve the mesoscale model in Eq.\ \eqref{eq:MesoscaleSolution} over the entire fuel-matrix region and subject to the \glspl{bc} described in Section \ref{sec:BCsMesoMicro}.
 \item Solve the microscale model in Eq.\ \eqref{eq:MicroscaleSolution} over a single average \gls{cfp} and subject to the \glspl{bc} described in Section \ref{sec:BCsMesoMicro}.
-\item Translate the microscale solution to the locations of the 15000 \glspl{cfp} and add to the mesoscale solution according to Eq.\ \eqref{eq:MultiscaleSolution}.
+\item Translate the microscale solution to the locations of the 15,000 \glspl{cfp} and add to the mesoscale solution according to Eq.\ \eqref{eq:MultiscaleSolution}.
 \end{enumerate}
 
-A verification example that may provide a more intuitive grasp is presented in Section \ref{sec:verification_meso}. The \gls{hsd} method is considered here due to successful application to cylindrical \gls{cfp} compacts that share many similarities to \gls{pbr} fuels \cite{stainsby}.
+An in Section \ref{sec:verification_meso} provides a more intuitive grasp of the method. The \gls{hsd} method is considered here due to successful application to cylindrical \gls{cfp} compacts that share many similarities to \gls{pbr} fuels \cite{stainsby}.
 
 In practice, the location of each \gls{cfp} is unknown, preventing prediction of the temperature at a specific location. However, often of greater practical interest is the estimation of integral metrics such as maximum and material-wise averaged temperatures. Even if the locations of the heterogeneities are unknown, provided the \glspl{cfp} are randomly dispersed through the domain, the maximum and minimum temperatures in material \(i\) can be approximated as
 
@@ -1414,7 +1386,7 @@ In addition, if the mesoscale temperature solution varies over a longer length s
 
 \noindent Note that while Eq.\ \eqref{eq:ConstantShiftMMD} requires the average of the microscale solution over the entire microscale domain to be zero, the $i$ subscript in Eq.\ \eqref{eq:AvgT} represents the average over only the $i$-th material layer in the microscale domain. The approximation in Eq.\ \eqref{eq:AvgT} is frequently applicable to \gls{pbr} fuels because the micro length scale is approximately 50 times smaller than the meso length scale, and extremely different particle-to-particle powers or non-uniform matrix-shell \glspl{bc} are uncommon.
 
-The most important assumption made in the \gls{hsd} method is that the heat equation is linear, and thus amenable to superposition techniques. Linearity implies that the thermal properties are independent of temperature. In this research, the meso and micro scale models are applied to steady-state analysis of the Mark-1 \gls{pbfhr}. The \gls{pbfhr} core temperature rise of 100\si{\celsius}, the close proximity of the \glspl{cfp} to the pebble surface, and the distribution of the pebble power among a relatively high number of \glspl{cfp} per pebble result in pebble temperature distributions that vary relatively little throughout the bed as compared to other nuclear fuels such as \gls{uo2} fuels in \glspl{lwr} and \glspl{sfr}. 
+The most important assumption made in the \gls{hsd} method is that the heat equation is linear, and thus amenable to superposition techniques. Linearity implies that the thermal properties are independent of temperature. In this research, the meso and micro scale models are applied to steady-state analysis of the Mark-1 \gls{pbfhr}. The \gls{pbfhr} core temperature rise of 100\si{\celsius}, the close proximity of the \glspl{cfp} to the pebble surface, and the distribution of the pebble power among a relatively high number of \glspl{cfp} per pebble result in pebble temperature distributions that vary relatively little throughout the bed as compared to other nuclear fuels such as \gls{uo2} pellet fuels. 
 
 Based on the solid properties provided in Appendix \ref{sec:props}, a \(\pm\)100\si{\celsius} change in temperature relative to 800\si{\celsius} results in approximately a \(\mp\)5\%, \(\mp\)10\%, and \(\mp\)10\% change in the matrix graphite, \gls{uo2}, and \gls{sic} thermal conductivities, respectively. To the author's knowledge, temperature-dependent models are unavailable for porous and pyrolitic graphite. These relatively small variations with temperature justify the use of thermal properties evaluated at the bed-averaged temperature.
 
@@ -1469,8 +1441,6 @@ Both the \gls{hl} and \gls{hsd} methods require the internal solid properties \(
 
 The spatially homogenized properties \(\rho_\text{meso}\), \(C_{p,\text{meso}}\), and \(k_\text{meso}\) represent effective properties of a heterogeneous solid. The homogenization models described in this section assume that these effective properties are a combination of the properties of its constituents.
 
-%It is also assumed that all of the materials to be mixed are at the same temperature.
-
 Consider a mixture of materials \(i\) for \(i=1\ ...\ N_m\) each with a phase fraction \(\epsilon_i\) and generic property \(\chi_i\). These phase fractions sum to unity. The simplest method for determining average properties is the use of series combination,
 
 \beq
@@ -1519,10 +1489,10 @@ Take the \gls{pbmr} pebble in Fig.\ \ref{fig:pbmr_pebble} as an example, with Eq
 
 \beq
 \label{eq:NonTransport2}
-\chi_s= \epsilon_\text{fm}\chi_\text{fm}+(1-\epsilon_\text{fm})\chi_{gs}\ ,
+\chi_s= \epsilon_\text{fm}\chi_\text{fm}+(1-\epsilon_\text{fm})\chi_\text{gs}\ ,
 \eeq
 
-\noindent where \(\epsilon_\text{fm}\) is the volume fraction of the pebble that is the fuel-matrix region, \(\chi_\text{fm}\) is the average of \(\chi\) over the fuel-matrix region, and \(\chi_{gs}\) is the property of the graphite shell. \(\chi_\text{fm}\) is calculated as
+\noindent where \(\epsilon_\text{fm}\) is the volume fraction of the pebble that is the fuel-matrix region, \(\chi_\text{fm}\) is the average of \(\chi\) over the fuel-matrix region, and \(\chi_\text{gs}\) is the property of the graphite shell. \(\chi_\text{fm}\) is calculated as
 
 \beq
 \label{eq:NonTransport}
@@ -1531,12 +1501,12 @@ Take the \gls{pbmr} pebble in Fig.\ \ref{fig:pbmr_pebble} as an example, with Eq
 
 \noindent where \(\epsilon_\text{cfp}\) is the volume fraction of the fuel-matrix region that is \glspl{cfp}; \(\chi_\text{cfp}\) is the average of \(\chi\) over a \gls{cfp} using the series average in Eq.\ \eqref{eq:series}; and \(\chi_\text{mat}\) is the property of the matrix. 
 
-For \gls{pbr} applications, the mesoscale properties indicated generically by \(\rho_\text{meso}\), \(C_{p,\text{meso}}\) and \(k_\text{meso}\) are equivalent to \(\rho_\text{fm}\), \(C_{p,fm}\) and \(k_\text{fm}\). The intrinsic solid phase averaged properties \(\rho_s\), \(C_{p,s}\), and \(k_s\) required in the macroscale model are computed using these homogenization models over the entire pebble.
+For \gls{pbr} applications, the mesoscale properties indicated generically by \(\rho_\text{meso}\), \(C_{p,\text{meso}}\) and \(k_\text{meso}\) are equivalent to \(\rho_\text{fm}\), \(C_{p,\text{fm}}\) and \(k_\text{fm}\). The intrinsic solid phase averaged properties \(\rho_s\), \(C_{p,s}\), and \(k_s\) required in the macroscale model are computed using these homogenization models over the entire pebble.
 
 \section{Limitations, Assumptions, and Knowledge Gaps}
 \label{sec:MacroAssumptions}
 
-Many assumptions were made explicitly or implicitly in the derivation of the macroscale spatially homogenized conservation equations in Section \ref{sec:macro_deriv} and in the models selected for the meso and micro length scales in Section \ref{sec:mesomicro}. Assumptions have been made in 1)~the form of the local conservation equations in Eqs. \eqref{eq:ContinuityNonPorous}--\eqref{eq:EnergyNonPorous} and \eqref{eq:InternalEnergy}, 2)~in the spatial homogenization procedure used to obtain the macroscale model in Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}, and 3)~in the implementation details of the \gls{hl} and \gls{hsd} methods. Existing closure models applicable to \glspl{pbr} also exhibit many limitations and knowledge gaps at all three length scales. A brief summary is now provided of the limitations, assumptions, and knowledge gaps that have the largest impact on the general applicability of this multiscale method to modeling of \glspl{pbr}.
+Many assumptions were made explicitly or implicitly in the derivation of the macroscale spatially homogenized conservation equations in Section \ref{sec:macro_deriv} and in the models selected for the meso and micro length scales in Section \ref{sec:mesomicro}. Assumptions have been made in 1)~the form of the local conservation equations in Eqs.\ \eqref{eq:ContinuityNonPorous}--\eqref{eq:EnergyNonPorous} and \eqref{eq:InternalEnergy}, 2)~in the spatial homogenization procedure used to obtain the macroscale model in Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}, and 3)~in the implementation details of the \gls{hl} and \gls{hsd} methods. Existing closure models applicable to \glspl{pbr} also exhibit many limitations and knowledge gaps at all three length scales. A brief summary is now provided of the limitations, assumptions, and knowledge gaps that have the largest impact on the general applicability of this multiscale method to modeling of \glspl{pbr}.
 
 Both the local mass conservation in Eq.\ \eqref{eq:ContinuityNonPorous} and the two-phase homogenization assume a single phase fluid and no mass transfer between the fluid and solid phases. The macroscale model therefore cannot model multi-phase fluid flow, such as water ingress events important to safety analysis of \glspl{htgr}. The assumption of a pure, simple, fluid in the conservation of energy equations excludes analysis of reacting flows. The macroscale \glspl{bc} assume the flow is subsonic. 
 
