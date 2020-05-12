@@ -465,14 +465,14 @@ As will be discussed at greater length in Chapter \ref{sec:ph}, Eqs. \eqref{eq:P
 
 This section presents a brief scaling analysis of the momentum and energy conservation equations to justify omission of the viscous heating term from Eqs. \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns} and the compression work term from Eq.\ \eqref{eq:PrimitiveEqns}. For notational simplicity, this scaling analysis is performed starting from the local conservation equations because small terms were neglected at the outset of the spatial homogenization procedure, rather than carried through to be neglected at the conclusion.
 
-Scaling analysis begins with the 1-D form of momentum conservation in Eq.\ \eqref{eq:NSFullForm}. Define the following nondimensional quantities,
+Scaling analysis begins with the \gls{1d} form of momentum conservation in Eq.\ \eqref{eq:NSFullForm}. Define the following nondimensional quantities,
 
 \beq
 \label{eq:NondimensionalQuantities}
 t^+=\frac{t}{L/V_o},\quad V^+=\frac{V}{V_o},\quad P^+=\frac{P}{\rho_oV_o^2},\quad x^+=\frac{x}{L},\quad g^+=\frac{g}{g_o}\ ,
 \eeq
 
-\noindent where a \(+\) superscript indicates a nondimensional quantity. Inserting Eq.\ \eqref{eq:NondimensionalQuantities} into the 1-D form of Eq.\ \eqref{eq:NSFullForm} with constant viscosity and dividing through by the coefficient on the advective term gives
+\noindent where a \(+\) superscript indicates a nondimensional quantity. Inserting Eq.\ \eqref{eq:NondimensionalQuantities} into the \gls{1d} form of Eq.\ \eqref{eq:NSFullForm} with constant viscosity and dividing through by the coefficient on the advective term gives
 
 \beqa
 \label{eq:NondimensionalNS2}
@@ -493,14 +493,14 @@ Re_h=&\ \frac{\rho \|\vec{V}\|D}{\mu}\ .
 
 \noindent Both Eqs. \eqref{eq:RePorousGeneralA} and \eqref{eq:RePorousGeneralB} are used throughout this work depending on whether the domain in question is porous or open, respectively. 
 
-Non-dimensionalization of the energy conservation equation is performed beginning from the 1-D form of Eq.\ \eqref{eq:InternalEnergy} with the volumetric heat source omitted for simplicity. In addition to Eq.\ \eqref{eq:NondimensionalQuantities}, define
+Non-dimensionalization of the energy conservation equation is performed beginning from the \gls{1d} form of Eq.\ \eqref{eq:InternalEnergy} with the volumetric heat source omitted for simplicity. In addition to Eq.\ \eqref{eq:NondimensionalQuantities}, define
 
 \beq
 \label{eq:Nondim11}
 T^+=\frac{T}{\Delta T}\ .
 \eeq
 
-\noindent Inserting Eqs. \eqref{eq:NondimensionalQuantities} and \eqref{eq:Nondim11} into the 1-D form of Eq.\ \eqref{eq:InternalEnergy} with constant thermal conductivity and dividing through by the coefficient on the advective term gives
+\noindent Inserting Eqs. \eqref{eq:NondimensionalQuantities} and \eqref{eq:Nondim11} into the \gls{1d} form of Eq.\ \eqref{eq:InternalEnergy} with constant thermal conductivity and dividing through by the coefficient on the advective term gives
 
 \beq
 \label{eq:NondimensionalTemperatureEqn}
@@ -877,14 +877,14 @@ THTR & cylindrical & \hspace{0.5em}6.0 & --- & 5.6 & 0.06 & 93.3\Bstrut\\
 \label{table:DpDbed}
 \end{table}
 
-For systems where spatial dependence is important, such as the SANA facility, a method is developed for constructing a 2-D \(r\)-\(z\) distribution in terms of two 1-D functions for the radial and axial profiles. The radial distribution \(\epsilon(r)\) is in general a function of \(\epsilon_\infty\), \(\epsilon_\text{wall}\), \(d_p\), and the minimum distance \(d_r\) to a radial wall. This dependence may be expressed as
+For systems where spatial dependence is important, such as the SANA facility, a method is developed for constructing a \gls{2d} \(r\)-\(z\) distribution in terms of two \gls{1d} functions for the radial and axial profiles. The radial distribution \(\epsilon(r)\) is in general a function of \(\epsilon_\infty\), \(\epsilon_\text{wall}\), \(d_p\), and the minimum distance \(d_r\) to a radial wall. This dependence may be expressed as
 
 \begin{equation}
 \label{eq:Conceptual1}
 \epsilon(r)=f\left(d_p, d_r, \epsilon_\text{wall},\epsilon_\infty\right)\ ,
 \end{equation}
 
-\noindent where \(f\) indicates a radial functional dependence. A 2-D distribution is obtained by replacing the constant \(\epsilon_\infty\) in Eq.\ \eqref{eq:Conceptual1} with a 1-D axial profile, which is itself a function of \(\epsilon_\infty\), \(\epsilon_\text{wall}\), \(d_p\), and the minimum distance \(d_z\) to an axial wall,
+\noindent where \(f\) indicates a radial functional dependence. A \gls{2d} distribution is obtained by replacing the constant \(\epsilon_\infty\) in Eq.\ \eqref{eq:Conceptual1} with a \gls{1d} axial profile, which is itself a function of \(\epsilon_\infty\), \(\epsilon_\text{wall}\), \(d_p\), and the minimum distance \(d_z\) to an axial wall,
 
 \begin{equation}
 \begin{aligned}
@@ -896,7 +896,7 @@ For systems where spatial dependence is important, such as the SANA facility, a 
 
 \noindent where \(g\) indicates an axial functional dependence. In other words, the infinite-medium porosity used in the radial dependence is computed based on the assumed axial dependence. The use of minimum distances to bounding walls assumes that the porosity is independent of the curvature of the walls, which is supported by experimental observations \cite{duToit2008,benenati}. 
 
-Eq.\ \eqref{eq:Conceptual} is written in general terms such that any functional expressions for the radial and axial profiles can be combined to obtain a 2-D distribution. For analyses performed in this dissertation not using the constant distribution in Eq.\ \eqref{eq:ConstantEps}, both the radial and axial profiles are given by exponential functions,
+Eq.\ \eqref{eq:Conceptual} is written in general terms such that any functional expressions for the radial and axial profiles can be combined to obtain a \gls{2d} distribution. For analyses performed in this dissertation not using the constant distribution in Eq.\ \eqref{eq:ConstantEps}, both the radial and axial profiles are given by exponential functions,
 
 \begin{equation}
 \label{eq:ExpPorosity2}
@@ -1312,7 +1312,7 @@ A second method, referred to as ``multiscale expansion,'' expresses the temperat
 
 While the spatial homogenization is a natural companion to the macroscale porous media method, its implementation and use is considered as a future research activity. The multiscale expansion method, while mathematically rigorous, results in many unique physics kernels with low reuse potential in a modular computing framework. This method is therefore also not pursued further. The remainder of this section describes two models investigated in this dissertation\mdash the \gls{hl} method and the \gls{hsd} method. Justification for their use over the macroscale homogenization and multiscale expansion methods is provided alongside a technical description.
 
-The \gls{hl} method blends aspects of a multilayer homogeneous solid that can be described by Eq.\ \eqref{eq:oem} with consideration of the \gls{cfp} layers thermal resistance and heat source localization. The \gls{hl} method is based on symmetrically smearing heterogeneities into a 1-D multilayer solid while preserving volume fractions. Fig.\ \ref{fig:pbmr_hlm} shows one possible representation of the \gls{pbmr} pebble in Fig.\ \ref{fig:pbmr_pebble} with the \gls{hl} method. The total mass of each material is conserved and the geometric structure of the \glspl{cfp} is approximated as a multilayer spherical shell; 15,000 randomly-distributed particles have been simplified to a single pseudo-particle at the expense of a distortion in the thermal resistance seen by the kernel and the separation of a continuous matrix into isolated regions.
+The \gls{hl} method blends aspects of a multilayer homogeneous solid that can be described by Eq.\ \eqref{eq:oem} with consideration of the \gls{cfp} layers thermal resistance and heat source localization. The \gls{hl} method is based on symmetrically smearing heterogeneities into a \gls{1d} multilayer solid while preserving volume fractions. Fig.\ \ref{fig:pbmr_hlm} shows one possible representation of the \gls{pbmr} pebble in Fig.\ \ref{fig:pbmr_pebble} with the \gls{hl} method. The total mass of each material is conserved and the geometric structure of the \glspl{cfp} is approximated as a multilayer spherical shell; 15,000 randomly-distributed particles have been simplified to a single pseudo-particle at the expense of a distortion in the thermal resistance seen by the kernel and the separation of a continuous matrix into isolated regions.
 
 \begin{figure}[!h]
 \centering

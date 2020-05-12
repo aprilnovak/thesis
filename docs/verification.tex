@@ -260,7 +260,7 @@ The excellent agreement with the reference benchmark solution demonstrates the c
 
 Because statements of momentum conservation that include the deviatoric viscous stress tensor are often combined with no-slip velocity \glspl{bc} on solid surfaces, the Navier-Stokes model is characterized by thin boundary layers that require enormous element counts and frequently, computationally prohibitive run times to resolve. However, most gas-cooled \glspl{pbr} operate at high Reynolds number such that inertial momentum transport dominates diffusive momentum transport. Because frictional momentum losses are still considered through the distributed loss term \(W\rho_f\vec{V}\), omitting the deviatoric stress tensor is a reasonable simplification to momentum conservation in high-Reynolds-number porous flows that results in more tractable boundary layer meshing requirements \cite{kececioglu}. Omission of the \(-\nabla\cdot(\tilde{\mu}\nabla\vec{V})\) kernel results in flows with significantly different mathematical and physical character to warrant additional verification exercises beyond the viscous convection flow considered in Section \ref{sec:natural_convection}.
 
-This section presents Pronghorn simulations of inviscid flow over a cylinder to verify applicability of the inviscid variation of the Navier-Stokes macroscale model, referred to here as the ``Euler'' macroscale model for brevity, to open flows. This verification exercise is relevant to the use of coarse mesh tools for simulation of effectively 1-D fluid flow in riser channels in \gls{pbr} reflectors and mixing and thermal striping in the open plena adjacent to many \gls{pbr} beds. 
+This section presents Pronghorn simulations of inviscid flow over a cylinder to verify applicability of the inviscid variation of the Navier-Stokes macroscale model, referred to here as the ``Euler'' macroscale model for brevity, to open flows. This verification exercise is relevant to the use of coarse mesh tools for simulation of effectively \gls{1d} fluid flow in riser channels in \gls{pbr} reflectors and mixing and thermal striping in the open plena adjacent to many \gls{pbr} beds. 
 
 The problem geometry is shown in Fig.\ \ref{fig:pf_geometry}. The cylinder radius \(R\) is 0.25 \si{\meter}. The top, bottom, and cylinder surface boundaries are modeled as insulated slip walls; the left boundary is an inlet with uniform inflow condition
 
@@ -294,7 +294,7 @@ The potential flow equations are a simplification to the Euler model for irrotat
 \nabla^2\phi=0\ .
 \eeq
 
-\noindent For flow past a 2-D cylinder, an analytic solution to Eq.\ \eqref{eq:LaplacePhi} is formed by superimposing the solution for uniform inflow with the solution for a doublet, a combination of a source and sink of equal strength separated by a finite distance. A derivation of this solution is available in many introductory fluid mechanics texts \cite{munson}. For a cylinder centered on the origin, the \(x\)- and \(y\)-velocity components are
+\noindent For flow past a \gls{2d} cylinder, an analytic solution to Eq.\ \eqref{eq:LaplacePhi} is formed by superimposing the solution for uniform inflow with the solution for a doublet, a combination of a source and sink of equal strength separated by a finite distance. A derivation of this solution is available in many introductory fluid mechanics texts \cite{munson}. For a cylinder centered on the origin, the \(x\)- and \(y\)-velocity components are
 
 \beq
 \label{eq:V1Analytic}
@@ -442,7 +442,7 @@ The mesoscale solution is shown in Fig.\ \ref{fig:nine_particle_mesoscaleb}. The
 \label{fig:nine_particle_mesoscale}
 \end{figure}
 
-The microscale domain, shown in Fig.\ \ref{fig:micro_a}, is a 1-D representation of a \gls{cfp} plus a layer of matrix material sized to preserve all material \glspl{pf}. \(\rho_\text{micro}\), \(C_{p,\text{micro}}\), and \(k_\text{micro}\) are the local properties shown in Fig.\ \ref{fig:nine_particle_mesha}. The fluctuating heat source is positive within the central kernel and negative in all other regions to preserve the zero average. Fig.\ \ref{fig:micro_b} shows the microscale temperature solution. Because the fluctuating heat source is negative outside the central kernel, the temperature is negative in the outermost regions of the microscale domain.
+The microscale domain, shown in Fig.\ \ref{fig:micro_a}, is a \gls{1d} representation of a \gls{cfp} plus a layer of matrix material sized to preserve all material \glspl{pf}. \(\rho_\text{micro}\), \(C_{p,\text{micro}}\), and \(k_\text{micro}\) are the local properties shown in Fig.\ \ref{fig:nine_particle_mesha}. The fluctuating heat source is positive within the central kernel and negative in all other regions to preserve the zero average. Fig.\ \ref{fig:micro_b} shows the microscale temperature solution. Because the fluctuating heat source is negative outside the central kernel, the temperature is negative in the outermost regions of the microscale domain.
 
 \begin{figure}[!h]
 \centering
