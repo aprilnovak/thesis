@@ -42,30 +42,27 @@ The three pebble designs\mdash 6.5 \si{\centi\meter} diameter aluminum oxide, 6 
 
 Experiments are performed with both helium and nitrogen due to the extensive use of helium coolant and nitrogen's thermodynamic similarity to air, barring high graphite corrosion rates. The SANA facility operates at atmospheric pressure, so both coolants correspond to depressurized \gls{lofc} conditions; experiments with nitrogen represent surrogates for air ingress, where natural convection cooling is distinct from that with helium. Helium and nitrogen have significantly different thermal properties; the helium thermal conductivity is approximately five times larger than that of nitrogen, resulting in stronger convective transport but weaker diffusive transport in nitrogen than in helium. The various combinations of pebble design and coolant result in different relative strengths of convective to diffusive transport and buoyant forces to friction losses. 
 
-The partial length heater configurations are surrogates for partial control rod insertion, while the open plenum case models the bed-cavity interface found in most gas-cooled \glspl{pbr}. Finally, the various heater powers correspond to the decreasing decay heat levels at various times following an initial shutdown. The maximum power density of 28 \si{\kilo\watt\per\cubic\meter} corresponds to about 1\% of the full power of a typical gas-cooled \gls{pbr} design, or decay heat levels several hours after shutdown.
+The partial length heater configurations are surrogates for partial control rod insertion, while the open plenum case models the bed-cavity interface found in most gas-cooled \glspl{pbr}. Finally, the various heater powers correspond to the decreasing decay heat levels at various times following an initial shutdown. The maximum power density of 28 \si{\kilo\watt\per\cubic\meter} represents about 1\% of the full power of a typical gas-cooled \gls{pbr} design, or decay heat levels several hours after shutdown.
 
-All 52 of the steady-state and axisymmetric cases are simulated with Pronghorn. Validation results for eight cases are presented in detail, while the remaining 44 are summarized with error histogram plots. These eight cases are selected to cover most of the range of powers, heater arrangements, coolants, and pebble types used in the experiments, in addition to permitting direct comparison with the available Flownex and GAMMA results. Fluid temperature and velocity results, for which no experimental data was collected, are also shown for a number of additional experiments aside from the eight highlighted cases. Table \ref{table:CasesLetters} summarizes these eight cases and provides case letters for differentiation. One experiment with an open upper plenum is discussed as a separate demonstration of the macroscale model's capabilities for predicting bed-to-plenum heat and mass transfer.
+All 52 of the steady-state and axisymmetric cases are simulated with Pronghorn. Validation results for eight cases are presented in detail, while the remaining 44 are summarized with error histogram plots. These eight cases are selected to cover most of the range of powers, heater arrangements, coolants, and pebble types used in the experiments, in addition to permitting direct comparison with the available Flownex and GAMMA results. Table \ref{table:CasesLetters} summarizes these eight cases and provides case letters for differentiation. One experiment with an open upper plenum is discussed as a separate demonstration of the macroscale model's capabilities for predicting bed-to-plenum heat and mass transfer. Fluid temperature and velocity results, for which no experimental data was collected, are also shown for a number of additional experiments aside from the eight highlighted cases.
 
 \begin{table}[h!]
 \caption{A summary of the SANA cases simulated with Pronghorn and presented in detail in this text. Case letters are provided for reference.}
 \centering
-\begin{tabular}{|c|c|c|c c c|}
-\hline\hline
-Case & Heater description & Pebble Type & \(d_p\) (\si{\centi\meter}) & Fluid & Power (\si{\kilo\watt})\Tstrut\Bstrut\\
-\hline
-A & full-height & graphite & 6.0 & He & \color{white}0\color{black}5\Tstrut\\
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+\textbf{Case} & \textbf{Heater Description} & \textbf{Pebble Type} & \textbf{{\boldmath{\(d_p\)} (\si{\centi\meter})}} & \textbf{Fluid} & \textbf{Power (\si{\kilo\watt})}\\
+\midrule
+A & full-height & graphite & 6.0 & He & \color{white}0\color{black}5\\
 B & full-height & graphite & 6.0 &He & 35\\
 C & full-height & graphite & 6.0 & N & \color{white}0\color{black}5\\
-D & full-height & graphite & 6.0 & N & 35\Bstrut\\
-\hline
-E & full-height & aluminum oxide & 6.5 & He & 30\Tstrut\\
-F & full-height & aluminum oxide & 6.5 & N & 30\Bstrut\\
-\hline
-G & bottom half & graphite & 6.0 & He & 20\Tstrut\\
-H & bottom half & graphite & 6.0 & N & 20\Bstrut\\
-\hline
-I & bottom half, open plenum & graphite & 6.0 & N & \color{white}0\color{black}5\Tstrut\Bstrut\\
-\hline
+D & full-height & graphite & 6.0 & N & 35\\
+E & full-height & aluminum oxide & 6.5 & He & 30\\
+F & full-height & aluminum oxide & 6.5 & N & 30\\
+G & bottom half & graphite & 6.0 & He & 20\\
+H & bottom half & graphite & 6.0 & N & 20\\
+I & bottom half, open plenum & graphite & 6.0 & N & \color{white}0\color{black}5\\
+\bottomrule
 \end{tabular}
 \label{table:CasesLetters}
 \end{table}
@@ -89,7 +86,7 @@ The lack of significant azimuthal asymmetries justifies the use of a \gls{2d} cy
 h_r=\varepsilon\sigma\left(T_\text{surf}^2+T_\infty^2\right)\left(T_\text{surf}^{\color{white}1\color{black}}+T_\infty\right)\ ,
 \end{equation}
 
-\noindent where \(T_\text{surf}\) is the surface temperature. In Eqs.\ \eqref{eq:ThermalResistanceBC} and \eqref{eq:RadiationHTC}, ``boundary'' refers to the mesh sideset where the \gls{bc} is applied and ``surface'' refers to the interface between the \(n_l\)-th conduction layer and the ambient. An under-relaxed fixed point iteration is performed to obtain \(T_\text{surf}\). Eq.\ \eqref{eq:ThermalResistanceBC} approximates the heat transfer through the conduction layers as unidirectional along \(\hat{n}\) and may not be accurate for very large thermal gradients in directions parallel to \(\hat{n}\).
+\noindent where \(T_\text{surf}\) is the surface temperature. In Eqs.\ \eqref{eq:ThermalResistanceBC} and \eqref{eq:RadiationHTC}, ``boundary'' refers to the mesh sideset where the \gls{bc} is applied and ``surface'' refers to the interface between the \mbox{\(n_l\)-th} conduction layer and the ambient. An under-relaxed fixed point iteration is performed to obtain \(T_\text{surf}\). Eq.\ \eqref{eq:ThermalResistanceBC} approximates the heat transfer through the conduction layers as unidirectional along \(\hat{n}\) and may not be accurate for very large thermal gradients in directions perpendicular to \(\hat{n}\).
 
 On the bottom, top, and right boundaries, the heat flux applied to the solid energy conservation equation is given by Eq.\ \eqref{eq:ThermalResistanceBC} with constant insulation and vessel thermal properties \cite{SANA}. The vessel emissivity and convection heat transfer coefficient are assumed to be 0.8 and 15 \si{\watt\per\square\meter\per\kelvin}, respectively. Neither of these values are provided with the benchmark documentation, so both values were selected to be in the center of the ranges used by other participants \cite{rousseau,baggemann,becker2003,lim,tecdoc1163}. Due to the lower thermal conductivity of the fluid phase and the low velocities expected, the fluid is assumed insulated on the bottom, top, and right boundaries.
 
@@ -102,27 +99,27 @@ On the heater surface, the total heat flux \(\tilde{q}_\text{tot}\) is assumed u
 
 \noindent while the heat flux into the fluid phase comprises the remainder of the total heat flux. Eq.\ \eqref{eq:HeatFluxSplitting} is a very crude approximation of the multi-phase heat transfer processes that occur near walls in packed beds. Other simplified \glspl{bc} have been proposed \cite{alazmi}, but preliminary tests with different \glspl{bc} did not show any clear advantage of any one option over another. Finally, zero normal mass flux is weakly imposed on all surfaces, while tangential slip is permitted. 
 
-The baseline set of macroscale closures used in Section \ref{sec:baseline} are as follows. The friction factor is given by Eq.\ \eqref{eq:W_KTA}, the interphase heat transfer coefficient is given by Eq.\ \eqref{eq:KTA}, and the effective fluid thermal conductivity is given by Eq.\ \eqref{eq:KappaFluidBasic}. The effective solid thermal conductivity is given by the sum of Eqs.\ \eqref{eq:KappaRadiationBB}, \eqref{eq:KappaFluidConductionZS}, and \eqref{eq:KappaSolidConductionCT}, with Eq.\ \eqref{eq:Tsotsas} applied within a half pebble diameter of the walls as a correction to \(\kappa_\text{radiation}\). For all three pebble types, the emissivity, elastic modulus, and Poisson ratio are assumed to be 0.8, \(9\times10^9\) Pa, and 0.136, respectively\mdash values typically ascribed to \gls{pbr} fuel pebbles\mdash since more detailed information was not available. 
+The baseline set of macroscale closures used in Section \ref{sec:baseline} are as follows. \(W\) is given by Eq.\ \eqref{eq:W_KTA}, \(\alpha\) is given by Eq.\ \eqref{eq:KTA}, and \(\kappa_f\) is given by Eq.\ \eqref{eq:KappaFluidBasic}. \(\kappa_s\) is given by the sum of Eqs.\ \eqref{eq:KappaRadiationBB}, \eqref{eq:KappaFluidConductionZS}, and \eqref{eq:KappaSolidConductionCT}, with Eq.\ \eqref{eq:Tsotsas} applied within a half pebble diameter of the walls as a correction to \(\kappa_\text{radiation}\). For all three pebble types, the emissivity, elastic modulus, and Poisson ratio are assumed to be 0.8, \(9\times10^9\) Pa, and 0.136, respectively\mdash values typically ascribed to \gls{pbr} fuel pebbles\mdash since more detailed information was not available. 
 
 No information is available regarding the bed filling method, so \(\epsilon_\infty\) is selected as 0.39, a value commonly used for packed sphere beds. For all cases except the open plenum case, the porosity is given by Eq.\ \eqref{eq:ExpPorosity2} with \(\epsilon_\text{wall}=0.8\). For the open plenum case, the porosity in the plenum is unity and in the bed is given by Eq.\ \eqref{eq:ExpPorosity2} with \(\epsilon_\text{wall}=1\) to ensure a smooth transition to the plenum in the near-wall region.
 
-All cases are run as pseudo-transients, terminating once the relative change in the solution norm from the previous time step is less than \(10^{-6}\). Mesh refinement studies are performed for the highest-powered cases of each experiment category (such as nitrogen coolant with 3 \si{\centi\meter} pebbles and a long central heater) to ensure converged results, but for brevity are not shown here. 
-
-To enable reproduction of the simulations presented in this chapter, Appendix \ref{sec:reproducibility} lists all data and input files related to this chapter.
+Mesh refinement studies are performed for the highest-powered cases of each experiment category (such as nitrogen coolant with 3 \si{\centi\meter} pebbles and a long central heater) to ensure converged results, but for brevity are not shown here. Finally, to enable reproduction of the simulations presented in this chapter, Appendix \ref{sec:reproducibility} lists all data and input files related to this chapter.
 
 \section{Baseline Results}
 \label{sec:baseline}
 
 This section presents Pronghorn simulations for the 52 steady-state and axisymmetric SANA experiments and one open plenum test using the baseline set of closures described at the end of Section \ref{sec:model}. 
 
-Section \ref{sec:sana_subset} presents detailed validation results for the select cases given in Table \ref{table:CasesLetters}. All 52 steady-state and axisymmetric cases are summarized in Section \ref{sec:AllTests}. To avoid repeating the same error discussion with each new validation case, all discussion of the effects of modeling simplifications and differences in the Pronghorn, Flownex, and GAMMA models is deferred to Section \ref{sec:AllTests}.
+Section \ref{sec:sana_subset} presents detailed validation results for the select cases given in Table \ref{table:CasesLetters}, while all 52 steady-state and axisymmetric cases are summarized in Section \ref{sec:AllTests}. To avoid repeating the same error discussion with each new validation case, all discussion of the effects of modeling simplifications and differences in the Pronghorn, Flownex, and GAMMA models is deferred to Section \ref{sec:AllTests}.
 
 \subsection{A Selected Subset of the Experiments}
 \label{sec:sana_subset}
 
-A total of nearly 1300 solid temperature measurements were made across the steady-state and axisymmetric SANA experiments. While no fluid temperature or velocity data was recorded, a qualitative discussion of the effect of coolant and pebble properties on flow and heat transport provides useful physical intuition for understanding the solid temperature data. Fig.\ \ref{fig:streamlines2} shows Pronghorn predictions of fluid temperature and velocity streamlines for the six experiments with a long central heater and 30 \si{\kilo\watt} heater power. The top and bottom rows show predictions for helium and nitrogen coolant, respectively. The left, middle, and right columns show predictions for 6 \si{\centi\meter} electric graphite pebbles, 3 \si{\centi\meter} matrix graphite pebbles, and 6.5 \si{\centi\meter} aluminum oxide pebbles, respectively. In each figure, the left axis is adjacent to the heater and represents the $r$-$z$ symmetry axis. 
+A total of nearly 1300 solid temperature measurements were made across the steady-state and axisymmetric SANA experiments. While no fluid temperature or velocity data was recorded, a qualitative discussion of the effect of coolant and pebble properties on flow and heat transport via fluid temperature and velocity predictions provides useful physical intuition for understanding the later presentation of solid temperature data. Fig.\ \ref{fig:streamlines2} shows Pronghorn predictions of fluid temperature and velocity streamlines for the six experiments with a long central heater and 30 \si{\kilo\watt} heater power. The top and bottom rows show predictions for helium and nitrogen coolant, respectively. The left, middle, and right columns show predictions for 6 \si{\centi\meter} electric graphite pebbles, 3 \si{\centi\meter} matrix graphite pebbles, and 6.5 \si{\centi\meter} aluminum oxide pebbles, respectively. In each figure, the left axis is the $r$-$z$ symmetry axis that coincides with the center of the heater.
 
-A natural convection flow is established as fluid buoyantly rises near the heater surface and cools near the vessel outer surface. The insulation on the bottom and top of the bed induces primarily radial temperature gradients. The low thermal conductivity of nitrogen results in more significant convective transport than in helium, which manifests as larger axial fluid temperature gradients and a recirculation vortex located closer to the bottom of the bed. The thermal conductivity of the pebbles is directly related to the maximum temperature in the bed\mdash from left to right, the pebble thermal conductivity decreases. Experiments with aluminum oxide pebbles and nitrogen coolant have the greatest convective heat transport, while experiments with 6 \si{\centi\meter} graphite pebbles and helium coolant have the greatest diffusive heat transport. 
+A natural convection flow is established as fluid buoyantly rises near the heater surface and cools near the vessel outer surface. The insulation on the bottom and top of the bed induces primarily radial temperature gradients. The low thermal conductivity of nitrogen results in more significant convective transport than in helium, which manifests as larger axial fluid temperature gradients and a recirculation vortex located closer to the bottom of the bed. 
+
+The thermal conductivity of the pebbles is directly related to the maximum temperature in the bed\mdash from left to right, the pebble thermal conductivity decreases. Experiments with aluminum oxide pebbles and nitrogen coolant have the greatest convective heat transport, while experiments with graphite pebbles and helium coolant have the greatest diffusive heat transport. 
 
 \begin{figure}[h!]
 \centering
@@ -134,6 +131,8 @@ A natural convection flow is established as fluid buoyantly rises near the heate
 
 To provide physical insight for the partial-length heater experiments, Fig.\ \ref{fig:streamlines1} shows Pronghorn predictions of fluid temperature and velocity streamlines for the eight experiments with a half-length heater in the bottom of the bed and 6 \si{\centi\meter} graphite pebbles. The top and bottom rows again show predictions for helium and nitrogen coolant, respectively, while each column corresponds to a unique power level. The higher the heater power, the further upward the recirculation vortex moves for the helium tests, as energy transfer is primarily diffusive and in the radial direction. For nitrogen, higher heater powers result in stronger fluid acceleration in the upwards direction, pushing the recirculation vortex further downwards as the fluid changes directions along the top and right walls of the vessel. Both of these observations are related to the stronger convective transport in nitrogen.
 
+Moving to the solid temperature, similar trends with pebble and coolant thermal properties will be highlighted with each case. In presenting the validation data, all experimental results are shown as discrete points and Pronghorn predictions are shown as solid lines (---). When available, Flownex results are shown as dashed lines (- -) and GAMMA results are shown as dotted lines ($\ \cdots$). Measurements were taken at the five axial elevations shown in Fig.\ \ref{fig:SANA_core}, but only three of these elevations are plotted to simplify data presentation. The axial coordinate of these elevations is shown in the figure legends as $z=z_i$, where $z_i$ is the coordinate.
+
 \begin{figure}[h!]
 \centering
 \centerline{
@@ -142,11 +141,7 @@ To provide physical insight for the partial-length heater experiments, Fig.\ \re
 \label{fig:streamlines1}
 \end{figure}
 
-Moving to the solid temperature predictions, similar trends in the solid temperature with pebble and coolant thermal properties will be highlighted with each case. In presenting the validation data, all experimental results are shown as discrete points and Pronghorn predictions are shown as solid lines (---). When available, Flownex results are shown as dashed lines (- -) and GAMMA results are shown as dotted lines ($\cdots$). Measurements were taken at the five axial elevations shown in Fig.\ \ref{fig:SANA_core}, but only three of these elevations are plotted to simplify data presentation.
-
-Figs. \ref{fig:helium_long} and \ref{fig:nitrogen_long} show Pronghorn and Flownex solid temperature predictions for heater powers of 5 and 35 \si{\kilo\watt} and 6 \si{\centi\meter} graphite pebbles with helium and nitrogen coolant, respectively. The 5 \si{\kilo\watt} cases in Figs. \ref{fig:helium_longa} and \ref{fig:nitrogen_longa} are shown on the same temperature scale of 0 to 500\si{\celsius}, while the 35 \si{\kilo\watt} cases in Figs. \ref{fig:helium_longb} and \ref{fig:nitrogen_longb} are shown on the same temperature scale of 0 to 1200\si{\celsius}. Similar to the fluid temperature shown in Fig.\ \ref{fig:streamlines2}, the greater diffusive transport in helium results in smaller axial solid temperature gradients and a lower maximum temperature as compared to nitrogen. 
-
-Pronghorn and Flownex agree well for the helium cases and reasonably well for the nitrogen cases, though Pronghorn predicts lower temperatures at the lowest elevation in the nitrogen cases than Flownex. Both Pronghorn and Flownex tend to overpredict temperatures near the surface of the heater.
+Figs. \ref{fig:helium_long} and \ref{fig:nitrogen_long} show Pronghorn and Flownex solid temperature predictions for heater powers of 5 and 35 \si{\kilo\watt} and 6 \si{\centi\meter} graphite pebbles with helium and nitrogen coolant, respectively. The 5 \si{\kilo\watt} cases in Figs. \ref{fig:helium_longa} and \ref{fig:nitrogen_longa} are shown on the same temperature scale of 0 to 500\si{\celsius}, while the 35 \si{\kilo\watt} cases in Figs. \ref{fig:helium_longb} and \ref{fig:nitrogen_longb} are shown on the same temperature scale of 0 to 1200\si{\celsius}. Similar to the fluid temperature shown in Fig.\ \ref{fig:streamlines2}, the greater diffusive transport in helium results in smaller axial solid temperature gradients and a lower maximum temperature as compared to nitrogen. Pronghorn and Flownex agree well for the helium cases and reasonably well for the nitrogen cases, though Pronghorn predicts lower temperatures at the lowest elevation in the nitrogen cases than Flownex. Both Pronghorn and Flownex tend to overpredict temperatures near the surface of the heater.
 
 Fig.\ \ref{fig:long65} shows Pronghorn solid temperature predictions for a heater power of 30 \si{\kilo\watt} and 6.5 \si{\centi\meter} aluminum oxide pebbles with helium and nitrogen coolant. Compared to the graphite pebble experiments in Figs. \ref{fig:helium_long} and \ref{fig:nitrogen_long}, the lower thermal conductivity of the aluminum oxide results in larger radial temperature gradients and higher peak temperatures by about 400\si{\celsius}. Pronghorn predicts the experimental data well at all points except at the lowest elevation close to the heater surface for helium.
 
@@ -163,7 +158,7 @@ Fig.\ \ref{fig:long65} shows Pronghorn solid temperature predictions for a heate
         \caption{Case B: 35 \si{\kilo\watt} helium}
         \label{fig:helium_longb}
     \end{subfigure}
-    \caption{Pronghorn (---) and Flownex (- -) predicted solid temperature at three axial elevations for (a) case A and (b) case B, or a full-length heater with helium and 6 \si{\centi\meter} graphite pebbles.}
+    \caption{Pronghorn (---) and Flownex (- -) predicted solid temperature for (a) case A and (b) case B, or a full-length heater with helium and 6 \si{\centi\meter} graphite pebbles.}
     \label{fig:helium_long}
 \end{figure}
 
@@ -180,9 +175,11 @@ Fig.\ \ref{fig:long65} shows Pronghorn solid temperature predictions for a heate
         \caption{Case D: 35 \si{\kilo\watt} nitrogen}
         \label{fig:nitrogen_longb}
     \end{subfigure}
-    \caption{Pronghorn (---) and Flownex (- -) predicted solid temperature at three axial elevations for (a) case C and (b) case D, or a full-length heater with nitrogen and 6 \si{\centi\meter} graphite pebbles.}
+    \caption{Pronghorn (---) and Flownex (- -) predicted solid temperature for (a) case C and (b) case D, or a full-length heater with nitrogen and 6 \si{\centi\meter} graphite pebbles.}
     \label{fig:nitrogen_long}
 \end{figure}
+
+Fig.\ \ref{fig:bottom} shows Pronghorn, Flownex, and GAMMA solid temperature predictions for a heater power of 20 \si{\kilo\watt} in the bottom half of the bed with 6 \si{\centi\meter} graphite pebbles and helium or nitrogen coolant. Near the heater surface, the temperature distribution is inverted relative to the long central heater cases in Figs. \ref{fig:helium_long} and \ref{fig:nitrogen_long}, being highest at the bottom of the bed. This occurs due to the absence of a heat source in the top of the bed. The lower thermal conductivity of nitrogen results in poorer radial heat transport than in helium, resulting in an opposite temperature trend near the bed periphery compared to helium. All codes show similar trends in Fig.\ \ref{fig:bottom}, but the absolute variation is larger than for the full-length heater results. Pronghorn tends to underpredict temperatures in the higher elevations relative to Flownex and GAMMA. 
 
 \begin{figure}[h!]
     \begin{subfigure}{0.5\linewidth}
@@ -195,11 +192,9 @@ Fig.\ \ref{fig:long65} shows Pronghorn solid temperature predictions for a heate
         \includegraphics[height=0.75\linewidth]{figs/exp_total_J2.pdf}
         \caption{Case F: 30 \si{\kilo\watt} nitrogen}
     \end{subfigure}
-    \caption{Pronghorn (---) predicted solid temperature at three axial elevations for (a) case E and (b) case F, or a full-length heater with helium or nitrogen and 6.5 \si{\centi\meter} aluminum oxide pebbles.}
+    \caption{Pronghorn (---) predicted solid temperature for (a) case E and (b) case F, or a full-length heater with helium or nitrogen and 6.5 \si{\centi\meter} aluminum oxide pebbles.}
     \label{fig:long65}
 \end{figure}
-
-Fig.\ \ref{fig:bottom} shows Pronghorn, Flownex, and GAMMA solid temperature predictions for a heater power of 20 \si{\kilo\watt} in the bottom half of the bed with 6 \si{\centi\meter} graphite pebbles and helium or nitrogen coolant. Near the heater surface, the temperature distribution is inverted relative to the long central heater cases in Figs. \ref{fig:helium_long} and \ref{fig:nitrogen_long}, being highest at the bottom of the bed. This occurs due to the absence of a heat source in the top of the bed. The lower thermal conductivity of nitrogen results in poorer radial heat transport than in helium, resulting in an opposite temperature trend near the bed periphery compared to helium. All codes show similar trends in Fig.\ \ref{fig:bottom}, but the absolute variation is larger than for the full-length heater results. Pronghorn tends to underpredict temperatures in the higher elevations relative to Flownex and GAMMA. 
 
 \begin{figure}[h!]
     \begin{subfigure}{0.5\linewidth}
@@ -212,11 +207,13 @@ Fig.\ \ref{fig:bottom} shows Pronghorn, Flownex, and GAMMA solid temperature pre
         \includegraphics[height=0.75\linewidth]{figs/exp_total_Y2.pdf}
         \caption{Case H: 20 \si{\kilo\watt} nitrogen}
     \end{subfigure}
-    \caption{Pronghorn (---), Flownex (- -), and GAMMA (\(\cdots\)) predicted solid temperature at three axial elevations for (a) case G and (b) case H, or a half-length heater in the bottom of the bed and 6 \si{\centi\meter} graphite pebbles.}
+    \caption{Pronghorn (---), Flownex (- -), and GAMMA (\(\cdots\)) predicted solid temperature for (a) case G and (b) case H, or a half-length heater in the bottom of the bed and 6 \si{\centi\meter} graphite pebbles.}
     \label{fig:bottom}
 \end{figure}
 
-Finally, Fig.\ \ref{fig:plenuma} shows Pronghorn solid temperature predictions for a heater power of 5 \si{\kilo\watt} in the bottom half of the bed and an open plenum in the top third of the bed for 6 \si{\centi\meter} graphite pebbles and nitrogen coolant. Reasonable agreement is obtained with the experimental data, though temperatures are slightly overpredicted near the heater surface at the middle and top elevations. Fig.\ \ref{fig:plenumb} shows predicted fluid temperature with velocity streamlines. The transition from the pebble bed to the open plenum is clearly visible in the velocity streamlines. Fluid re-entering the porous region is pulled towards the high-porosity region near the wall where friction factors are lower. When combined with the significantly reduced friction in the open plenum relative to the bed, this results in primarily radial flow in the plenum.
+Finally, Fig.\ \ref{fig:plenuma} shows Pronghorn solid temperature predictions for a heater power of 5 \si{\kilo\watt} in the bottom half of the bed and an open plenum in the top third of the bed for 6 \si{\centi\meter} graphite pebbles and nitrogen coolant. Reasonable agreement is obtained with the experimental data, though temperatures are slightly overpredicted near the heater surface at the middle and top elevations. 
+
+Fig.\ \ref{fig:plenumb} shows the predicted fluid temperature with velocity streamlines. The transition from the pebble bed to the open plenum is clearly visible in the velocity streamlines. Fluid re-entering the porous region is pulled towards the high-porosity region near the wall where friction factors are lower. When combined with the significantly reduced friction in the open plenum relative to the bed, this results in primarily radial flow in the plenum.
 
 \begin{figure}[h!]
     \begin{subfigure}{0.5\linewidth}
@@ -231,7 +228,7 @@ Finally, Fig.\ \ref{fig:plenuma} shows Pronghorn solid temperature predictions f
        \caption{Velocity streamlines}
        \label{fig:plenumb}
     \end{subfigure}
-    \caption{Pronghorn predicted (a) solid temperature at three axial elevations and (b) fluid temperature with velocity streamlines for case I, or an open plenum and 6 \si{\centi\meter} graphite pebbles.}
+    \caption{Pronghorn predicted (a) solid temperature and (b) fluid temperature with velocity streamlines for case I, or an open plenum and 6 \si{\centi\meter} graphite pebbles.}
     \label{fig:plenum}
 \end{figure}
 
@@ -261,19 +258,26 @@ Fig.\ \ref{fig:histogram} shows a histogram of the error for all 52 cases with t
 In each column, the number of points compared between the three tools are the same. When directly comparing Pronghorn to Flownex and GAMMA, Pronghorn predicts a slightly smaller mean error and lower standard deviation relative to both Flownex and GAMMA. Pronghorn predicts a significantly smaller maximum error for the Flownex cases, but a slightly larger error for the GAMMA cases. Given the cases simulated, the three codes are of comparable accuracy. 
 
 \begin{table}[h!]
-\caption{The mean, standard deviation, and maximum solid temperature error for the Flownex cases (A, B, C, D, H, and the 20 \si{\kilo\watt} top half heater with 6 \si{\centi\meter} graphite pebbles and nitrogen); GAMMA cases (G, H, and the 30 \si{\kilo\watt} long heater with 6 \si{\centi\meter} graphite pebbles with helium and nitrogen); and all 52 cases. All units are \si{\celsius}. ``---'' indicates that data is not available.}
 \centering
-\begin{tabular}{|c |c c c |c c c |c c c|}
-\hline\hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{Code}} & \multicolumn{3}{c}{Flownex cases (6)} & \multicolumn{3}{c}{GAMMA cases (4)} & \multicolumn{3}{c|}{\color{white}${\rvert^\dagger}^\dagger$\color{black}All cases (52)\color{white}${\rvert^\dagger}^\dagger$\color{black}}\Bstrut\\ \cline{2-10}
- & Mean & \(\sigma\) & Max. & Mean & \(\sigma\) & Max. & Mean & \(\sigma\) & Max.\Tstrut\Bstrut\\
-\hline
-Flownex & \color{white}-\color{black}19.8 & 51.4 & \color{white}-\color{black}207.0 & --- & --- & --- & --- & --- & ---\Tstrut\\
-GAMMA & --- & --- & --- & \color{white}-\color{black}4.3 & 50.9 & 147.5 & --- & --- & ---\\
-Pronghorn & \color{white}0\color{black}-7.8 & 47.5 & -155.8 & -1.6 & 48.7 & 148.4 & 22.6 & 54.6 & 198.6\Bstrut\\
-\hline
+\begin{threeparttable}
+\caption{The mean, standard deviation \(\sigma\), and maximum solid temperature error for the six Flownex cases, the four GAMMA cases, and all 52 cases. All units are \si{\celsius}.}
+\begin{tabular}{@{}lcc c c c cc c c c c@{}}
+\toprule
+ & \multicolumn{3}{c}{Flownex cases\hspace{0.01cm}\tnote{1}} &\phantom{a}& \multicolumn{3}{c}{GAMMA cases\hspace{0.01cm}\tnote{2}} &\phantom{a}& \multicolumn{3}{c}{\color{white}${\rvert^\dagger}^\dagger$\color{black}All cases\color{white}${\rvert^\dagger}^\dagger$\color{black}}\\
+\cmidrule{2-4} \cmidrule{6-8} \cmidrule{10-12}
+ & \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.} && \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.} && \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.}\\
+\midrule
+Flownex & \color{white}-\color{black}19.8 & 51.4 & \color{white}-\color{black}207.0 && --- & --- & --- && --- & --- & ---\\
+GAMMA & --- & --- & --- && \color{white}-\color{black}4.3 & 50.9 & 147.5 && --- & --- & ---\\
+Pronghorn & \color{white}0\color{black}-7.8 & 47.5 & -155.8 && -1.6 & 48.7 & 148.4 && 22.6 & 54.6 & 198.6\\
+\bottomrule
 \end{tabular}
 \label{table:stats}
+\begin{tablenotes}
+\item[1] \small A, B, C, D, H, and the 20 \si{\kilo\watt} top half heater with 6 \si{\centi\meter} graphite pebbles and nitrogen.
+\item[2] \small G, H, and the 30 \si{\kilo\watt} long heater with 6 \si{\centi\meter} graphite pebbles with helium and nitrogen.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
 It should be noted that the presentation of the error and standard deviation for the SANA cases should not be taken as an indication of the expected accuracy of the macroscale model for all applications. Rather, this condensed presentation is performed to provide a quantitative comparison against Flownex and GAMMA and to provide a rough sense of the accuracy of porous media \gls{th} simulations in friction-dominated flows such as \gls{lofc} decay heat removal.
@@ -308,19 +312,19 @@ Additional insight can be obtained when considering the error for different subs
 \begin{table}[h!]
 \caption{The mean, standard deviation, and maximum error for different subsets of the 52 steady-state and axisymmetric SANA cases.}
 \centering
-\begin{tabular}{|r |c |c c c |}
-\hline\hline
-\multicolumn{1}{|c|}{Subset Description} & \# Cases & Mean (\si{\celsius}) & \(\sigma\) (\si{\celsius}) & Max. (\si{\celsius})\Tstrut\Bstrut\\
-\hline
-\textbf{All cases} & \textbf{52} & \textbf{22.6} & \textbf{54.6} & \textbf{\color{white}-\color{black}198.6}\Tstrut\\
+\begin{tabular}{@{}l c c c c @{}}
+\toprule
+ & \textbf{\# Cases} & \textbf{Mean (\si{\celsius})} & \textbf{\boldmath{\(\sigma\)} (\si{\celsius})} & \textbf{Max. (\si{\celsius})}\\
+\midrule
+All cases & 52 & 22.6 & 54.6 & \color{white}-\color{black}198.6\\
 Helium coolant & 26 & 20.5 & 45.8 & \color{white}-\color{black}166.7\\
 Nitrogen coolant & 26 & 24.8 & 62.4 & \color{white}-\color{black}198.6\\
 3 \si{\centi\meter} matrix graphite pebbles & 12 & 44.2 & 48.7 & \color{white}-\color{black}198.6\\
 6 \si{\centi\meter} electric graphite pebbles & 28 & \color{white}0\color{black}2.0 & 48.4 & -189.6\\
 6.5 \si{\centi\meter} aluminum oxide pebbles & 12 & 45.8 & 55.8 & \color{white}-\color{black}181.3\\
 Full-length heater & 36 & 30.5 & 52.7 & \color{white}-\color{black}198.6\\
-Partial-length heater & 16 & \color{white}0\color{black}3.9 & 54.7 & -189.6\Bstrut\\
-\hline
+Partial-length heater & 16 & \color{white}0\color{black}3.9 & 54.7 & -189.6\\
+\bottomrule
 \end{tabular}
 \label{table:subcases}
 \end{table}
@@ -338,32 +342,31 @@ Significant development efforts in all three applications are required to fully 
 
 This section explores the sensitivity of pebble temperature to particular closures for porosity, the near-wall treatment for the solid effective thermal conductivity, interphase heat transfer and drag, and thermal dispersion. The geometric representation and \glspl{bc} described in Section \ref{sec:model} are unchanged.
 
-Table \ref{table:stats_location} shows the mean, standard deviation, and maximum error for the baseline Pronghorn model in comparison to various closure modifications. The data in each row was obtained by simulating all 52 steady-state and axisymmetric cases with a single isolated change in macroscale closures from the baseline model described in Section \ref{sec:model}. For example, the entry labeled ``constant porosity'' represents simulation predictions with the porosity closure used in the baseline model replaced by the constant porosity model in Eq.\ \eqref{eq:ConstantEps} with all other closures fixed. ``Near-wall scaling \(\kappa_s\)'' represents predictions with a \(0.5\) multiplier on \(\kappa_\text{radiation}\) in the near-wall region instead of the Tsotsas correlation in Eq.\ \eqref{eq:Tsotsas}. ``Ergun \(W\)'' represents predictions with the Ergun interphase friction factor in Eq.\ \eqref{eq:Ergun} instead of the \gls{kta} correlation in Eq.\ \eqref{eq:W_KTA}. ``Gnielinski \(\alpha\)'' represents predictions with the Gnielinski interphase convective heat transfer coefficient in Eq.\ \eqref{eq:GnielinskiPebblebed} instead of the \gls{kta} correlation in Eq.\ \eqref{eq:KTA}. ``With dispersion'' represents predictions with the linear Peclet dispersion model in Eq.\ \eqref{eq:LinearPecletKappaFluid} instead of the zero-dispersion model in Eq.\ \eqref{eq:KappaFluidBasic}.
+Table \ref{table:stats_location} shows the mean, standard deviation, and maximum error for the baseline Pronghorn model in comparison to various closure modifications. The data in each row was obtained by simulating all 52 steady-state and axisymmetric cases with a single isolated change in macroscale closures from the baseline model described in Section \ref{sec:model}. For example, the entry labeled ``constant \(\epsilon\)'' represents simulation predictions with the porosity closure used in the baseline model replaced by the constant porosity model in Eq.\ \eqref{eq:ConstantEps} with all other closures fixed. ``Near-wall scaling \(\kappa_s\)'' represents predictions with a \(0.5\) multiplier on \(\kappa_\text{radiation}\) in the near-wall region instead of the Tsotsas correlation in Eq.\ \eqref{eq:Tsotsas}. ``Ergun \(W\)'' represents predictions with the Ergun interphase friction factor in Eq.\ \eqref{eq:Ergun} instead of the \gls{kta} correlation in Eq.\ \eqref{eq:W_KTA}. ``Gnielinski \(\alpha\)'' represents predictions with the Gnielinski interphase convective heat transfer coefficient in Eq.\ \eqref{eq:GnielinskiPebblebed} instead of the \gls{kta} correlation in Eq.\ \eqref{eq:KTA}. ``With dispersion'' represents predictions with the linear Peclet dispersion model in Eq.\ \eqref{eq:LinearPecletKappaFluid} instead of the zero-dispersion model in Eq.\ \eqref{eq:KappaFluidBasic}.
 
 To quantify the significance of the lack of complete experimental facility information, simulations are also performed for two different constant values of the vessel convection coefficient and for two different values of the pebble emissivity. Results are presented in terms of the thermocouple locations within the bed to illustrate how the error varies as a function of position. The near-wall region is defined to occur within a half pebble diameter of the walls, while the bulk region constitutes all other points. 459 points lie in the near-wall region, while the remaining 833 are in the bulk.
 
 \begin{table}[h!]
-\caption{The mean, standard deviation, and maximum solid temperature error for all 52 cases simulated with Pronghorn as a function of location within the bed for various closure modifications to the baseline model described in Section \ref{sec:model}. All units are \si{\celsius}.}
+\caption{The mean, standard deviation \(\sigma\), and maximum solid temperature error for all 52 cases simulated with Pronghorn as a function of location within the bed for various closure modifications to the baseline model described in Section \ref{sec:model}. All units are \si{\celsius}.}
 \centering
 \centerline{
-\begin{tabular}{|r |c c c |c c c |c c c|}
-\hline\hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{Model}} & \multicolumn{3}{c}{\color{white}${\rvert^\dagger}^\dagger$\color{black}All\color{white}${\rvert^\dagger}^\dagger$\color{black}} & \multicolumn{3}{c}{Near-Wall} & \multicolumn{3}{c|}{Bulk}\Bstrut\\ \cline{2-10}
- & Mean & \(\sigma\) & Max. & Mean & \(\sigma\) & Max. & Mean & \(\sigma\) & Max.\Tstrut\Bstrut\\
-\hline
-\textbf{Baseline} & \textbf{22.6} & \textbf{54.6} & \textbf{\color{white}-\color{black}198.6} & \textbf{29.3} & \textbf{60.5} & \textbf{\color{white}-\color{black}198.6} & \textbf{18.9} & \textbf{50.7} & \textbf{181.3}\Tstrut\\
-Constant \(\epsilon\) & 34.2 & 66.0 & \color{white}-\color{black}280.1 & 42.1 & 74.4 & \color{white}-\color{black}280.1 & 29.8 & 60.4 & 250.4\\
-Near-wall scaling \(\kappa_s\) & 35.5 & 52.0 & \color{white}-\color{black}197.3 & 41.3 & 58.5 & \color{white}-\color{black}197.3 & 32.3 & 47.8 & 191.1\\
-Ergun \(W\) & 21.1 & 54.4 & \color{white}-\color{black}211.6 & 27.2 & 59.7 & -197.8 & 17.7 & 50.9 & 211.6\\
-Gnielinski \(\alpha\) & 22.0 & 54.9 & \color{white}-\color{black}211.1 & 28.2 & 60.3 & -196.3 & 18.6 & 51.4 & 211.1\\
-With dispersion & 21.5 & 54.2 & \color{white}-\color{black}208.1 & 27.5 & 59.6 & \color{white}-\color{black}194.1 & 18.1 & 50.7 & 208.1\Bstrut\\
-\hline
-\(h_c=10\) \si{\watt\per\square\meter\per\kelvin} & 36.1 & 51.3 & \color{white}-\color{black}218.0 & 41.4 & 57.0 & \color{white}-\color{black}206.8 & 33.2 & 47.6 & 218.0\Tstrut\\
-\(h_c=20\) \si{\watt\per\square\meter\per\kelvin} & 11.6 & 57.8 & -215.3 & 18.5 & 63.1 & -215.3 & \color{white}0\color{black}7.8 & 54.3 & 203.6\Bstrut\\
-\hline
-\(\varepsilon=0.7\) & 35.5 & 63.6 & \color{white}-\color{black}221.4 & 45.0 & 70.7 & \color{white}-\color{black}221.4 & 30.3 & 58.7 & 195.0\Tstrut\\
-\(\varepsilon=0.9\) & \color{white}0\color{black}9.5 & 48.8 & -179.5 & 13.7 & 53.9 & -179.5 & \color{white}0\color{black}7.2 & 45.7 & 167.3\Bstrut\\
-\hline
+\begin{tabular}{@{}l c c c c c c c c c c c@{}}
+\toprule
+ & \multicolumn{3}{c}{\color{white}${\rvert^\dagger}^\dagger$\color{black}All\color{white}${\rvert^\dagger}^\dagger$\color{black}} & \phantom{a}& \multicolumn{3}{c}{Near-Wall} &\phantom{a}& \multicolumn{3}{c}{Bulk}\\
+ \cmidrule{2-4} \cmidrule{6-8} \cmidrule{10-12}
+ & \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.} && \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.} && \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.}\\
+\midrule
+Baseline & 22.6 & 54.6 & \color{white}-\color{black}198.6 && 29.3 & 60.5 & \color{white}-\color{black}198.6 && 18.9 & 50.7 & 181.3\\
+Constant \(\epsilon\) & 34.2 & 66.0 & \color{white}-\color{black}280.1 && 42.1 & 74.4 & \color{white}-\color{black}280.1 && 29.8 & 60.4 & 250.4\\
+Near-wall scaling \(\kappa_s\) & 35.5 & 52.0 & \color{white}-\color{black}197.3 && 41.3 & 58.5 & \color{white}-\color{black}197.3 && 32.3 & 47.8 & 191.1\\
+Ergun \(W\) & 21.1 & 54.4 & \color{white}-\color{black}211.6 && 27.2 & 59.7 & -197.8 && 17.7 & 50.9 & 211.6\\
+Gnielinski \(\alpha\) & 22.0 & 54.9 & \color{white}-\color{black}211.1 && 28.2 & 60.3 & -196.3 && 18.6 & 51.4 & 211.1\\
+With dispersion & 21.5 & 54.2 & \color{white}-\color{black}208.1 && 27.5 & 59.6 & \color{white}-\color{black}194.1 && 18.1 & 50.7 & 208.1\\
+\(h_c=10\) \si{\watt\per\square\meter\per\kelvin} & 36.1 & 51.3 & \color{white}-\color{black}218.0 && 41.4 & 57.0 & \color{white}-\color{black}206.8 && 33.2 & 47.6 & 218.0\\
+\(h_c=20\) \si{\watt\per\square\meter\per\kelvin} & 11.6 & 57.8 & -215.3 && 18.5 & 63.1 & -215.3 && \color{white}0\color{black}7.8 & 54.3 & 203.6\\
+\(\varepsilon=0.7\) & 35.5 & 63.6 & \color{white}-\color{black}221.4 && 45.0 & 70.7 & \color{white}-\color{black}221.4 && 30.3 & 58.7 & 195.0\\
+\(\varepsilon=0.9\) & \color{white}0\color{black}9.5 & 48.8 & -179.5 && 13.7 & 53.9 & -179.5 && \color{white}0\color{black}7.2 & 45.7 & 167.3\\
+\bottomrule
 \end{tabular}
 }
 \label{table:stats_location}
@@ -377,13 +380,12 @@ The solid temperature is sensitive to both the porosity model and the near-wall 
 
 While a constant porosity only differs from the \gls{2d} \(r\)-\(z\) porosity in the near-wall region, and the wall treatment for solid effective thermal conductivity is only applied in the near-wall region, it is important to note that the use of these different closures affects the accuracy in all regions of the bed. Additional investigations are required to determine how these conclusions extend to geometries with larger bed to pebble diameter ratios. 
 
-The solid temperature is also sensitive to the vessel convection coefficient and pebble emissivity. A range of 24.5\si{\celsius} in mean error and 6.5\si{\celsius} in standard deviation is observed depending on the selection of \(h\), while a range of 26.0\si{\celsius} in mean error and 14.8\si{\celsius} in standard deviation is observed depending on the selection of \(\varepsilon\). For all the variations in closure parameters, increasing the pebble emissivity from 0.8 to 0.9 is the only change that simultaneously results in a lower mean error, a smaller standard deviation, and a lower maximum error relative to the baseline model. This strong dependence on emissivity has been observed elsewhere, and motivates complete characterization of pebble material properties \cite{tecdoc1163}. Some error and spread in the Pronghorn simulations must therefore be attributed to a lack of complete experimental and material details in the benchmark specifications.
+The solid temperature is also sensitive to the vessel convection coefficient and pebble emissivity. A range of 24.5\si{\celsius} in mean error and 6.5\si{\celsius} in standard deviation is observed depending on the selection of \(h_c\), while a range of 26.0\si{\celsius} in mean error and 14.8\si{\celsius} in standard deviation is observed depending on the selection of \(\varepsilon\). For all the variations in closure parameters, increasing the pebble emissivity from 0.8 to 0.9 is the only change that simultaneously results in a lower mean error, a smaller standard deviation, and a lower maximum error relative to the baseline model. This strong dependence on emissivity has been observed elsewhere, and motivates complete characterization of pebble material properties \cite{tecdoc1163}. Some error and spread in the Pronghorn simulations must therefore be attributed to a lack of complete experimental and material details in the benchmark specifications.
 
 \section{Summary and Conclusions}
 \label{sec:5_summary}
 
-Essential to the development of any new simulation tool is the establishment of a strong validation base. This section demonstrated validation of the friction-dominated macroscale model and its numerical implementation in Pronghorn with the SANA experiments, a scaled experiment modeling depressurized natural convection decay heat removal. Using a single baseline set of closures, Pronghorn on average overpredicts solid temperature by 22.6\si{\celsius} with a standard deviation of 54.6\si{\celsius}. A code-to-code comparison with Flownex and GAMMA shows similar accuracy, with the additional advantages of \gls{3d} unstructured meshing and comprehensive multiphysics coupling to \gls{moose} applications. 
-% TODO: Rachel wants something about runtimes
+Essential to the development of any new simulation tool is the establishment of a strong validation base. This section demonstrated validation of the friction-dominated macroscale model and its numerical implementation in Pronghorn with the SANA experiments, a scaled experiment modeling depressurized natural convection decay heat removal. Using a single baseline set of closures, Pronghorn on average overpredicts solid temperature by 22.6\si{\celsius} with a standard deviation of 54.6\si{\celsius}. A code-to-code comparison with Flownex and GAMMA shows similar accuracy, but with the additional advantages of \gls{3d} unstructured meshing and comprehensive multiphysics coupling to \gls{moose} applications. 
 
 The standard deviation decreases with distance from radial and axial walls, while the error only decreases with distance from radial walls. These observations highlight the need for anisotropic drag and heat transfer closures for near-wall regions, which are all but absent from the porous media literature. The primarily radial temperature gradient in the SANA facility also suggests that more accurate predictions can be achieved with improved isotropic closures such as heat flux \glspl{bc} and near-wall corrections to the effective solid thermal conductivity. 
 
