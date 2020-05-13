@@ -232,14 +232,7 @@ LinearPecletKappaFluid::computeQpProperties()
 \subsection{The Selection of Basis and Weight Functions}
 \label{sec:basis}
 
-The \gls{fem} solves the weak form in a domain discretized into computational elements. Fig.\ \ref{fig:fe_mesh} shows an example discretization of a rectangular domain into a number of triangular elements. Each black dot represents a ``node;'' only the nodes coinciding with the highlighted element are shown in Fig.\ \ref{fig:fe_mesh}.
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.45\linewidth]{figs/fe_mesh.png}
-\caption{Illustration of a continuous domain discretized into triangular finite elements.}
-\label{fig:fe_mesh}
-\end{figure}
+The \gls{fem} solves the weak form in a domain discretized into computational elements. Fig.\ \ref{fig:fe_mesh} shows an example discretization of a rectangular domain into a number of triangular elements. Each black dot represents a ``node;'' only the nodes coinciding with the highlighted element are shown.
 
 If \(\psi\) and \(\phi\) are nonzero over the entire domain, every region of the problem is tightly coupled to all other regions, resulting in a dense matrix system. A sparse system can be attained by restricting the shape functions to a nodal basis such that
 
@@ -249,6 +242,13 @@ If \(\psi\) and \(\phi\) are nonzero over the entire domain, every region of the
 \eeq
 
 \noindent where \(\Omega_j\) is the coordinate describing the location of the \(j\)-th node and \(\delta_{ij}\) is the Kronecker delta. The number of nodes in the entire domain, \(N\), determines the number of basis functions used in the approximate solution in Eq.\ \eqref{eq:WRExpansion}. Unless otherwise noted, first-order Lagrange basis functions are used for all solution variables in this work, though the \gls{moose} framework supports higher orders and many other shape function families, such as Hermite and monomial functions.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.45\linewidth]{figs/fe_mesh.png}
+\caption{Illustration of a continuous domain discretized into triangular finite elements.}
+\label{fig:fe_mesh}
+\end{figure}
 
 The boundary terms in Eqs.\ \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are integrals over the entire boundary. The boundary may in general be decomposed into the portion on which Dirichelt conditions are specified, \(\Gamma_\text{Dirichlet}\), and the portion on which Neumann conditions are specified, \(\Gamma_\text{Neumann}\). The boundary is the union of these two boundaries
 
@@ -267,7 +267,7 @@ The boundary terms in Eqs.\ \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:
 \subsection{Method of Lines Time Stepping}
 \label{sec:mol}
 
-The expansion used for the approximate solution in Eq.\ \eqref{eq:WRExpansion} is assumed separable in space and time. That is, the expansion coefficients \(C\) are only functions of time, while the basis functions \(\phi\) are only functions of space. All time derivatives in Eqs.\ \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are replaced by \gls{fd} approximations, a method that is often referred to as the \gls{mol}. For time step \(n+1\), all other terms in the weak form are evaluated at time \(m\) or time \(m+1\) for explicit and implicit \gls{fd} approximations, respectively.
+The expansion used for the approximate solution in Eq.\ \eqref{eq:WRExpansion} is assumed separable in space and time. That is, the expansion coefficients \(C_j\) are only functions of time, while the basis functions \(\phi_j\) are only functions of space. All time derivatives in Eqs.\ \eqref{eq:PronghornEquations_V2WeakForm}--\eqref{eq:MultiscaleWeak} are replaced by \gls{fd} approximations, a method that is often referred to as the \gls{mol}. For time step \(m+1\), all other terms in the weak form are evaluated at time \(m\) or time \(m+1\) for explicit and implicit \gls{fd} approximations, respectively.
 
 The \gls{moose} framework abstracts much of the details of the \gls{mol} implementation to \gls{moose} framework classes and the \gls{petsc} library. For instance, there is no time indexing in the variables and material properties referenced in the example source snippets shown in Listings \ref{lst:one} and \ref{lst:two}. Application developers take advantage of polymorphism to represent time derivatives in the source implementation agnostic of the discretization, similar to the spatial representation shown in Section \ref{sec:weak_form}. For example, the source code responsible for residual calculation of the time derivative contribution to Eqs.\ \eqref{eq:MassWeak} and \eqref{eq:Mass2Weak} at a quadrature point is shown in Listing \ref{lst:three}.
 
@@ -294,7 +294,7 @@ The continuous \gls{fem} is well-known to be conditionally stable for convection
 -\alpha_d\frac{\partial^2\upsilon}{\partial x^2}+V\frac{\partial \upsilon}{\partial x}=0\ ,
 \eeq
 
-\noindent where \(\alpha_d\) is the diffusivity, \(V\) is the velocity, and \(\upsilon\) is a transported scalar. For a linear Lagrange interpolation on uniform elements, the stability criterion for Eq.\ \eqref{eq:1DConvectionDiffusion} is straightforward to derive and is shown in ref. \cite{novak_manual}. This derivation yields
+\noindent where \(\alpha_d\) is the diffusivity, \(V\) is the velocity, and \(\upsilon\) is a transported scalar. For a linear Lagrange interpolation on uniform elements, the stability criterion for Eq.\ \eqref{eq:1DConvectionDiffusion} is straightforward to derive and is shown elsewhere \cite{novak_manual}. This derivation yields
 
 \beq
 \label{eq:PeCriterion}
@@ -312,7 +312,7 @@ Pe_{el}\equiv\frac{\|\vec{V}\|h_e}{2\alpha_d}\ ,
 
 It can be shown that a linear Lagrange interpolation of Eq.\ \eqref{eq:1DConvectionDiffusion} on uniform elements is equivalent to a central \gls{fd} approximation of both the diffusive and convective kernels. This symmetric discretization results in non-physical nodal oscillations for flows with \(Pe_{el}>1\) with magnitudes that tend to increase with \(Pe_{el}\) \cite{novak_manual,zienkiewicz}. 
 
-Fig.\ \ref{fig:Convection_vs_Diffusion} illustrates typical convective and diffusive processes transporting a passive scalar in both space and time between the same \gls{ic} and the same end time. While diffusion is a symmetric phenomenon, convection transports in the direction of velocity such that the flow at a point is only dependent on the upstream conditions. This observation is the underlying cause of the numeric instability\mdash a symmetric discretization of the convective derivative is a poor representation of convective physics unless the symmetry of the diffusive process dominates the upwind nature of convection, or \(Pe_{el}<1\). The same conclusion can be shown in more rigorous manner in terms of the self-adjoint and non-self-adjoint properties of diffusion and convection operators, respectively \cite{zienkiewicz}.
+Fig.\ \ref{fig:Convection_vs_Diffusion} illustrates typical convective and diffusive processes transporting a passive scalar in both space and time between the same \gls{ic} and the same end time. While diffusion is a symmetric phenomenon, convection transports in the direction of velocity such that the flow at a point is only dependent on the upstream conditions. This observation is the underlying cause of the numeric instability\mdash a symmetric discretization of the convective derivative is a poor representation of convective physics unless the symmetry of the diffusive process dominates the upwind nature of convection, or \(Pe_{el}<1\). The same conclusion can be shown in a more rigorous manner in terms of the self-adjoint and non-self-adjoint properties of diffusion and convection operators, respectively \cite{zienkiewicz}.
 
 \begin{figure}[!h]
 \centering
@@ -416,7 +416,7 @@ The Navier-Stokes and friction-dominated fluid conservation equations are suffic
 
 \beq
 \label{eq:UDerivs}
-\frac{\partial U_i}{\partial U_j}=\delta_{ij}\ ,
+\frac{\partial U_i}{\partial U_j}=\delta_{ij}\ .
 \eeq
 
 \noindent The derivative of \(H_f\) with respect to \(\vec{U}\) is
@@ -432,18 +432,18 @@ The Navier-Stokes and friction-dominated fluid conservation equations are suffic
 \frac{\partial P}{\partial \vec{U}}=\frac{\partial P}{\partial v_f}\frac{\partial v_f}{\partial \vec{U}}+\frac{\partial P}{\partial e_f}\frac{\partial e_f}{\partial \vec{U}}\ ,
 \eeq
 
-\noindent where \(v_f\) is the fluid intrinsic phase averaged specific volume; \(\partial P/\partial v_f\) and \(\partial P/\partial e_f\) are obtained from the \gls{eos}; \(\partial v_f/\partial \vec{U}\) is given as
+\noindent where \(v_f\) is the fluid intrinsic phase-averaged specific volume; \(\partial P/\partial v_f\) and \(\partial P/\partial e_f\) are obtained from the \gls{eos}; \(\partial v_f/\partial \vec{U}\) is given as
 
 \beq
 \label{eq:dvdU}
-\frac{\partial v_f}{\partial \vec{U}}=\begin{bmatrix}\frac{1}{\rho_f^2} & 0 & 0 & 0 & 0\end{bmatrix}\ ;
+\frac{\partial v_f}{\partial \vec{U}}=\begin{bmatrix}v_f^2 & 0 & 0 & 0 & 0\end{bmatrix}\ ;
 \eeq
 
 \noindent and \(\partial e_f/\partial \vec{U}\) is given as
 
 \beq
 \label{eq:dedU}
-\frac{\partial e_f}{\partial \vec{U}}=\frac{1}{\rho_f}\begin{bmatrix}\|\vec{V}\|^2-E_f & -V_1 & -V_2 & -V_3 & 1\end{bmatrix}\ .
+\frac{\partial e_f}{\partial \vec{U}}=v_f\begin{bmatrix}\|\vec{V}\|^2-E_f & -V_1 & -V_2 & -V_3 & 1\end{bmatrix}\ .
 \eeq
 
 \noindent With the derivatives in Eqs.\ \eqref{eq:UDerivs}--\eqref{eq:dedU}, the inviscid flux Jacobian matrices are
@@ -531,7 +531,7 @@ Finally, the fluid energy conservation equation is stabilized using the single-e
 \int_\Omega\tilde{\tau}\left\lbrack-\nabla\cdot(\kappa_f\nabla T_f)+\alpha(T_f-T_s)-\dot{q}_f\right\rbrack\vec{V}\cdot\nabla \psi d\Omega=0\ .
 \eeqa
 
-\noindent The first two integrals in Eq.\ \eqref{eq:qqq2} have already been presented in Eq.\ \eqref{eq:Energy2Weak}. The \gls{supg} stabilization terms in Eq.\ \eqref{eq:supg1} for the Navier-Stokes model and Eqs.\ \eqref{eq:fd1} and \eqref{eq:fd2} for the friction-dominated model are implemented in Pronghorn in a similar manner as the other kernels as described in Section \ref{sec:weak_form}. 
+\noindent The first three integrals in Eq.\ \eqref{eq:qqq2} have already been presented in Eq.\ \eqref{eq:Energy2Weak}. The \gls{supg} stabilization terms in Eq.\ \eqref{eq:supg1} for the Navier-Stokes model and in Eqs.\ \eqref{eq:fd1} and \eqref{eq:fd2} for the friction-dominated model are implemented in Pronghorn in a similar manner as the other kernels as described in Section \ref{sec:weak_form}. 
 
 \(\tau_{SUPG}\) represents a matrix of intrinsic time scales; for coupled systems of equations, each component in \(\tau_{SUPG}\) is a combination of the waves associated with the eigenvalues of the equation system. Rather than solve an eigenvalue problem at each quadrature point, computational efficiency motivates a diagonal approximation,
 
@@ -548,7 +548,7 @@ Finally, the fluid energy conservation equation is stabilized using the single-e
 
 \noindent where the stabilization parameters for the mass, momentum, and energy conservation equations are \(\tau_c\), \(\tau_u\), and \(\tau_e\), respectively \cite{hauke,tezduyar,hauke_1998,kirk,TH1983,tezduyar1983}. \(\tau_c\), \(\tau_u\), and \(\tau_e\) are typically selected as characteristic time scales representing normalized temporal, advective, and diffusive terms in the weak form \cite{tezduyar}. 
 
-Three different time scales are considered in the construction of \(\tau_c\), \(\tau_u\), and \(\tau_e\)\mdash 1)~a transient limit, \(\tau_\text{temporal}\); 2)~an advective limit, \(\tau_\text{advective}\); and 3)~a diffusive limit, \(\tau_\text{diffusive}\). These time scales are combined into a single representative time scale with smooth transitions among its components,
+Three different time scales are considered in the construction of the \(\tau_c\), \(\tau_u\), and \(\tau_e\) values \mdash 1)~a transient limit, \(\tau_\text{temporal}\); 2)~an advective limit, \(\tau_\text{advective}\); and 3)~a diffusive limit, \(\tau_\text{diffusive}\). These time scales are combined into a single representative time scale with smooth transitions among its components,
 
 \beq
 \label{eq:switchTau}
@@ -599,9 +599,8 @@ Coupling between the macro, meso, and micro length scales is achieved using Pica
 The coupling tree is highly parallelized. The master application uses all processors, while all its sub-applications run simultaneously in parallel with the resources allocated to the local master application. For instance, consider a three-tiered coupling system with application \(\mathcal{A}\) controlling five sub-applications \(\mathcal{B}_i\) for \(i=1\cdots 5\), each of which controls two sub-applications \(\mathcal{C}_{ij}\) for \(j=1, 2\). Allocating a total of 60 \gls{mpi} processes to application \(\mathcal{A}\) will run each of the \(\mathcal{B}\) applications with 12 processes and each of the \(\mathcal{C}\) applications with 6 processes; all \(\mathcal{B}\) processes run in parallel with one another and all \(\mathcal{C}\) processes run in parallel with one another. 
 
 \gls{moose}'s coupling system specifically aims to address many of the shortcomings of earlier multiphysics simulations that relied on rigid one-to-one spatial and temporal data transfers through the file system. All \gls{moose} applications may be coupled on different spatial meshes with subcycling time stepping, and all data is communicated in memory. 
-% TODO - could cite multiphysics papers here
 
-As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and communication structure within a single Picard iteration for a simulation involving two applications on the same spatial domain. Both the master application and sub-application may in general solve a set of coupled nonlinear equations. In Picard iteration \(n\) within the time step incrementing to simulation time \(t\), the master application first solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then transfers the variable \(T\) to a sub-application that depends on that variable, such as through a source term or material property. Interpolation between meshes, sampling from element centroids, and functional expansions are several of the mechanisms available for representing data transfers between applications. For this example, Fig.\ \ref{fig:multiapp} depicts this data transfer as a mesh interpolation. Next, the sub-application solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then retrieves the variable \(\phi\) from the sub-application to use in dependent terms in its set of equations. The coupled simulation is converged and proceeds to the next time step if the relative change in the solution from the previous Picard iteration is less than a specified tolerance. If not converged, the Picard iteration is repeated. The example illustrated in Fig.\ \ref{fig:multiapp} is fairly simplistic, and the multi-application execution and data transfer system in \gls{moose} accommodates many other types of coupling, such as scalar and boundary coupling, with more fine-grained communication patterns. 
+As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and communication structure within a single Picard iteration for a simulation involving two applications on the same spatial domain. Both the master application and sub-application may in general solve a set of coupled nonlinear equations. In Picard iteration \(n\) within the time step incrementing to simulation time \(t\), the master application first solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then transfers the variable \(T\) to a sub-application that depends on that variable, such as through a source term or material property. Interpolation between meshes, sampling from element centroids, and functional expansions are several of the mechanisms available for representing data transfers between applications. For this example, Fig.\ \ref{fig:multiapp} depicts this data transfer as a mesh interpolation. 
 
 \begin{figure}[!h]
 \centering
@@ -609,6 +608,8 @@ As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and c
 \caption{Illustration of one possible execution and communication structure for coupling multiple applications within the \gls{moose} framework.}
 \label{fig:multiapp}
 \end{figure}
+
+Next, the sub-application solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then retrieves the variable \(\phi\) from the sub-application to use in dependent terms in its set of equations. The coupled simulation proceeds to the next time step if the relative change in the solution from the previous Picard iteration is less than a specified tolerance. If not converged, the Picard iteration is repeated. The example illustrated in Fig.\ \ref{fig:multiapp} is fairly simplistic, and the multi-application execution and data transfer system in \gls{moose} accommodates many other types of coupling, such as scalar and boundary coupling, with more fine-grained communication patterns. 
 
 Fig.\ \ref{fig:multiscale_pbr} shows an illustration of the length scale coupling in Pronghorn when the \gls{hsd} is used to describe the internal pebble heat transfer. The macroscale model is the master application, which controls the execution of the ``first-tier'' mesoscale sub-applications. Each mesoscale application controls the execution of the ``second-tier'' microscale sub-applications. In a single Picard iteration, the multiscale coupling procedure with the \gls{hsd} meso and micro scale model is as follows\mdash
 
@@ -635,7 +636,7 @@ Fig.\ \ref{fig:multiscale_pbr} shows an illustration of the length scale couplin
 \label{fig:multiscale_pbr}
 \end{figure}
 
-It is important to note that this coupling algorithm only applies to steady-state flows. An extension to transient modeling requires communication of the pebble surface heat flux to the macroscale application for use as a source term in the fluid energy conservation equation instead of the \(\alpha(T_f-T_s)\) kernel, eliminating the macroscale solid energy conservation equation. Transient capabilities are to be implemented in the near future. 
+It is important to note that this coupling algorithm only applies to steady-state flows. An extension to transient modeling requires communication of the pebble surface heat flux to the macroscale application for use as a source term in the fluid energy conservation equation instead of the \(\alpha(T_f-T_s)\) kernel. Transient capabilities are to be implemented in the near future. 
 
 For generality, Fig.\ \ref{fig:multiscale_pbr} shows a number of microscale simulations in each pebble. As discussed in Section \ref{sec:mesomicro}, the thin fuel-matrix region of the \gls{pbfhr} modeled in Chapter \ref{sec:pbfhr} warrants the simplifying assumption that a single average microscale domain in each pebble captures the average particle heat transfer. Therefore, a single microscale domain is simulated in each mesoscale domain.
 
@@ -644,7 +645,7 @@ As compared to the \gls{hsd} model, the multiscale coupling procedure is much si
 \subsection{Newton-Krylov Nonlinear Solution}
 \label{sec:nonlinear}
 
-This section describes the solution of a nonlinear system of equations\mdash for the macroscale model, this refers to the four coupled equations in Eq.\ \eqref{eq:PorousEquations} or \eqref{eq:PrimitiveEqns}; for the mesoscale, this refers to the \gls{hl} model in Eq.\ \eqref{eq:oem} or the \gls{hsd} model in \eqref{eq:MesoscaleSolution}; and for the microscale, this refers to the \gls{hsd} model in Eq.\ \eqref{eq:MicroscaleSolution}. Notably, Pronghorn differs from many Navier-Stokes solvers in that the fluid conservation equations are solved together in the same matrix system, rather than with segregated solvers such as \gls{simple}.
+This section describes the solution of a nonlinear system of equations\mdash for the macroscale model, this refers to the four coupled equations in Eq.\ \eqref{eq:PorousEquations} or Eq.\ \eqref{eq:PrimitiveEqns}; for the mesoscale, this refers to the \gls{hl} model in Eq.\ \eqref{eq:oem} or the \gls{hsd} model in \eqref{eq:MesoscaleSolution}; and for the microscale, this refers to the \gls{hsd} model in Eq.\ \eqref{eq:MicroscaleSolution} or the \gls{hl} model in Eq. \eqref{eq:oem}. Notably, Pronghorn differs from many Navier-Stokes solvers in that the fluid conservation equations are solved together in the same matrix system, rather than with segregated solvers such as the \gls{simple}.
 
 A Newton-Krylov method is used to solve the \gls{fe} discretized forms of the multiscale models presented in Section \ref{sec:weak_form} with the \gls{supg} stabilization terms given in Section \ref{sec:supg}. The nonlinear system of equations is a root-finding problem; extending Eq.\ \eqref{eq:residual} to the discretized case, this nonlinear system is
 
@@ -729,21 +730,20 @@ The nonlinear problem is converged once the norm of the nonlinear residual in th
 
 \noindent In each linear iteration, the \gls{gmres} method computes the \((k+1)\)-th linear iterate from the space \(\vec{x}_0+\mathcal{K}_k\) by minimizing the L$^2$ norm of the linear residual over \(\vec{x}_0+\mathcal{K}_k\). 
 
-The convergence of iterative linear solvers such as \gls{gmres} generally depends on the condition number and location and clustering of the eigenvalues of \textbf{A} \cite{trefethen}. The total number of linear iterations can be dramatically reduced by preconditioning the linear system, or applying a preconditioner matrix \textbf{M} in such a way as to reduce the condition number and/or shift the eigenvalue spectrum \cite{benzi}. \gls{gmres} and other linear solvers based on minimizing residuals typically employ a ``right'' preconditioning process, which applies \textbf{M} to the linear system in Eq.\ \eqref{eq:linear} as
+The convergence of iterative linear solvers such as \gls{gmres} generally depends on the condition number and location and clustering of the eigenvalues of \textbf{A} \cite{trefethen}. The total number of linear iterations can be dramatically reduced by applying a preconditioner matrix \textbf{M} in such a way as to reduce the condition number and/or shift the eigenvalue spectrum \cite{benzi}. \gls{gmres} and other linear solvers based on minimizing residuals typically employ a ``right'' preconditioning process, which applies \textbf{M} to the linear system in Eq.\ \eqref{eq:linear} as
 
 \beq
 \textbf{A}\textbf{M}^{-1}(\textbf{M}\vec{x})=\vec{b}\ ,
 \eeq
 
-\noindent so that the residual is unchanged. \gls{petsc} options are exposed directly to \gls{moose} applications, enabling the use of a large set of preconditioners \cite{petsc}. Preconditioner selection is often problem-specific, but an \gls{asm} \gls{smp} with \gls{ilu} on sub-blocks is often sufficient.
+\noindent so that the residual is unchanged. \gls{petsc} options are exposed directly to \gls{moose} applications, enabling the use of a large set of preconditioners \cite{petsc}.
 
 \gls{ad}, sometimes referred to as ``algorithmic differentiation,'' is used to calculate the Jacobians in Eq.\ \eqref{eq:JacobianDef} \cite{ad}. Operator overloads are defined for all of the fundamental arithmetic operators, such as addition, subtraction, multiplication, and division, as well as for elementary functions such as exponentials and logarithms. These overloads then systematically apply the chain rule to the sequence of arithmetic operations used to construct the residual \(\vec{R}\) to compute a working precision accurate estimate of the derivatives of \(\vec{R}\) with respect to \(\vec{u}\). The use of \gls{ad} enables faster application development by avoiding the by-hand derivation of nonlinear residual derivatives. In many cases, \gls{ad} also decreases the number of linear and nonlinear iterations due to the more accurate Jacobian evaluation. The use of \gls{ad} also allows seamless interchange between different sets of solution variables without any modifications to the kernel and \gls{bc} classes that would otherwise be required for by-hand Jacobian evaluation.
 
 \section{Software Engineering Design}
 \label{sec:software}
-% TODO: change many to all?
 
-High-quality software is essential to support the safety analysis of nuclear reactors. The \gls{moose} framework meets many \gls{nqa1} standards that certify software providing safety functions for nuclear facilities. The \gls{moose} framework meets these standards through supporting a software engineering design incorporating the use of git version control, GitHub pull requests and peer review, \gls{ci} with regression and unit tests of the framework and registered applications, and code style and formatting requirements \cite{slaughter}. Pronghorn shares many of these software engineering best practices, including\mdash
+High-quality software is essential to support the safety analysis of nuclear reactors. The \gls{moose} framework follows an \gls{nqa1} development process to certify software providing safety functions for nuclear facilities. The \gls{moose} framework meets the \gls{nqa1} standards through supporting a software engineering design incorporating the use of git version control, GitHub pull requests and peer review, \gls{ci} with regression and unit tests of the framework and registered applications, and code style and formatting requirements \cite{slaughter}. Pronghorn shares many of these software engineering best practices, including\mdash
 
 \begin{itemize}
 \itemsep0.3em
@@ -755,4 +755,4 @@ High-quality software is essential to support the safety analysis of nuclear rea
 \item In-repository theory manual.
 \end{itemize}
 
-Select examples from Pronghorn's regression and unit test suite are described at greater length in Chapter \ref{sec:vv}.
+Select examples from Pronghorn's regression test suite are described at greater length in Chapter \ref{sec:vv}.
