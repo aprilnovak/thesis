@@ -1,16 +1,29 @@
 \chapter{Conclusions}
 \label{sec:conclusions}
 
-I will complete this after receiving all comments.
-
-\begin{comment}
-\begin{displayquote}
-Ironically, the pebble bed HTR concept has probably survived until now mainly as consequence of one of its weak points, its insufficient in-core instrumentation abilities.
-\end{displayquote}
-- Moormann \cite{moormann}
+In 2009, reflecting on the operating experiences of the first \gls{pbr}, the \gls{avr}, the German chemist Rainer Moormann commented that
 
 \begin{displayquote}
-Despite many unsuccessful attempts over half a century to develop it [HTGR] as a commerical power reactor, there is still a strong belief amonst many nuclear advocates that a highly successful HTGR technology will emerge.
+Ironically, the pebble bed HTR concept has probably survived until now mainly as consequence of one of its weak points, its insufficient in-core instrumentation abilities.\hspace{0.01cm}\footnote{R. Moormann, ``AVR prototype pebble bed reactor: A safety re-evaluation of its operation and consequences for future reactors,'' \textit{Kerntechnik}, vol. 74, pp. 8--21, 2009.}
 \end{displayquote}
-- S. Thomas \cite{thomas}
-\end{comment}
+
+Deficiencies in early computational models of the \gls{avr} contributed to core temperatures exceeding licensing limits by hundreds of degrees, an effect that was only quantified following a complicated melt wire pebble experiment with a data lead time of 15 months. However, to design \glspl{pbr} with an exclusive emphasis on experimentation, with all the attendant difficulties of data collection in a high temperature, high radiation, and stochastically moving environment, would be an incredibly expensive, and possibly unfruitful, endeavor. 
+
+One might pessimistically interpret this quotation as an indication that the \gls{pbr} concept should be rejected from future study, thereby abandoning its many advantages in the areas of high temperature efficiency, process heat applications, slowly-evolving transients, passive heat removal, and low excess reactivity. Instead, Moormann's position is here viewed as an impetus to develop more accurate computational models of \glspl{pbr} that can augment complementary experimental research programs.
+
+This dissertation developed multiscale models of \glspl{pbr} with the hope that delivering fast-running and accurate predictions of pebble bed thermal and flow physics to the nuclear industry will translate to an increased viability of the \gls{pbr} concept. With the objective of improving modeling fidelity in areas of safety relevance to \glspl{pbr}, specific emphasis was placed on 1)~model validation against experimental data, 2)~identifying knowledge gaps that affect model accuracy, and 3)~incorporating core bypass flow predictions to bound the core coolant diversion, an effect whose underestimation was likely a leading contributor to the high temperatures observed in the \gls{avr} \cite{viljoen}.
+
+For \gls{ms} to be a valuable design tool for reactor development, numerical models must be able to characterize the proximity of the reactor state to the thermal, mechanical, and radiation limits bounding the desired operating space. Given today's computing resources and a length scale separation of approximately six orders of magnitude\mdash from a \glspl{cfp} layer thickness on the scale of 10$^{-5}$ \si{\meter} to a full core height on the scale of 10$^1$ \si{\meter}\mdash precludes routine design and analysis with fully-resolved models for all length scales and heterogeneities.
+
+In Chapter \ref{sec:PhysicalModels}, multiscale analysis of \glspl{pbr} was introduced as a means for obtaining representative \gls{th} physics predictions over many orders of magnitude in space with full-reactor runtimes on the order of a few \gls{cpu} minutes. These models were presented in terms of three important characteristic length scales\mdash 1)~the macroscale, incorporating the core and surrounding structural materials; 2)~the mesoscale, encompassing a fuel pebble; and 3)~the microscale, spanning a \gls{cfp}. Spatial homogenization of the Navier-Stokes equations with conjugate heat transfer between the coolant and the pebbles was performed to obtain a porous media macroscale model. Two meso and micro scale models were considered. The first was a homogeneous multi-layer conduction model motivated by a simple numerical implementation in existing single-\gls{pde} software tools and a previous dissertation based upon the method \cite{xin_wang_thesis}. The second was a linear superposition approach that augments a long-wavelength background temperature solution with microscale corrections accounting for the locality of heat generation and layer thermal resistances. 
+
+In Chapter \ref{sec:pronghorn}, the incorporation of these multiscale models into a new software application, Pronghorn, built upon the open-source \gls{fe} \gls{moose} framework was described. The objective of this new tool development was to deliver the multiscale \gls{th} models described in Chapter \ref{sec:PhysicalModels} within a high-performance, portable, and extensible computing platform that leverages state-of-the-art numerical methods, nonlinear solvers, and meshing. Flexible in-memory multiphysics data communication systems, general 3-D unstructured meshes, and a modern software engineering design greatly expand upon the capabilities available to the nuclear community for modeling of \glspl{pbr}. Chapter \ref{sec:pronghorn} described the spatial discretization, numerical stabilization, nonlinear solution methods, and length scale coupling used to translate the equation and closure models in Chapter \ref{sec:PhysicalModels} into predictive software.
+
+The use of computational models to predict reactor response to nominal and off-normal conditions requires high software quality and a strong \gls{vv} base. Chapter \ref{sec:vv} discussed several verification activities used to highlight the high caliber of the numerical implementation, illustrate the reduction of the macroscale models to open flows, and support a common simplification used to reduce boundary layer meshing requirements. A small selection of the \gls{mms} verifications shows that the numerical implementation is convergent and matches theoretical spatial and temporal convergence rates for \gls{fe} and \gls{fd} discretizations. Excellent agreement is obtained between Pronghorn and a reference solution to a neraly-incompressible, thermally-driven natural circulation numerical benchmark; this demonstrates that the macroscale model is relevant to the open natural convection flows that may be observed in reactor plena, the accurate prediction of which has significant implications for assessing cyclic fatigue of structural materials. And in the limit of decreasing Mach number, a comparison of inviscid flow over a cylinder to an analytic potential flow solution exemplifies the general applicability of the macroscale model to both compressible and nearly-incompressible flows; this is an essential prerequisite in the development of an all-speed flow solver for reactors that exhibit the full range from low-speed natural circulation to high-speed blowdown depressurization.
+
+
+
+
+
+% emphasis on validation to ensure applicability
+% but more experiments are needed to validate the physical predictions made in this dissertation
