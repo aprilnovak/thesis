@@ -15,7 +15,7 @@ The key requirement for the use of these averaging identities is that the spatia
 
 \beq
 \label{eq:AverageofAverage22}
-\la\la\Phi_k\ra^k\ra^k=\la\Phi_k\ra^k\ ,
+\la\la\Phi_k\ra^k\ra^k=\la\Phi_k\ra^k\ .
 \eeq
 
 \noindent Eqs.\ \eqref{eq:AverageofAverage} and \eqref{eq:AverageofAverage22} require that the averaging volume be much larger than the volume over which the microscopic solution varies appreciably. Forming a Taylor series expansion of \(\la\Phi\ra\) about the centroid of the \gls{rev} gives
@@ -25,7 +25,7 @@ The key requirement for the use of these averaging identities is that the spatia
 \la\Phi\ra=\la\Phi\ra_c+x_i\left(\frac{\partial\la\Phi\ra}{\partial x_i}\right)_c+\frac{x_ix_j}{2}\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c+\mathcal{O}(x_ix_jx_k)\ ,
 \eeq
 
-\noindent where the ``c'' subscript indicates the value at the centroid. Taking the average of Eq.\ \eqref{eq:FF1} gives
+\noindent where the ``c'' subscript indicates the centroid. Taking the average of Eq.\ \eqref{eq:FF1} gives
 
 \beqa
 \la\la\Phi\ra\ra=&\ \la\Phi\ra_c+\left(\frac{\partial\la\Phi\ra}{\partial x_i}\right)_c\frac{1}{\volume}\int_{\volume}x_id\volume +\frac{1}{2}\left(\frac{\partial^2\la\Phi\ra}{\partial x_i\partial x_j}\right)_c\frac{1}{\volume}\int_{\volume}x_ix_jd\volume +\mathcal{O}(x_ix_jx_k)\\
@@ -35,12 +35,11 @@ The key requirement for the use of these averaging identities is that the spatia
 \noindent where all terms subscripted with ``c'' are independent of the averaging volume. The \(x_id\volume\) integral is zero because the coordinate \(x_i\) is measured from the centroid of the averaging volume such that the integration represents an integral of an odd function. Based on this Taylor series analysis of \(\la\Phi\ra\) and \(\la\la\Phi\ra\ra\), the assumption of spatial averages being independent of the \gls{rev} volume is accurate to \(\mathcal{O}(l/L)^2\). Expressing volume averages in terms of a one-dimensional integral of a spatially-dependent surface average shows that volume averages are also equivalent to area averages with accuracy \(\mathcal{O}(l/L)^2\).
 
 A number of identities are now derived to address specific terms that arise in the averaging of the conservation equations in Chapter \ref{sec:PhysicalModels}. Combining Eqs.\ \eqref{eq:PM_back}, \eqref{eq:AverageofAverage}, and \eqref{eq:AverageofAverage22} gives
-
 \begin{subequations}
 \label{eq:SumMeanPlusFluctuation}
 \begin{align}
 \label{eq:SumMeanPlusFluctuationa}
-\Phi_kf_k=&\ \la\Phi_k\ra+\hat{\Phi}_kf_k\\
+\Phi_kf_k=&\ \la\Phi_k\ra+\hat{\Phi}_kf_k\ ,\\
 \label{eq:SumMeanPlusFluctuationb}
 \Phi_kf_k=&\ \la\Phi_k\ra^k+\hat{\Phi}_kf_k\ .
 \end{align}
@@ -89,7 +88,7 @@ S(s)\equiv S_e(s)+S_i(s)\ ,
 
 \beq
 \label{eq:PtonSurface}
-\vec{x}(s)=\vec{x}_0(s)+\vec{p}(s)\ ,
+\vec{x}(s)=\vec{x}_0(s)+\vec{p}(s)\ .
 \eeq
 
 \noindent By the chain rule, the directional derivative with respect to the arc length is
@@ -123,12 +122,11 @@ S(s)\equiv S_e(s)+S_i(s)\ ,
 \eeq
 
 \noindent Finally, dividing Eq.\ \eqref{eq:Slattery} by \(\volume\) gives the relation between the average of a gradient and the gradient of the average, 
-
 \begin{subequations}
 \label{eq:AvgGrdGrdAvg}
 \begin{align}
 \label{eq:AvgGrdGrdAvga}
-\la\nabla\Phi_k\ra=&\ \nabla\la\Phi_k\ra+\frac{1}{\volume}\int_{S_i}\Phi_k\hat{n}_kdS\\
+\la\nabla\Phi_k\ra=&\ \nabla\la\Phi_k\ra+\frac{1}{\volume}\int_{S_i}\Phi_k\hat{n}_kdS\ ,\\
 \label{eq:AvgGrdGrdAvgb}
 \la\nabla\Phi_k\ra=&\ \epsilon_k\nabla\la\Phi_k\ra^k+\frac{1}{\volume}\int_{S_i}\hat{\Phi}_k\hat{n}_kdS\ .
 \end{align}
@@ -145,12 +143,11 @@ Now, in order to relate the averages of time derivatives to the time derivatives
 \eeqa
 
 \noindent where \(\vec{w}\) is the velocity of the phase interface \cite{gray}. Finally, several relations between averages of products are needed to average nonlinear advective terms. From Eq.\ \eqref{eq:PorosityAvg}, an average of the product \(\vec{V}_k\Phi_k\) over \(\volume\) can be related to an average over the phase volume \(\volume_k\), giving
-
 \begin{subequations}
 \label{eq:Dispersion}
 \begin{align}
 \label{eq:DispersionA}
-\la\vec{V}_k\Phi_k\ra=&\ \epsilon_k\la\vec{V}_k\Phi_k\ra^k\\
+\la\vec{V}_k\Phi_k\ra=&\ \epsilon_k\la\vec{V}_k\Phi_k\ra^k\ ,\\
 \la\vec{V}_k\Phi_k\ra=&\ \epsilon_k\la\vec{V}_k\ra^k\la\Phi_k\ra^k+\la\hat{\vec{V}}_k\hat{\Phi}_k\ra\ ,
 \end{align}
 \end{subequations}
@@ -174,7 +171,6 @@ This section provides the correlations used for fluid material properties; unles
 
 \subsubsection*{FLiBe}
 The material properties for \gls{flibe}, a peritectic molar composition of 67\% LiF and 33\% BeF$_2$, are given as \cite{richard,romatoski}
-
 \begin{subequations}
 \label{eq:flibe}
 \begin{align}
@@ -189,7 +185,6 @@ C_{p,f}=&\ 2416.0\ ,
 
 \subsubsection*{Helium}
 Helium material properties are given as \cite{petersen}
-
 \begin{subequations}
 \label{eq:helium}
 \begin{align}
@@ -204,7 +199,6 @@ C_{p,f}=&\ 5195.0\ .
 
 \subsubsection*{Ideal Gas}
 The ideal gas \gls{eos} provides material properties for a generic gas as
-
 \begin{subequations}
 \begin{align}
 \rho_f=&\ \frac{P}{T_f}\frac{M}{8.3144598}\ ,\\
@@ -217,7 +211,7 @@ C_{p,f}=&\ C_{p,f,0}\ ,
 \noindent where \(M\) is the molar mass, and \(k_{f,0}\), \(\mu_{f,0}\), and \(C_{p,f,0}\) are constant values chosen depending on the fluid modeled.
 
 \subsubsection*{Nitrogen}
-The correlations providing nitrogen material properties are based on the Span et.\ al and Lemmon and Jacobsen \glspl{eos}, and are far too lengthy to repeat, even in the Appendix \cite{span,lemmon}. Additional information may be found in the cited references and in the \gls{moose} fluid properties module documentation.
+The correlations providing nitrogen material properties are based on the Span et.\ al and Lemmon and Jacobsen \glspl{eos}, and are far too lengthy to repeat, even in this Appendix \cite{span,lemmon}. Additional information may be found in the cited references and in the \gls{moose} fluid properties module documentation.
 
 Alternatively, a \gls{moose} nitrogen properties module based on the \gls{sbtl} method is available \cite{kunick}.
 
@@ -227,7 +221,6 @@ This section provides the correlations used for solid material properties. Note 
 
 \subsubsection*{Aluminum oxide}
 Aluminum oxide material properties are given as \cite{SANA,aluminum_oxide_cp}
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 3637\ ,\\
@@ -236,11 +229,8 @@ C_{p,S}=&\ 880\ .
 \end{align}
 \end{subequations}
 
-%Eq.\ \eqref{eq:k_al2o3} is valid for \(293\text{ K}\leq T_S\leq 1579\) K. 
-
 \subsubsection*{Electric graphite}
 Sigri Al 2-500 electric graphite material properties are given as \cite{SANA,butland}
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 1673\ ,\\
@@ -253,11 +243,8 @@ C_{p,S} =&\ 4184\left(0.5421+a_1T_S+\frac{a_2}{T_S}+\frac{a_3}{T_S^2}+\frac{a_4}
 
 \noindent where \(a_1=-2.4267\times10^{-6}\), \(a_2=-90.273\), \(a_3=-43449\), \(a_4=1.5931\times10^7\), and \(a_5=-1.4369\times10^9\).
 
-%Eq.\ \eqref{eq:k_eg} is valid for \(373\textrm{ K}\leq T_s\leq 1273\) K. 
-
 \subsubsection*{Fire Brick}
 Type C-22Z fire brick material properties are given as \cite{firebrick,firebrick2}
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 737\ ,\\
@@ -270,7 +257,6 @@ C_{p,S} =&\ 1050\ .
 
 \subsubsection*{Matrix graphite}
 Matrix graphite material properties are given as \cite{SANA,butland}
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 1632\ ,\\
@@ -283,11 +269,8 @@ C_{p,S} =&\ 4184\left(0.5421+a_1T_S+\frac{a_2}{T_S}+\frac{a_3}{T_S^2}+\frac{a_4}
 
 \noindent where \(a_1=-2.4267\times10^{-6}\), \(a_2=-90.273\), \(a_3=-43449\), \(a_4=1.5931\times10^7\), and \(a_5=-1.4369\times10^9\). The graphite reflector properties are assumed given by these matrix graphite properties.
 
-%Eq.\ \eqref{eq:k_mg} is valid for \(292\text{ K}\leq T_s\leq 1574\) K. 
-
 \subsubsection*{Porous graphite}
 The material properties for porous graphite, or the low-density buffer layer in \glspl{cfp}, are assumed constant based on experimental data and values used elsewhere \cite{sun,tecdoc1694,xin_wang_thesis,stainsby,parfume,hales,rochais,lopez_honorato} as
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 1000\ ,\\
@@ -295,11 +278,9 @@ k_S =&\ 0.5\ , \\
 C_{p,S} =&\ 720\ .
 \end{align}
 \end{subequations}
-%large differences in specific heat \cite{xin_wang_thesis,rochais} and thermal conductivity \cite{cao}
 
 \subsubsection*{Pyrolitic graphite (PyC)}
 The material properties for \gls{pyc} are assumed constant based on experimental data and values used elsewhere \cite{sun,xin_wang_thesis,tecdoc1694,slack,bokros,basini,hales,rochais,stainsby,parfume,cao} as
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 1900\ ,\\
@@ -312,7 +293,6 @@ C_{p,S} =&\ 720\ .
 
 \subsubsection*{Stainless steel 316}
 The material properties for stainless steel 316 are given as \cite{tinte2}
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 7863\ ,\\
@@ -325,7 +305,6 @@ C_{p,S} =&\ \frac{7.8\times 10^6}{\rho_S}\left(0.4533+0.382\frac{T_S-273}{1000}\
 
 \subsubsection*{Silicon carbide (SiC)}
 The material properties for \gls{sic} are given as \cite{snead,xin_wang_thesis,tecdoc1694,sun}
-
 \begin{subequations}
 \begin{align}
 \rho_S=&\ 3216\ ,\\
@@ -340,7 +319,6 @@ Due to a lack of other closures, uranium oxycarbide properties are approximated 
 
 \subsubsection*{Uranium dioxide (UO$_2$)}
 \gls{uo2} material properties are given as
-
 \begin{subequations}
 \label{eq:uo2}
 \begin{align}
