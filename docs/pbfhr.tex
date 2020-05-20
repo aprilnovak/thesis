@@ -43,7 +43,6 @@ The nominal operating conditions of the \gls{pbfhr} relevant to core thermal ana
 \begin{table}[htb!]
 \caption{Nominal operating conditions of the \gls{pbfhr}.}
 \centering
-\small
 \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Operating Condition} & \textbf{Value}\\
@@ -127,7 +126,6 @@ The present analysis assumes a slightly thicker fuel-matrix shell thickness than
 \begin{table}[htb!]
 \caption{Properties and kernel geometry for the \gls{pbfhr} fuel pebble \cite{novak_manual_2020}.}
 \centering
-\small
 \centerline{
 \begin{tabular}{@{}l c c c c@{}}
 \toprule
@@ -235,7 +233,7 @@ Fig.\ \ref{fig:pebble_octant_mesh} shows a close-up view of a portion of the tet
 \label{fig:pebble_octant_mesh}
 \end{figure}
 
-For illustration, Fig.\ \ref{fig:f1} shows the reference fuel kernel temperature solution for 15\% particle \gls{pf}. Temperatures in the matrix and all \gls{cfp} layers exterior to the central fissile kernel are not shown, while the core and shell regions are shown as gray blocks for scale. An inset shows the tetrahedral mesh in the \glspl{cfp}, where the color represents the material ID (with a different color coding from Fig. \ref{fig:pebble_octant_mesh}. Because the heat source is uniform and localized to the kernel, kernel temperatures are highest in the particle center.
+For illustration, Fig.\ \ref{fig:f1} shows the reference fuel kernel temperature solution for 15\% particle \gls{pf}. Temperatures in the matrix and all \gls{cfp} layers exterior to the central fissile kernel are not shown, while the core and shell regions are shown as gray blocks for scale. An inset shows the tetrahedral mesh in the \glspl{cfp}, where the color represents the material ID (with a different color coding from Fig.\ \ref{fig:pebble_octant_mesh}. Because the heat source is uniform and localized to the kernel, kernel temperatures are highest in the particle center.
 
 \begin{figure}[h!]
 \centering
@@ -244,7 +242,7 @@ For illustration, Fig.\ \ref{fig:f1} shows the reference fuel kernel temperature
 \label{fig:f1}
 \end{figure}
 
-To provide a second perspective at a different \gls{pf}, the reference temperature solution at \(20\)\% \gls{pf} is shown in Fig.\ \ref{fig:octant1} along a radial plane and in Fig.\ \ref{fig:octant2} on the surfaces of the particles with the core and shell shown for context. Different color scales are used to make results clearer. Note that the seemingly larger particles in Fig. \ref{fig:octant2} relative to Fig. \ref{fig:f1} simply reflect the outer \gls{pyc} surfaces as opposed to the much smaller fissile kernels.
+To provide a second perspective at a different \gls{pf}, the reference temperature solution at \(20\)\% \gls{pf} is shown in Fig.\ \ref{fig:octant1} along a radial plane and in Fig.\ \ref{fig:octant2} on the surfaces of the particles with the core and shell shown for context. Different color scales are used to make results clearer. Note that the seemingly larger particles in Fig.\ \ref{fig:octant2} relative to Fig.\ \ref{fig:f1} simply reflect the outer \gls{pyc} surfaces as opposed to the much smaller fissile kernels.
 
 The absence of a heat source in the central graphite core results in a nearly uniform temperature distribution in this region, and the majority of the radial temperature drop occurs over the fuel-matrix region. Ten other simulations at different \glspl{pf} were performed, but for brevity not shown here.
 
@@ -268,7 +266,7 @@ The absence of a heat source in the central graphite core results in a nearly un
 
 The \gls{hsd} method is applied with Eq.\ \eqref{eq:ChiewGlandt} used to average the fuel-matrix properties with the \glspl{cfp} properrties and Eq.\ \eqref{eq:parallel} used for all other averages. After several trial-and-error tests, the \gls{hl} method is applied for two pseudo-particles; using a single particle resulted in poorer temperature predictions because of a reduced geometric attenuation, while no significant difference was observed for more than two pseudo-particles.
 
-Figs. \ref{fig:hsd1} and \ref{fig:hsd2} compare the reference ($\bullet$), \gls{hsd} method (---), and \gls{hl} method \mbox{(- -)} integral temperature solutions as a function of \gls{pf}. The \gls{pf} corresponding to the \gls{pbfhr} fuel design is highlighted with a gray vertical line. The maximum kernel, average kernel, and average buffer temperatures are shown in Fig.\ \ref{fig:hsd1}, while average graphite temperatures in the core, matrix, and shell of the pebble are shown in Fig.\ \ref{fig:hsd2}. Different temperature scales are used to make results clearer.
+Figs.\ \ref{fig:hsd1} and \ref{fig:hsd2} compare the reference ($\bullet$), \gls{hsd} method (---), and \gls{hl} method \mbox{(- -)} integral temperature solutions as a function of \gls{pf}. The \gls{pf} corresponding to the \gls{pbfhr} fuel design is highlighted with a gray vertical line. The maximum kernel, average kernel, and average buffer temperatures are shown in Fig.\ \ref{fig:hsd1}, while average graphite temperatures in the core, matrix, and shell of the pebble are shown in Fig.\ \ref{fig:hsd2}. Different temperature scales are used to make results clearer.
 
 \begin{figure}[!htb]
 \centering
@@ -380,7 +378,6 @@ Related to the smaller scale separation than in the pebble region, the porosity 
 \begin{table}[htb!]
 \caption{Outer reflector porosity and hydraulic diameter as a function of the gap size.}
 \centering
-\small
 \begin{tabular}{@{}c c c c@{}}
 \toprule
 \textbf{Gap size (\si{\milli\meter})} & \textbf{Porosity} & \textbf{Vertical \(D\) (\si{\centi\meter})} & \textbf{Horizontal \(D\) (\si{\centi\meter})}\\
@@ -490,13 +487,12 @@ Table \ref{table:drag} summarizes the \(A\) and \(B\) coefficients used to corre
 \begin{table}[htb!]
 \caption{Outer reflector friction factor correlations for radial and axial flow, with \(A_{ij}\) and \(B_{ij}\) defined in Eq.\ \eqref{eq:W3}. The error in the correlation is calculated relative to the \gls{cfd} data points.}
 \centering
-\small
 \centerline{
 \begin{tabular}{@{}l c c ccc c c c c@{}}
 \toprule
 & & & \multicolumn{2}{c}{Percent Error} &\phantom{a}& & & \multicolumn{2}{c}{Percent Error} \\
 \cmidrule{4-5} \cmidrule{9-10}
-\textbf{Gap (\si{\milli\meter})} & {\boldmath\(A_{rr}\)} & {\boldmath\(B_{rr}\)} & \textbf{Average} & \textbf{Maximum} && {\boldmath\(A_{zz}\)} & {\boldmath\(B_{zz}\)} & \textbf{Average} & \textbf{Maximum}\\
+\textbf{Gap (\si{\milli\meter})} & {\boldmath\(A_{rr}\)} & {\boldmath\(B_{rr}\)} & \textbf{Avg.} & \textbf{Max.} && {\boldmath\(A_{zz}\)} & {\boldmath\(B_{zz}\)} & \textbf{Avg.} & \textbf{Max.}\\
 \midrule
 5.0 & 1337.76 & 2.58 & 0.47 & 1.09 && 593.78 & 0.96 & 0.65 & 1.50\\
 10.0 & \color{white}0\color{black}479.38 & 1.44 & 0.43 & 1.17 && 193.47 & 0.50 & 1.90 & 3.82\\
@@ -610,7 +606,7 @@ B_{ij}=f(z)B_{ij,10}+\left\lbrack1-f(z)\right\rbrack B_{ij,5}\ ,
 
 It is important to note that uniform 10 \si{\milli\meter} gaps are likely unrealistically large, and \gls{th} predictions for uniform 10 \si{\milli\meter} gaps should not be regarded as representative of the \gls{pbfhr} outer reflector end-of-life condition. Instead, the 10 \si{\milli\meter} gaps are considered to understand the sensitivity of bypass to the gap size and to contrast the axial distribution in Fig.\ \ref{fig:axial_gaps} with uniform distributions.
 
-Figs. \ref{fig:bcs_temp}--\ref{fig:bcs_temp3} show the predicted fluid temperature and velocity streamlines in the pebble bed, plenum, and outer reflector for the five flow \glspl{bc} considered for 5 \si{\milli\meter} gaps, 10 \si{\milli\meter} gaps, and the axial gap distribution, respectively. In each subfigure, the $r$-$z$ symmetry axis is on the left boundary and black arrows indicate the inner reflector flow \gls{bc}. Gray blocks represent the inner reflector, barrel, downcomer, and vessel. All temperatures in Figs. \ref{fig:bcs_temp}--\ref{fig:bcs_temp3} are shown on the same color scale.
+Figs.\ \ref{fig:bcs_temp}--\ref{fig:bcs_temp3} show the predicted fluid temperature and velocity streamlines in the pebble bed, plenum, and outer reflector for the five flow \glspl{bc} considered for 5 \si{\milli\meter} gaps, 10 \si{\milli\meter} gaps, and the axial gap distribution, respectively. In each subfigure, the $r$-$z$ symmetry axis is on the left boundary and black arrows indicate the inner reflector flow \gls{bc}. Gray blocks represent the inner reflector, barrel, downcomer, and vessel. All temperatures in Figs.\ \ref{fig:bcs_temp}--\ref{fig:bcs_temp3} are shown on the same color scale.
 
 \begin{figure}[!htb]
 \centering
@@ -711,7 +707,7 @@ Based on the comparisons performed in this section, condition C$_{0.2}$ is recom
 
 This section provides in-depth core \gls{th} predictions for the three reflector gap distributions with the C$_\text{0.2}$ inflow condition. As discussed at the end of Section \ref{sec:inflow}, this inlet \gls{bc} is selected for more detailed analysis because the average and maximum outlet fluid temperatures are generally lower than for the other \glspl{bc} considered, with only minor differences in core pressure drop. Therefore, all results presented in this section correspond to inflow condition C$_\text{0.2}$.
 
-Fig.\ \ref{fig:fluid_temp_all} shows the fluid temperature with velocity streamlines for the three gap distributions; all temperatures are shown on the same color scale. While the same data is shown in Figs. \ref{fig:bcs_temp}--\ref{fig:bcs_temp}, excluding flow conditions A and B from the shared color scale enables clearer visualization. 
+Fig.\ \ref{fig:fluid_temp_all} shows the fluid temperature with velocity streamlines for the three gap distributions; all temperatures are shown on the same color scale. While the same data is shown in Figs.\ \ref{fig:bcs_temp}--\ref{fig:bcs_temp}, excluding flow conditions A and B from the shared color scale enables clearer visualization. 
 
 \begin{figure}[h!]
 \centering
@@ -732,7 +728,7 @@ For all gap distributions, the pressure drop is nearly linear with height; conto
 \label{fig:pressure_all}
 \end{figure}
 
-For all three gap distributions, Fig.\ \ref{fig:solid_core} shows the predicted pebble surface temperature in the bed region and Fig.\ \ref{fig:solid_noncore} shows the solid temperature in the inner reflector, outer reflector, outlet plenum, barrel, downcomer, and vessel. The same color scale is used for Figs. \ref{fig:solid_core} and \ref{fig:solid_noncore}. The fire brick is excluded from the visualization in Fig.\ \ref{fig:solid_noncore} because the 600\si{\celsius} temperature drop from the vessel surface to the \gls{rrcls} system would saturate the color scale for visualization. The temperature contours in the fire brick are nearly vertical, as heat is conducted nearly entirely in the radial direction from the vessel surface.
+For all three gap distributions, Fig.\ \ref{fig:solid_core} shows the predicted pebble surface temperature in the bed region and Fig.\ \ref{fig:solid_noncore} shows the solid temperature in the inner reflector, outer reflector, outlet plenum, barrel, downcomer, and vessel. The same color scale is used for Figs.\ \ref{fig:solid_core} and \ref{fig:solid_noncore}. The fire brick is excluded from the visualization in Fig.\ \ref{fig:solid_noncore} because the 600\si{\celsius} temperature drop from the vessel surface to the \gls{rrcls} system would saturate the color scale for visualization. The temperature contours in the fire brick are nearly vertical, as heat is conducted nearly entirely in the radial direction from the vessel surface.
 
 The interface between the fuel and blanket pebbles is clearly visible in the pebble surface temperature distribution in Fig.\ \ref{fig:solid_core}. The combination of radial and axial coolant flow in the bed results in the highest temperatures occurring near the outlet of the bed and along the fuel-blanket interface due to a combination of higher coolant temperature and higher power density. Similar to the fluid temperatures shown in Fig.\ \ref{fig:fluid_temp_all}, the reflector gap profile and the resultant differences in core bypass primarily affect the magnitude of the solid surface temperature, rather than the distribution. 
 
@@ -745,7 +741,7 @@ The interface between the fuel and blanket pebbles is clearly visible in the peb
 
 The sharp line between fuel pebbles and blanket pebbles will in reality be smoothed from small amounts of pebble radial diffusion, while the sinusoidal power density does not account for radial peaking near reflectors \cite{xin_wang_thesis}. Both of these effects will be considered in future analyses.
 
-Heat conducts from the pebbles to the graphite reflectors and through the barrel, downcomer, vessel, and fire bricks to removal by the \gls{rrcls} system. The highest reflector temperatures occur in the inner reflector and near the core outlet. As mentioned in reference to the fluid temperature distribution shown in Figs. \ref{fig:bcs_temp}--\ref{fig:bcs_temp3}, the omission of convective heat transfer between the fluid and reflectors overpredicts graphite temperatures in these regions. By neglecting convective heat transfer in the reflectors, the simulated temperature difference between the solid and fluid phases is about 100\si{\celsius} in some regions such as near the outlet plenum and in the upper portion of the center reflector. To provide an exceedingly coarse estimate of the error in the reflector temperature predictions, at the upper limit of convective heat transfer coefficients, this 100\si{\celsius} temperature difference suggests that the reflector temperatures might be overpredicted by 50\si{\celsius}. When considering a finite heat transfer coefficient, the temperature overprediction in the reflectors is likely on the order of tens of degrees. Therefore, while the 10 \si{\milli\meter} gap results in the highest reflector temperatures in Fig.\ \ref{fig:solid_noncore}, the higher bypass flow may compensate by providing more heat removal than for the lower-bypass conditions.
+Heat conducts from the pebbles to the graphite reflectors and through the barrel, downcomer, vessel, and fire bricks to removal by the \gls{rrcls} system. The highest reflector temperatures occur in the inner reflector and near the core outlet. As mentioned in reference to the fluid temperature distribution shown in Figs.\ \ref{fig:bcs_temp}--\ref{fig:bcs_temp3}, the omission of convective heat transfer between the fluid and reflectors overpredicts graphite temperatures in these regions. By neglecting convective heat transfer in the reflectors, the simulated temperature difference between the solid and fluid phases is about 100\si{\celsius} in some regions such as near the outlet plenum and in the upper portion of the center reflector. To provide an exceedingly coarse estimate of the error in the reflector temperature predictions, at the upper limit of convective heat transfer coefficients, this 100\si{\celsius} temperature difference suggests that the reflector temperatures might be overpredicted by 50\si{\celsius}. When considering a finite heat transfer coefficient, the temperature overprediction in the reflectors is likely on the order of tens of degrees. Therefore, while the 10 \si{\milli\meter} gap results in the highest reflector temperatures in Fig.\ \ref{fig:solid_noncore}, the higher bypass flow may compensate by providing more heat removal than for the lower-bypass conditions.
 
 \begin{figure}[h!]
 \centering
@@ -754,7 +750,7 @@ Heat conducts from the pebbles to the graphite reflectors and through the barrel
 \label{fig:solid_noncore}
 \end{figure}
 
-For all three gap distributions, Figs. \ref{fig:uo2_max}, \ref{fig:uo2_avg}, and \ref{fig:graphite} show the maximum UC$_{1.5}$O$_{0.5}$ temperature in the fueled region, the average UC$_{1.5}$O$_{0.5}$ temperature in the fueled region, and the average graphite temperature in the bed, respectively. The same color scale is used in Figs. \ref{fig:uo2_max}--\ref{fig:graphite}.
+For all three gap distributions, Figs.\ \ref{fig:uo2_max}, \ref{fig:uo2_avg}, and \ref{fig:graphite} show the maximum UC$_{1.5}$O$_{0.5}$ temperature in the fueled region, the average UC$_{1.5}$O$_{0.5}$ temperature in the fueled region, and the average graphite temperature in the bed, respectively. The same color scale is used in Figs.\ \ref{fig:uo2_max}--\ref{fig:graphite}.
 
 The distribution of fissile kernel and graphite temperatures in the fuel pebble region is similar to the sinusoidal power density, but with maximum values shifted towards the right and slightly upwards in the core due to the combination of radial and axial flow inlets. The graphite temperature distribution in the blanket pebble region directly follows the fluid temperature distribution due to a lack of a volumetric heat source in this region.
 
@@ -774,7 +770,7 @@ The close proximity of \glspl{cfp} to the pebble surface results in roughly a 10
 \label{fig:uo2_avg}
 \end{figure}
 
-Similar to the fluid and solid temperature distributions shown in Figs. \ref{fig:fluid_temp_all}--\ref{fig:solid_noncore}, the coolant bypass from the core raises temperatures nearly uniformly through the bed. Table \ref{table:multiscale} summarizes the core maximum fluid temperature, maximum pebble surface temperature, maximum kernel temperature, and maximum of the average graphite as a function of outer reflector gap size. A maximum temperature is provided for the kernel to represent the proximity to individual-particle failure modes. Graphite forms many layers of the \glspl{cfp} as well as the matrix, shell, and inner core. Therefore, the maximum of the pebble-wise average graphite temperature, rather than the maximum graphite temperature, is provided as a more meaningful indication of pebble thermal conditions, such as potentials for fission product diffusion.
+Similar to the fluid and solid temperature distributions shown in Figs.\ \ref{fig:fluid_temp_all}--\ref{fig:solid_noncore}, the coolant bypass from the core raises temperatures nearly uniformly through the bed. Table \ref{table:multiscale} summarizes the core maximum fluid temperature, maximum pebble surface temperature, maximum kernel temperature, and maximum of the average graphite as a function of outer reflector gap size. A maximum temperature is provided for the kernel to represent the proximity to individual-particle failure modes. Graphite forms many layers of the \glspl{cfp} as well as the matrix, shell, and inner core. Therefore, the maximum of the pebble-wise average graphite temperature, rather than the maximum graphite temperature, is provided as a more meaningful indication of pebble thermal conditions, such as potentials for fission product diffusion.
 
 \begin{figure}[h!]
 \centering
@@ -803,7 +799,7 @@ When the maximum fluid temperature is normalized to a common value for all three
 
 This reinforces that the primary effect of the core bypass is to uniformly raise core temperatures. From the 5 \si{\milli\meter} gaps to the axial distribution, all temperatures increase by roughly 9\si{\celsius}, while from the axial distribution to the 10 \si{\milli\meter} gaps, all temperatures increase by a further 12\si{\celsius}. In order of increasing gap resistance, the maximum core temperatures decrease nearly linearly as less fluid is diverted through the reflector. However, it is interesting to note that the bypass fraction does not exhibit a similar linear trend. From the 5 \si{\milli\meter} gaps to the axial distribution, the bypass fraction increases by 0.007, while from the axial distribution to the 10 \si{\milli\meter} gaps, the bypass fraction increases by 0.079. This order of magnitude higher increase in the bypass does not directly translate to an order of magnitude higher increase in core temperatures, reinforcing the conclusion in Section \ref{sec:inflow} that the effect of the bypass fraction on core temperatures is a nonlinear function of operating conditions and flow \glspl{bc}. 
 
-At each computational element in the bed, the \gls{hsd} model is used to compute integral temperature solutions that were shown for the kernel and graphite in Figs. \ref{fig:uo2_max}--\ref{fig:graphite}. To provide additional elaboration on the \gls{hsd} model application to the \gls{pbfhr}, the left half of Fig.\ \ref{fig:multiscale_fuel} shows the pebble surface temperature with solid black contour lines for the 5 \si{\milli\meter} gap distribution. This data is also shown in Fig.\ \ref{fig:solid_core} on a shared color scale for all three gap distributions. Throughout the bed, nine equally-spaced axial positions are indicated with horizontal dashed lines. The axially-symmetric sinusoidal power distribution results in the same pebble power density at \(z=0.53\) and 4.78 \si{\meter}, at \(z=1.06\) and 4.25 \si{\meter}, at \(z=1.59\) and 3.72 \si{\meter}, and at \(z=2.13\) and 3.19 \si{\meter}.
+At each computational element in the bed, the \gls{hsd} model is used to compute integral temperature solutions that were shown for the kernel and graphite in Figs.\ \ref{fig:uo2_max}--\ref{fig:graphite}. To provide additional elaboration on the \gls{hsd} model application to the \gls{pbfhr}, the left half of Fig.\ \ref{fig:multiscale_fuel} shows the pebble surface temperature with solid black contour lines for the 5 \si{\milli\meter} gap distribution. This data is also shown in Fig.\ \ref{fig:solid_core} on a shared color scale for all three gap distributions. Throughout the bed, nine equally-spaced axial positions are indicated with horizontal dashed lines. The axially-symmetric sinusoidal power distribution results in the same pebble power density at \(z=0.53\) and 4.78 \si{\meter}, at \(z=1.06\) and 4.25 \si{\meter}, at \(z=1.59\) and 3.72 \si{\meter}, and at \(z=2.13\) and 3.19 \si{\meter}.
 
 On each horizontal line, a colored circle indicates the location of the maximum UC$_{1.5}$O$_{0.5}$ temperature on that line. Because the sinusoidal power distribution only contains an axial dependence, the maximum UC$_{1.5}$O$_{0.5}$ temperature location coincides with the maximum pebble surface temperature location. In the right half of Fig.\ \ref{fig:multiscale_fuel}, the meso and micro scale temperature distributions are shown at the nine axial positions at the maximum kernel temperature location. Recall that the mesoscale temperature represents the long-wavelength heat conduction solution due to the homogenized heat source and thermal properties, while the mesoscale temperature represents a small-scale correction associated with a localized heat source and heterogeneous \gls{cfp} thermal properties. 
 

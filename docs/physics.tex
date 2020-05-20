@@ -1133,7 +1133,7 @@ B=1.25\left(\frac{1-\epsilon}{\epsilon}\right)^{10/9}\ ,
 \kappa_{\textrm{conduction}}=\left(1-\sqrt{1-\epsilon}\right)k_f+\sqrt{1-\epsilon}\ \mathscr{K}_{SF}k_f\ ,
 \end{equation}
 
-\noindent where \(\mathscr{K}_{SF}\) is given\hspace{0.02cm}\footnote{A typo is unfortunately present in this equation in the author's 2019 journal article \cite{novak_sana}} as
+\noindent where \(\mathscr{K}_{SF}\) is given\hspace{0.02cm}\footnote{A typo is unfortunately present in Eq.\ \eqref{eq:ZBSKSF} in the author's 2019 journal article \cite{novak_sana}.} as
 
 \begin{equation}
 \label{eq:ZBSKSF}
@@ -1236,7 +1236,7 @@ The porous media solid energy conservation equation derived in Section \ref{sec:
 \label{fig:meso}
 \end{figure}
 
-The spatial distribution of pebbles within the macroscale domain is usually unknown, so the use of the identical pebble representation in Figs. \ref{fig:mesoa} and \ref{fig:mesob} is purely pedagogical. Given the assumption of mesoscale periodicity, the solid surface temperature at each position \(\vec{x}\) in the macroscale domain represents a uniform surface temperature on a representative solid pebble centered at \(\vec{x}\).
+The spatial distribution of pebbles within the macroscale domain is usually unknown, so the use of the identical pebble representation in Figs.\ \ref{fig:mesoa} and \ref{fig:mesob} is purely pedagogical. Given the assumption of mesoscale periodicity, the solid surface temperature at each position \(\vec{x}\) in the macroscale domain represents a uniform surface temperature on a representative solid pebble centered at \(\vec{x}\).
 
 In solid-fluid mixtures consisting of a homogeneous or multi-layer homogeneous solid phase, the heat equation may readily be applied to estimate the internal solid temperature distribution,
 
@@ -1284,14 +1284,14 @@ While the spatial homogenization is a natural companion to the macroscale porous
 
 The \gls{hl} method blends aspects of a multilayer homogeneous solid that can be described by Eq.\ \eqref{eq:oem} with consideration of the \gls{cfp} layers thermal resistance and heat source localization. The \gls{hl} method is based on symmetrically smearing heterogeneities into a \gls{1d} multilayer solid while preserving volume fractions. Fig.\ \ref{fig:pbmr_hlm} shows one possible representation of the \gls{pbmr} pebble in Fig.\ \ref{fig:pbmr_pebble} with the \gls{hl} method. The total mass of each material is conserved and the geometric structure of the \glspl{cfp} is approximated as a multilayer spherical shell; 15,000 randomly-distributed particles have been simplified to a single pseudo-particle at the expense of a distortion in the thermal resistance seen by the kernel and the separation of a continuous matrix into isolated regions.
 
+However, conserving volume fractions of the materials in the fuel-matrix region does not provide a sufficient number of constraints to determine 1)~the number of pseudo-particles, 2)~the location of the pseudo-particles, and 3)~the relative thicknesses of the ``inner'' and ``outer'' layers of non-kernel materials in the pseudo-particles. An infinite number of \gls{hl} representations of the pebble in Fig.\ \ref{fig:pbmr_pebble} can be conceived, so several additional requirements are arbitrarily imposed. 
+
 \begin{figure}[!h]
 \centering
   \includegraphics[width=0.85\linewidth]{figs/pbmr_hlm.png}
 \caption{Schematic of the \gls{pbmr} fuel pebble design as represented by the \gls{hl} method; colors indicate different material compositions.}
 \label{fig:pbmr_hlm}
 \end{figure}
-
-However, conserving volume fractions of the materials in the fuel-matrix region does not provide a sufficient number of constraints to determine 1)~the number of pseudo-particles, 2)~the location of the pseudo-particles, and 3)~the relative thicknesses of the ``inner'' and ``outer'' layers of non-kernel materials in the pseudo-particles. An infinite number of \gls{hl} representations of the pebble in Fig.\ \ref{fig:pbmr_pebble} can be conceived, so several additional requirements are arbitrarily imposed. 
 
 The number of pseudo-particles \(N_p\) is the only free parameter. First, the fuel-matrix region is divided into \(N_p\) equal-volume spherical shells. Consider a shell spanning \(r_i\leq r\leq r_o\) with total volume \(\volume\) given as
 
