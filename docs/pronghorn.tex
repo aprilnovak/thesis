@@ -294,7 +294,7 @@ The continuous \gls{fem} is well-known to be conditionally stable for convection
 -\alpha_d\frac{\partial^2\upsilon}{\partial x^2}+V\frac{\partial \upsilon}{\partial x}=0\ ,
 \eeq
 
-\noindent where \(\alpha_d\) is the diffusivity, \(V\) is the velocity, and \(\upsilon\) is a transported scalar. For a linear Lagrange interpolation on uniform elements, the stability criterion for Eq.\ \eqref{eq:1DConvectionDiffusion} is straightforward to derive and is shown elsewhere \cite{novak_manual}. This derivation yields
+\noindent where \(\alpha_d\) is the diffusivity, \(V\) is the velocity, and \(\upsilon\) is a transported scalar. For a linear Lagrange interpolation on uniform elements, the stability criterion for Eq.\ \eqref{eq:1DConvectionDiffusion} is straightforward to derive and is shown elsewhere \cite{novak_manual_2020}. This derivation yields
 
 \beq
 \label{eq:PeCriterion}
@@ -310,7 +310,7 @@ Pe_{el}\equiv\frac{\|\vec{V}\|h_e}{2\alpha_d}\ ,
 
 \noindent where \(h_e\) is the element size. For generality, Eq.\ \eqref{eq:PeEl} is shown in terms of a general diffusivity \(\alpha_d\) rather than the thermal diffusivity \(k/\rho C_p\) used in the definition of \(Pe\) in Eq.\ \eqref{eq:PecletDef}. 
 
-It can be shown that a linear Lagrange interpolation of Eq.\ \eqref{eq:1DConvectionDiffusion} on uniform elements is equivalent to a central \gls{fd} approximation of both the diffusive and convective kernels. This symmetric discretization results in non-physical nodal oscillations for flows with \(Pe_{el}>1\) with magnitudes that tend to increase with \(Pe_{el}\) \cite{novak_manual,zienkiewicz}. 
+It can be shown that a linear Lagrange interpolation of Eq.\ \eqref{eq:1DConvectionDiffusion} on uniform elements is equivalent to a central \gls{fd} approximation of both the diffusive and convective kernels. This symmetric discretization results in non-physical nodal oscillations for flows with \(Pe_{el}>1\) with magnitudes that tend to increase with \(Pe_{el}\) \cite{novak_manual_2020,zienkiewicz}. 
 
 Fig.\ \ref{fig:Convection_vs_Diffusion} illustrates typical convective and diffusive processes transporting a passive scalar in both space and time between the same \gls{ic} and the same end time. While diffusion is a symmetric phenomenon, convection transports in the direction of velocity such that the flow at a point is only dependent on the upstream conditions. This observation is the underlying cause of the numeric instability\mdash a symmetric discretization of the convective derivative is a poor representation of convective physics unless the symmetry of the diffusive process dominates the upwind nature of convection, or \(Pe_{el}<1\). The same conclusion can be shown in a more rigorous manner in terms of the self-adjoint and non-self-adjoint properties of diffusion and convection operators, respectively \cite{zienkiewicz}.
 
@@ -355,7 +355,7 @@ For a linear Lagrange interpolation of Eq.\ \eqref{eq:1DConvectionDiffusion} on 
 \psi^\star=\frac{h_e}{2\|\vec{V}\|}\vec{V}\cdot\nabla\psi\ 
 \eeq
 
-\noindent is equivalent to a central \gls{fd} approximation of the diffusive kernel and an upwind approximation of the convective kernel that eliminates the \(Pe_{el}\) stability criterion \cite{zienkiewicz,brooks,novak_manual}. 
+\noindent is equivalent to a central \gls{fd} approximation of the diffusive kernel and an upwind approximation of the convective kernel that eliminates the \(Pe_{el}\) stability criterion \cite{zienkiewicz,brooks,novak_manual_2020}. 
 
 In 1981, Brooks developed a consistent generalization of Eq.\ \eqref{eq:psiStar} to multi-dimensional, coupled, systems of convection-diffusion equations known as the \gls{supg} method that is now widely used in continuous \gls{fem} discretizations of convection-diffusion systems \cite{hauke,tezduyar,kirk,hauke_1998,TH1983,tezduyar1983,zienkiewicz,StabilizationReview}. The remainder of this section describes the application of the \gls{supg} stabilization scheme to the macroscale equations described in Chapter \ref{sec:PhysicalModels}. A detailed discussion of the stabilization is presented to illustrate the extension of the original \gls{supg} method to porous flows. 
 
