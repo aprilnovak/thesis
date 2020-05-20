@@ -162,14 +162,16 @@ Gaps exist between the reflector blocks and between the barrel. Gaps may also ex
 \label{fig:pbfhr_slice}
 \end{figure}
 
+Finally, and perhaps most significantly, no geometric information is available for the reflector block design at axial positions away from the core mid-plane. For instance, the outer reflector thickness towards the bottom of the reactor is 0.793 \si{\meter}. Rather than arbitrarily assume the horizontal suction channels are 0.393 \si{\meter} longer than the design at the mid-plane or that no suction channels exist, requiring significantly more \gls{cfd} simulations, the entire outer reflector is modeled with the same closures as those calculated for the mid-plane blocks. Fig.\ \ref{fig:ord} shows more detailed schematics of the dimensions of a single outer reflector block at the axial mid-plane of the reactor with \(\Delta_h=0\) and \(\Delta_v=0\). 
+
+The pebble bed, outer reflector, and outlet plenum are modeled as porous media, while the barrel, vessel, and fire bricks are modeled as conducting slabs. Small convective flows in gaps between the fire bricks are neglected. While coolant flows in the downcomer and inner reflector, both of these regions are also modeled as conducting slabs for two reasons. First, the inlet plenum geometry remains to be developed, so the geometry connecting the downcomer to the bed and reflectors is unknown. Second, the axial distribution of flow from the inner reflector into the bed is an open design question for the \gls{pbfhr} \cite{pbfhr,xin_wang_thesis,scarlat}. 
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{figs/pbfhr_or.png}
 \caption{Top-down schematic of a section of the outer reflector at the axial mid-plane of the \gls{pbfhr} as represented in COMSOL.}
 \label{fig:orh}
 \end{figure}
-
-Finally, and perhaps most significantly, no geometric information is available for the reflector block design at axial positions away from the core mid-plane. For instance, the outer reflector thickness towards the bottom of the reactor is 0.793 \si{\meter}. Rather than arbitrarily assume the horizontal suction channels are 0.393 \si{\meter} longer than the design at the mid-plane or that no suction channels exist, requiring significantly more \gls{cfd} simulations, the entire outer reflector is modeled with the same closures as those calculated for the mid-plane blocks. Fig.\ \ref{fig:ord} shows more detailed schematics of the dimensions of a single outer reflector block at the axial mid-plane of the reactor with \(\Delta_h=0\) and \(\Delta_v=0\). 
 
 \begin{figure}[h!]
     \begin{subfigure}{0.5\linewidth}
@@ -185,8 +187,6 @@ Finally, and perhaps most significantly, no geometric information is available f
     \caption{Schematic of the \gls{pbfhr} outer reflector blocks at the axial mid-plane as represented in COMSOL for \(\Delta_h=0\) and \(\Delta_v=0\) as (a) volumes and (b) wireframes.}
     \label{fig:ord}
 \end{figure}
-
-The pebble bed, outer reflector, and outlet plenum are modeled as porous media, while the barrel, vessel, and fire bricks are modeled as conducting slabs. Small convective flows in gaps between the fire bricks are neglected. While coolant flows in the downcomer and inner reflector, both of these regions are also modeled as conducting slabs for two reasons. First, the inlet plenum geometry remains to be developed, so the geometry connecting the downcomer to the bed and reflectors is unknown. Second, the axial distribution of flow from the inner reflector into the bed is an open design question for the \gls{pbfhr} \cite{pbfhr,xin_wang_thesis,scarlat}. 
 
 If the inner reflector were modeled as a porous medium, the interphase friction factor \(W\) as a function of height must be imposed in a manner to obtain the desired axial flow distribution, resulting in a complex nonlinear problem for every potential inlet flow \gls{bc}. Instead, the flow into the core is imposed on the inlet to the pebble bed region and along the inner reflector outer surface according to the desired axial distribution. The inner reflector is modeled as a two-phase conducting slab mixture of 50\% \gls{flibe} and 50\% graphite.
 
@@ -296,6 +296,8 @@ Because a single reference solution is obtained at each \gls{pf}, the variations
 
 Table \ref{table:error} summarizes the error in the \gls{hsd} and \gls{hl} solutions for the nominal \gls{pbfhr} design at 30.9\% \gls{pf}. The \gls{hsd} method predicts all temperatures to within 1.8\si{\celsius}, which supports the use of the \gls{hsd} method for steady-state analysis of the \gls{pbfhr}. It is rather fortuitous that a reasonable agreement is obtained for the \gls{hl} method for the maximum and average kernel temperatures given the general failure to predict temperatures over the \gls{pf} range investigated. The underprediction of the \gls{cfp} thermal resistance and the division of the continuous matrix results in temperature overpredictions of \(22.3\) to \(38.2\)\si{\celsius} in regions outside the kernel aside from the shell. The \gls{hl} method is not recommended for analysis of the \gls{pbfhr} because of its inability to account for thermal resistance in low-\gls{pf} fuel variations, and hence is not considered further in this chapter.
 
+The uniquely ``thermally-thin'' fuel-matrix region may explain the high accuracy of the \gls{hsd} and the low accuracy of the \gls{hl} method. Only at relatively high \glspl{pf} can the \gls{hl} method reasonably approximate the thermal resistance while preserving volume fractions with cubic spherical weighting. In addition, the approximations made in the effective mesoscale properties in the \gls{hsd} method are of smaller absolute consequence because of the thin shell thickness. 
+
 \begin{table}[htb!]
 \caption{Temperature error (multiscale minus reference) for the \gls{hsd} and \gls{hl} methods applied to the nominal \gls{pbfhr} fuel design at 30.9\% \gls{pf}.}
 \centering
@@ -313,8 +315,6 @@ HL Error (\si{\celsius}) & $\color{white}-\color{black}3.9$ & $-1.7$ & $\color{w
 }
 \label{table:error}
 \end{table}
-
-The uniquely ``thermally-thin'' fuel-matrix region may explain the high accuracy of the \gls{hsd} and the low accuracy of the \gls{hl} method. Only at relatively high \glspl{pf} can the \gls{hl} method reasonably approximate the thermal resistance while preserving volume fractions with cubic spherical weighting. In addition, the approximations made in the effective mesoscale properties in the \gls{hsd} method are of smaller absolute consequence because of the thin shell thickness. 
 
 To expand upon this last point, Fig.\ \ref{fig:hsd_err} shows the error (\gls{hsd} multiscale minus reference) as a function of \gls{pf} for integral temperature solutions (a) in the particle and (b) outside the particle for four different closure selections. Solid (---) lines correspond to the Chiew and Glandt model in Eq.\ \eqref{eq:ChiewGlandt} for the fuel-matrix with a parallel average for all other mixtures. Dashed (- -) lines correspond to the Chiew and Glandt model for the fuel-matrix with a series average for all other mixtures. Dashed-dot ($-\cdot-$) lines correspond to the Lewis and Nielsen model in Eq.\ \eqref{eq:Nielsen} for the fuel-matrix with a parallel average for all other mixtures. Dotted ($\cdots$) lines correspond to the Lewis and Nielsen model for the fuel-matrix with a series average for all other mixtures. In other words, two different fuel-matrix closures and two different \gls{cfp} and pebble layer closures are considered; the permutation gives four total sets of homogenization closures.
 

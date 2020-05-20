@@ -43,7 +43,7 @@ The objective of this section is to introduce the salient aspects of the method 
 
 The \gls{fem} is characterized by an elegant software implementation and computational efficiency that make it the method of choice for many physics applications, especially for systems with symmetric operators that take advantage of the \gls{fem}'s best approximation properties for self-adjoint differential equations \cite{reddy,zohdi,zienkiewicz}. Unfortunately, the \gls{fem} is conditionally unstable for advection-diffusion equations such as those in Eqs.\ \eqref{eq:PorousEquations} and \eqref{eq:PrimitiveEqns}. Section \ref{sec:supg} therefore concludes this section with a description of a stabilization method implemented to address this shortcoming.
 
-The \gls{fem} is an element-wise application of a Galerkin weighted residual method. Weighted residual methods seek an approximate solution to a differential equation with the assumed form
+The \gls{fem} is an element-wise application of a Galerkin weighted residual method; weighted residual methods seek an approximate solution to a differential equation with the assumed form
 
 \beq
 \label{eq:WRExpansion}
@@ -548,7 +548,7 @@ Finally, the fluid energy conservation equation is stabilized using the single-e
 
 \noindent where the stabilization parameters for the mass, momentum, and energy conservation equations are \(\tau_c\), \(\tau_u\), and \(\tau_e\), respectively \cite{hauke,tezduyar,hauke_1998,kirk,TH1983,tezduyar1983}. \(\tau_c\), \(\tau_u\), and \(\tau_e\) are typically selected as characteristic time scales representing normalized temporal, advective, and diffusive terms in the weak form \cite{tezduyar}. 
 
-Three different time scales are considered in the construction of the \(\tau_c\), \(\tau_u\), and \(\tau_e\) values \mdash 1)~a transient limit, \(\tau_\text{temporal}\); 2)~an advective limit, \(\tau_\text{advective}\); and 3)~a diffusive limit, \(\tau_\text{diffusive}\). These time scales are combined into a single representative time scale with smooth transitions among its components,
+Three different time scales are considered in the construction of the \(\tau_c\), \(\tau_u\), and \(\tau_e\) \mbox{values \mdash} 1)~a transient limit, \(\tau_\text{temporal}\); 2)~an advective limit, \(\tau_\text{advective}\); and 3)~a diffusive limit, \(\tau_\text{diffusive}\). These time scales are combined into a single representative time scale with smooth transitions among its components,
 
 \beq
 \label{eq:switchTau}
@@ -598,9 +598,7 @@ Coupling between the macro, meso, and micro length scales is achieved using Pica
 
 The coupling tree is highly parallelized. The master application uses all processors, while all its sub-applications run simultaneously in parallel with the resources allocated to the local master application. For instance, consider a three-tiered coupling system with application \(\mathcal{A}\) controlling five sub-applications \(\mathcal{B}_i\) for \(i=1\cdots 5\), each of which controls two sub-applications \(\mathcal{C}_{ij}\) for \(j=1, 2\). Allocating a total of 60 \gls{mpi} processes to application \(\mathcal{A}\) will run each of the \(\mathcal{B}\) applications with 12 processes and each of the \(\mathcal{C}\) applications with 6 processes; all \(\mathcal{B}\) processes run in parallel with one another and all \(\mathcal{C}\) processes run in parallel with one another. 
 
-\gls{moose}'s coupling system specifically aims to address many of the shortcomings of earlier multiphysics simulations that relied on rigid one-to-one spatial and temporal data transfers through the file system. All \gls{moose} applications may be coupled on different spatial meshes with subcycling time stepping, and all data is communicated in memory. 
-
-As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and communication structure within a single Picard iteration for a simulation involving two applications on the same spatial domain. Both the master application and sub-application may in general solve a set of coupled nonlinear equations. In Picard iteration \(n\) within the time step incrementing to simulation time \(t\), the master application first solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then transfers the variable \(T\) to a sub-application that depends on that variable, such as through a source term or material property. Interpolation between meshes, sampling from element centroids, and functional expansions are several of the mechanisms available for representing data transfers between applications. For this example, Fig.\ \ref{fig:multiapp} depicts this data transfer as a mesh interpolation. 
+\gls{moose}'s coupling system specifically aims to address many of the shortcomings of earlier multiphysics simulations that relied on rigid one-to-one spatial and temporal data transfers through the file system. All \gls{moose} applications may be coupled on different spatial meshes with subcycling time stepping, and all data is communicated in memory. As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and communication structure within a single Picard iteration for a simulation involving two applications on the same spatial domain. 
 
 \begin{figure}[!h]
 \centering
@@ -608,6 +606,8 @@ As an example, Fig.\ \ref{fig:multiapp} illustrates one possible execution and c
 \caption{Illustration of one possible execution and communication structure for coupling multiple applications within the \gls{moose} framework.}
 \label{fig:multiapp}
 \end{figure}
+
+Both the master application and sub-application may in general solve a set of coupled nonlinear equations. In Picard iteration \(n\) within the time step incrementing to simulation time \(t\), the master application first solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then transfers the variable \(T\) to a sub-application that depends on that variable, such as through a source term or material property. Interpolation between meshes, sampling from element centroids, and functional expansions are several of the mechanisms available for representing data transfers between applications. For this example, Fig.\ \ref{fig:multiapp} depicts this data transfer as a mesh interpolation. 
 
 Next, the sub-application solves a set of coupled equations with the Newton-Krylov method described in Section \ref{sec:nonlinear}. The master application then retrieves the variable \(\phi\) from the sub-application to use in dependent terms in its set of equations. The coupled simulation proceeds to the next time step if the relative change in the solution from the previous Picard iteration is less than a specified tolerance. If not converged, the Picard iteration is repeated. The example illustrated in Fig.\ \ref{fig:multiapp} is fairly simplistic, and the multi-application execution and data transfer system in \gls{moose} accommodates many other types of coupling, such as scalar and boundary coupling, with more fine-grained communication patterns. 
 

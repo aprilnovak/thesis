@@ -309,18 +309,20 @@ Additional insight can be obtained when considering the error for different subs
 \begin{table}[h!]
 \caption{The mean, standard deviation, and maximum error for different subsets of the 52 steady-state and axisymmetric SANA cases.}
 \centering
-\begin{tabular}{@{}l c c c c @{}}
+\begin{tabular}{@{}l c c c c c @{}}
 \toprule
- & \textbf{\# Cases} & \textbf{Mean (\si{\celsius})} & \textbf{\boldmath{\(\sigma\)} (\si{\celsius})} & \textbf{Max. (\si{\celsius})}\\
+& &\phantom{a}& \multicolumn{3}{c}{Temperature Error (\si{\celsius})}\\
+\cmidrule{4-6}
+ & \textbf{\# Cases} && \textbf{Mean} & \textbf{\boldmath{\(\sigma\)}} & \textbf{Max.}\\
 \midrule
-All cases & 52 & 22.6 & 54.6 & \color{white}-\color{black}198.6\\
-Helium coolant & 26 & 20.5 & 45.8 & \color{white}-\color{black}166.7\\
-Nitrogen coolant & 26 & 24.8 & 62.4 & \color{white}-\color{black}198.6\\
-3 \si{\centi\meter} matrix graphite pebbles & 12 & 44.2 & 48.7 & \color{white}-\color{black}198.6\\
-6 \si{\centi\meter} electric graphite pebbles & 28 & \color{white}0\color{black}2.0 & 48.4 & -189.6\\
-6.5 \si{\centi\meter} aluminum oxide pebbles & 12 & 45.8 & 55.8 & \color{white}-\color{black}181.3\\
-Full-length heater & 36 & 30.5 & 52.7 & \color{white}-\color{black}198.6\\
-Partial-length heater & 16 & \color{white}0\color{black}3.9 & 54.7 & -189.6\\
+All cases & 52 && 22.6 & \color{white}-\color{black}54.6 & \color{white}-\color{black}198.6\\
+Helium coolant & 26 && 20.5 & \color{white}-\color{black}45.8 & \color{white}-\color{black}166.7\\
+Nitrogen coolant & 26 && 24.8 & \color{white}-\color{black}62.4 & \color{white}-\color{black}198.6\\
+3 \si{\centi\meter} matrix graphite pebbles & 12 && 44.2 & \color{white}-\color{black}48.7 & \color{white}-\color{black}198.6\\
+6 \si{\centi\meter} electric graphite pebbles & 28 && \color{white}0\color{black}2.0 & \color{white}-\color{black}48.4 & -189.6\\
+6.5 \si{\centi\meter} aluminum oxide pebbles & 12 && 45.8 & \color{white}-\color{black}55.8 & \color{white}-\color{black}181.3\\
+Full-length heater & 36 && 30.5 & \color{white}-\color{black}52.7 & \color{white}-\color{black}198.6\\
+Partial-length heater & 16 && \color{white}0\color{black}3.9 & \color{white}-\color{black}54.7 & -189.6\\
 \bottomrule
 \end{tabular}
 \label{table:subcases}
@@ -349,7 +351,7 @@ To quantify the significance of the lack of complete experimental facility infor
 \centerline{
 \begin{tabular}{@{}l c c c c c c c c c c c@{}}
 \toprule
- & \multicolumn{3}{c}{\color{white}${\rvert^\dagger}^\dagger$\color{black}All\color{white}${\rvert^\dagger}^\dagger$\color{black}} & \phantom{a}& \multicolumn{3}{c}{Near-Wall} &\phantom{a}& \multicolumn{3}{c}{Bulk}\\
+ & \multicolumn{3}{c}{\color{white}${\rvert^\dagger}^\dagger$\color{black}All\color{white}${\rvert^\dagger}^\dagger$\color{black}} & \phantom{l}& \multicolumn{3}{c}{Near-Wall} &\phantom{l}& \multicolumn{3}{c}{Bulk}\\
  \cmidrule{2-4} \cmidrule{6-8} \cmidrule{10-12}
  & \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.} && \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.} && \textbf{Mean} & {\boldmath\(\sigma\)} & \textbf{Max.}\\
 \midrule
