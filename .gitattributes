@@ -1,0 +1,3 @@
+*.mph linguist-detectable=false
+*.tex linguist-detectable=true
+*.i linguist-detectable=false
